@@ -25,7 +25,7 @@ def getHorizontalLine(length: Int) : String = {
 }
 
 def draw(x: Int, y: Int)(tiles: Array[Tile]): Unit = {
-  for i <- 0 until  y do
+  for i <- 0 until y do
     println(getHorizontalLine(x))
     for j <- 0 until x do
       print("| ")
@@ -35,9 +35,9 @@ def draw(x: Int, y: Int)(tiles: Array[Tile]): Unit = {
   println(getHorizontalLine(x))
 }
 
-val tiles = Array.tabulate(12) { i =>
+val tiles = Array.tabulate(16) { i =>
   val content = f"${i + 1}%02d"
   Tile(content, ConsoleColor.WHITE)
 }
 
-draw(4, 3)(tiles)
+draw(4, 4)(tiles)
