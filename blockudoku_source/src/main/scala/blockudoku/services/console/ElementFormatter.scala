@@ -15,8 +15,7 @@ case class ElementFormatter(element: Element) {
     for y <- ySize - 1 to 0 by -1 do
       val builder = new StringBuilder
       for x <- 0 until xSize do
-        if element.structure.contains(Point(x + xMin, y + yMin)) then builder.append("x")
-        else builder.append(" ")
+        builder.append(content(x + xMin, y + yMin))
       lines(y) = builder.result()
 
     lines
@@ -25,5 +24,10 @@ case class ElementFormatter(element: Element) {
   def formattedLine(index: Int): String = {
     if index < lines.length then lines(index)
     else " " * (xMax - xMin + 1)
+  }
+
+  def content(xPos: Int, yPos: Int): String = {
+    if element.structure.contains(Point(xPos, yPos)) then "x"
+    else " "
   }
 }
