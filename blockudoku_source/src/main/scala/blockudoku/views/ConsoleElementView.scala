@@ -5,10 +5,12 @@ import blockudoku.services.console.ElementFormatter
 
 case class ConsoleElementView(maxLength: Int, elements: Array[Element], width: Int) extends View {
   private val headline = "Elements_"
+  private val spacing = 15
 
   override def display(): Unit = {
     displayHeadline()
     displayElements()
+    displayElementNumbers()
   }
 
   private def displayHeadline(): Unit = {
@@ -33,8 +35,18 @@ case class ConsoleElementView(maxLength: Int, elements: Array[Element], width: I
     for i <- formatters.indices do
       val part = formatters(i).formattedLine(index)
       builder.append(part)
-      builder.append(" " * (15 + (maxLength - part.length)))
+      builder.append(" " * (spacing + (maxLength - part.length)))
 
     builder.result()
+  }
+  private def displayElementNumbers(): Unit = {
+    println
+    val builder = new StringBuilder
+
+    for i <- elements.indices do
+      builder.append(i)
+      builder.append(" " * (maxLength - 1 + spacing))
+
+    println(builder.result())
   }
 }
