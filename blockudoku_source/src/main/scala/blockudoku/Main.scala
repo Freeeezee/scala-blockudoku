@@ -8,3 +8,4 @@ import sys.process._
 @main def main(): Unit =
   val window: Window = ConsoleWindow()
   window.display()
+  println("Milena war hier")
