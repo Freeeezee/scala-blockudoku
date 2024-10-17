@@ -4,7 +4,7 @@ import blockudoku.models.{Element, Point}
 
 import scala.util.Random
 
-case class ElementController() {
+class ElementController() {
   val maxElementLength: Int = 3
   val elementCount: Int = 3
   

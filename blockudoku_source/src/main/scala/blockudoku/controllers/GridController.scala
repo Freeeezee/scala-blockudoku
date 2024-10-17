@@ -2,8 +2,7 @@ package blockudoku.controllers
 
 import blockudoku.models.{Grid, Point, Tile}
 
-case class GridController() {
-  val grid: Grid = generateGrid(10, 10)
+class GridController() {
   val grid: Grid = generateGrid(9, 9)
   
   private def generateGrid(xLength: Int, yLength: Int): Grid = {
