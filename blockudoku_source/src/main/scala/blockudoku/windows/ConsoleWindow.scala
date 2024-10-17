@@ -39,5 +39,5 @@ class ConsoleWindow extends Window, Observer[ConsoleGridView] {
 
     views.foreach(_.display())
   }
-  override def receiveUpdate(): Unit = display()
+  override def receiveUpdate(): Unit = display() 
 }
