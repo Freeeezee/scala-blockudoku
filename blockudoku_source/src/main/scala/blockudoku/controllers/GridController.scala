@@ -10,10 +10,10 @@ class GridController() {
   private def generateGrid(xLength: Int, yLength: Int): Grid = { // x: Spalten, y: Zeilen
     val array = new Array[Tile](xLength * yLength)
 
-    for i <- 0 until xLength do
-      for j <- 0 until yLength do
-        val index = i * xLength + j // Zeilenweise(s Speicherlayout) füllen REKURSIV
-        array(index) = Tile(index, Point(i, j)) // Tile anlegen an Position (i, j)
+    for y <- 0 until yLength do
+      for x <- 0 until xLength do
+        val index = y * xLength + x
+        array(index) = Tile(index, Point(x, y))
 
     Grid(xLength, yLength)(array)
   }
@@ -23,7 +23,7 @@ class GridController() {
     val baseTile = grid.tiles(selectedPos)
     element.structure.exists { point => // iterates over all points in the structure
       val x = baseTile.position.xPos + point.xPos
-      val y = baseTile.position.yPos + point.yPos
+      val y = baseTile.position.yPos - point.yPos
       println("Points" + x + " " + y)
       //val index = y * grid.xLength + x
       println("Tile is occupied" + grid.tile(x, y).index)

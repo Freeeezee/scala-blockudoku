@@ -6,10 +6,10 @@ case class GridFormatter(grid: Grid) {
   def formatted: String = {
     val builder = new StringBuilder
 
-    for i <- 0 until grid.xLength do
+    for y <- 0 until grid.yLength do
       builder.append(horizontalLine)
-      for j <- 0 until grid.yLength do
-        builder.append(formattedTile(grid.tile(i, j)))
+      for x <- 0 until grid.xLength do
+        builder.append(formattedTile(grid.tile(x, y)))
       builder.append("|\n")
       
     builder.append(horizontalLine)
