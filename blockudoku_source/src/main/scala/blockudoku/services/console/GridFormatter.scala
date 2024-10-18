@@ -1,15 +1,15 @@
 package blockudoku.services.console
 
-import blockudoku.models.{Grid, Tile}
+import blockudoku.models.{Grid, Tile, TileState}
 
 case class GridFormatter(grid: Grid) {
   def formatted: String = {
     val builder = new StringBuilder
 
-    for i <- 0 until grid.xLength do
+    for y <- 0 until grid.yLength do
       builder.append(horizontalLine)
-      for j <- 0 until grid.yLength do
-        builder.append(formattedTile(grid.tile(i, j)))
+      for x <- 0 until grid.xLength do
+        builder.append(formattedTile(grid.tile(x, y)))
       builder.append("|\n")
       
     builder.append(horizontalLine)
@@ -33,7 +33,7 @@ case class GridFormatter(grid: Grid) {
 
   private def tileContent(tile: Tile): String = {
     tile.state match
-      case empty => f"${tile.index}%02d"
-      case blocked => "xx"
+      case TileState.empty => f"${tile.index}%02d"
+      case TileState.blocked => "xx"
   }
 }
