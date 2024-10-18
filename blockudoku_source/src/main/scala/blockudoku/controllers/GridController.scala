@@ -43,6 +43,7 @@ class GridController() {
         tile.state = TileState.blocked
         //tile.index = index
       }
+
     }
   }
 }
