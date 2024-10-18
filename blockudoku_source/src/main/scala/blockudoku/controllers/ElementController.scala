@@ -4,7 +4,7 @@ import blockudoku.models.{Element, Point}
 
 import scala.util.Random
 
-case class ElementController() {
+case class ElementController() { // case-class -> Verwendung bei immutable objects
   val maxElementLength: Int = 3
   val elementCount: Int = 3
   
@@ -15,11 +15,14 @@ case class ElementController() {
 
     elements(slot) = generateElement
 
-    elements(slot)
+    elements(slot) // return
   }
 
   private def generateInitialElements: Array[Element] = {
     val array: Array[Element] = new Array[Element](elementCount)
+    /* Inhalte des immutable Containers array lassen sich verändern
+    * (elementCount): Größe
+    */
 
     for i <- 0 until elementCount do
       array(i) = generateElement
@@ -28,19 +31,18 @@ case class ElementController() {
   }
 
   private def generateElement: Element = {
-    var points = List[Point](Point(0, 0))
+    var points = List[Point](Point(0, 0)) //unveränderliche Liste, daher kein Array
     val length = Random.between(1, maxElementLength)
 
     for i <- 0 until length do
-      points = generateNextPoint(points) :: points
-
+      points = generateNextPoint(points) :: points // :: = fügt Element am Anfang ein
     Element(points)
   }
 
   private def generateNextPoint(points: List[Point]): Point = {
-    val possiblePoints = (0 to 7).toList
-      .map(num => pointFromDirection(points.last, num))
-      .filter(point => !points.contains(point))
+    val possiblePoints = (0 to 7).toList // 0-7 = mögliche Richtungen
+      .map(num => pointFromDirection(points.last, num)) //points.last = letzten Punkt aus Liste, num = Angabe der Richtung des neuen Punktes
+      .filter(point => !points.contains(point)) // Duplikate vermeiden (filtert exisitierende Punkte raus?
 
     // This is probably impossible
     if (possiblePoints.isEmpty) throw new Exception("Point generation failed to find a possible next point.")
