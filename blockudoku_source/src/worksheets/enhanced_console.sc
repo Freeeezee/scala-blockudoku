@@ -11,6 +11,7 @@ trait ConsoleElement {
   val isInteractable: Boolean = false
   val size: Int
   def content(highlightIndex: Int) : String
+  def interactableIndices(currentIndex: Int = 1): List[List[Int]]
 }
 
 trait Frame(elements: List[ConsoleElement]) extends ConsoleElement {
@@ -74,6 +75,28 @@ case class HorizontalFrame(elements: List[ConsoleElement])(spacing: Int, overrid
     }
     else " " * maxWidth
   }
+
+  override def interactableIndices(currentIndex: Int = 1): List[List[Int]] = {
+    if !isInteractable then return List[List[Int]]()
+
+    var interactableIndices = List[List[Int]]()
+
+    var index = currentIndex
+
+    val elementInteractableIndices = elements.map { element =>
+      val indices = element.interactableIndices(index)
+      index = index + element.size
+      indices
+    }
+
+    for i <- 0 until elementInteractableIndices.map(outerList => outerList.length).max do
+      val row = elementInteractableIndices.flatMap { outerList =>
+        if i < outerList.length then outerList(i) else List()
+      }
+      interactableIndices = interactableIndices :+ row
+
+    interactableIndices
+  }
 }
 
 case class VerticalFrame(elements: List[ConsoleElement])(spacing: Int, override val isInteractable: Boolean = false) extends Frame(elements) {
@@ -109,6 +132,24 @@ case class VerticalFrame(elements: List[ConsoleElement])(spacing: Int, override 
 
     str.result()
   }
+
+  override def interactableIndices(currentIndex: Int = 1): List[List[Int]] = {
+    if !isInteractable then return List[List[Int]]()
+
+    var interactableIndices = List[List[Int]]()
+
+    var index = currentIndex
+
+    elements.foreach { element =>
+      element.interactableIndices(index).foreach { row =>
+        interactableIndices = interactableIndices :+ row
+      }
+
+      index = currentIndex + element.size
+    }
+
+    interactableIndices
+  }
 }
 
 case class RegularConsoleElement(content: String, override val isInteractable: Boolean = false) extends ConsoleElement {
@@ -118,11 +159,55 @@ case class RegularConsoleElement(content: String, override val isInteractable: B
     if highlightIndex == size then highlighted(content)
     else content
   }
+
+  override def interactableIndices(currentIndex: Int): List[List[Int]] = {
+    if isInteractable then List[List[Int]](List(currentIndex))
+    else List[List[Int]]()
+  }
 }
 
-case class ComposedConsoleView(element: ConsoleElement, highlightedIndex: Int = 1) {
+case class ComposedConsoleView(element: ConsoleElement, selectedX: Int = 0, selectedY: Int = 0) {
+
+  private val interactableIndices = element.interactableIndices()
+
   def display(): Unit = {
     println(element.content(highlightedIndex))
+  }
+
+  private def highlightedIndex: Int = {
+    interactableIndices(selectedY)(selectedX)
+  }
+
+  def navigateRight: ComposedConsoleView = {
+    if selectedX + 1 < interactableIndices(selectedY).length then {
+      copy(selectedX = selectedX + 1)
+    }
+    else if selectedY + 1 < interactableIndices.length then copy(selectedX = 0, selectedY = selectedY + 1)
+    else copy()
+  }
+
+  def navigateDown: ComposedConsoleView = {
+    if selectedY + 1 < interactableIndices.length then {
+      if selectedX < interactableIndices(selectedY + 1).length then copy(selectedY = selectedY + 1)
+      else copy(selectedY = selectedY + 1, selectedX = interactableIndices(selectedY).length - 1)
+    }
+    else copy()
+  }
+
+  def navigateLeft: ComposedConsoleView = {
+    if selectedX - 1 > 0 then copy(selectedX = selectedX - 1)
+    else {
+      if selectedY > 0 then copy(selectedY = selectedY - 1, selectedX = interactableIndices(selectedY).length - 1)
+      else copy()
+    }
+  }
+
+  def navigateUp: ComposedConsoleView = {
+    if selectedY > 0 then {
+      if selectedX < interactableIndices(selectedY - 1).length then copy(selectedY = selectedY - 1)
+      else copy(selectedY = selectedY - 1, selectedX = interactableIndices(selectedY - 1).length - 1)
+    }
+    else copy()
   }
 }
 
@@ -140,10 +225,20 @@ val horizontalFrame = HorizontalFrame(List(
   RegularConsoleElement(content3, isInteractable = true)))(5, isInteractable = true)
 
 val verticalFrame = VerticalFrame(List(
-  RegularConsoleElement(content0),
+  RegularConsoleElement(content0, isInteractable = true),
   horizontalFrame,
   RegularConsoleElement(content4)))(2, isInteractable = true)
 
-val view = ComposedConsoleView(verticalFrame, highlightedIndex = 1)
+val view = ComposedConsoleView(verticalFrame)
 
 view.display()
+
+view.navigateDown.display()
+
+view.navigateRight.display()
+
+view.navigateLeft.display()
+
+view.navigateDown.navigateRight.navigateRight.display()
+
+view.navigateDown.navigateRight.navigateUp.display()
