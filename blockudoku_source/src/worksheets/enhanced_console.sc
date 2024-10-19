@@ -156,8 +156,12 @@ case class RegularConsoleElement(content: String, override val isInteractable: B
   override val size: Int = 1
 
   override def content(highlightIndex: Int): String = {
-    if highlightIndex == size then highlighted(content)
+    if highlightIndex == size then highlightedContent
     else content
+  }
+
+  private def highlightedContent: String = {
+    content.split('\n').map(highlighted).mkString("\n")
   }
 
   override def interactableIndices(currentIndex: Int): List[List[Int]] = {
@@ -195,9 +199,9 @@ case class ComposedConsoleView(element: ConsoleElement, selectedX: Int = 0, sele
   }
 
   def navigateLeft: ComposedConsoleView = {
-    if selectedX - 1 > 0 then copy(selectedX = selectedX - 1)
+    if selectedX > 0 then copy(selectedX = selectedX - 1)
     else {
-      if selectedY > 0 then copy(selectedY = selectedY - 1, selectedX = interactableIndices(selectedY).length - 1)
+      if selectedY > 0 then copy(selectedY = selectedY - 1, selectedX = interactableIndices(selectedY - 1).length - 1)
       else copy()
     }
   }
@@ -242,3 +246,7 @@ view.navigateLeft.display()
 view.navigateDown.navigateRight.navigateRight.display()
 
 view.navigateDown.navigateRight.navigateUp.display()
+
+view.navigateDown.navigateLeft.display()
+
+view.navigateDown.navigateRight.navigateRight.navigateLeft.navigateLeft.display()

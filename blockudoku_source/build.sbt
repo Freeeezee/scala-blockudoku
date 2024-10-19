@@ -6,3 +6,5 @@ lazy val root = (project in file("."))
   .settings(
     name := "blockudoku_source"
   )
+
+libraryDependencies += "org.jline" % "jline" % "3.26.2"

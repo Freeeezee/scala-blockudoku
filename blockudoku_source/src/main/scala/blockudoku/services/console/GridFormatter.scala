@@ -1,6 +1,6 @@
 package blockudoku.services.console
 
-import blockudoku.models.{Grid, Tile}
+import blockudoku.models.{Grid, Tile, TileState}
 
 case class GridFormatter(grid: Grid) {
   def formatted: String = {
@@ -33,7 +33,7 @@ case class GridFormatter(grid: Grid) {
 
   private def tileContent(tile: Tile): String = {
     tile.state match
-      case empty => f"${tile.index}%02d"
-      case blocked => "xx"
+      case TileState.empty => f"${tile.index}%02d"
+      case TileState.blocked => "xx"
   }
 }
