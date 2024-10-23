@@ -28,7 +28,7 @@ class ConsoleGridViewSpec extends UnitSpec {
                    || 72 | 73 | 74 | 75 | 76 | 77 | 78 | 79 | 80 |
                    |x----x----x----x----x----x----x----x----x----x
                    |""".stripMargin)
-      str.append("")
+      //str.append("")
       gridView.content() should be (str.result())
      }
   }
