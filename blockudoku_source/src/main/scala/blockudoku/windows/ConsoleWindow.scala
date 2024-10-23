@@ -1,5 +1,6 @@
 package blockudoku.windows
 
+import blockudoku.RandomImpl
 import blockudoku.controllers.{ElementController, GridController}
 import blockudoku.views.{ConsoleElementView, ConsoleGridView, ConsoleHeadlineView, View}
 
@@ -26,7 +27,7 @@ class ConsoleWindow extends Window {
   private def initializeElementView(): View = {
     val gridController = GridController()
     val width = gridController.grid.xLength * 5 + 1
-    val elementController = ElementController()
+    val elementController = ElementController(RandomImpl())
     ConsoleElementView(elementController.maxElementLength, elementController.elements, width)
   }
   override def display(): Unit = {

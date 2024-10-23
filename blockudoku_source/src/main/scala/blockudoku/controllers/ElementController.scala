@@ -2,9 +2,9 @@ package blockudoku.controllers
 
 import blockudoku.models.{Element, Point}
 
-import scala.util.Random
+import blockudoku.Random
 
-class ElementController() {
+class ElementController(random: Random) {
   val maxElementLength: Int = 3
   val elementCount: Int = 3
   
@@ -29,7 +29,7 @@ class ElementController() {
 
   private def generateElement: Element = {
     var points = List[Point](Point(0, 0))
-    val length = Random.between(1, maxElementLength)
+    val length = random.between(1, maxElementLength)
 
     for i <- 0 until length do
       points = generateNextPoint(points) :: points
@@ -45,7 +45,7 @@ class ElementController() {
     // This is probably impossible
     if (possiblePoints.isEmpty) throw new Exception("Point generation failed to find a possible next point.")
 
-    possiblePoints(Random.nextInt(possiblePoints.length))
+    possiblePoints(random.nextInt(possiblePoints.length))
   }
 
   private def pointFromDirection(point: Point, direction: Int): Point = {
