@@ -1,10 +1,9 @@
 package blockudoku.windows
 
-import blockudoku.Observer
 import blockudoku.controllers.{ElementController, GridController}
 import blockudoku.views.{ConsoleElementView, ConsoleGridView, ConsoleHeadlineView, View}
 
-class ConsoleWindow extends Window, Observer[ConsoleGridView] {
+class ConsoleWindow extends Window {
   private val views = initializeViews()
 
   private def initializeViews(): List[View] = {
@@ -38,5 +37,4 @@ class ConsoleWindow extends Window, Observer[ConsoleGridView] {
     
     println(str.result())
   }
-  override def receiveUpdate(): Unit = display() 
 }
