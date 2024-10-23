@@ -7,5 +7,6 @@ lazy val root = (project in file("."))
     name := "blockudoku_source"
   )
 
+libraryDependencies += "org.jline" % "jline" % "3.26.2"
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.19"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.19" % "test"

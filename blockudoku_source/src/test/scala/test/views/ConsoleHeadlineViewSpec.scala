@@ -2,6 +2,7 @@ package test.views
 
 import test.UnitSpec
 import blockudoku.views.ConsoleHeadlineView
+import blockudoku.views.console.ConsoleHeadlineView
 
 class ConsoleHeadlineViewSpec extends UnitSpec {
   "HeadlineView" should {
