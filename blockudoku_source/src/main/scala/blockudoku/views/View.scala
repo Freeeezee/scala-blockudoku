@@ -1,5 +1,5 @@
 package blockudoku.views
 
 trait View {
-  def display(): Unit
+  def content(): String
 }

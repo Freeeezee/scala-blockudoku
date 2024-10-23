@@ -5,8 +5,8 @@ import blockudoku.models.Grid
 case class ConsoleHeadlineView(width: Int) extends View {
   private val headline = "Blockudoku_"
 
-  override def display(): Unit = {
-    println(s"$line $headline $line\n")
+  override def content(): String = {
+    s"$line $headline $line\n\n"
   }
 
   private def line: String = {

@@ -7,14 +7,12 @@ case class ConsoleElementView(maxLength: Int, elements: Array[Element], width: I
   private val headline = "Elements_"
   private val spacing = 15
 
-  override def display(): Unit = {
-    displayHeadline()
-    displayElements()
-    displayElementNumbers()
+  override def content(): String = {
+    s"$headlineContent$elementContent$elementNumbersContent"
   }
 
-  private def displayHeadline(): Unit = {
-    println(s"\n$line $headline $line\n")
+  private def headlineContent: String = {
+    s"\n$line $headline $line\n\n"
   }
   private def line: String = {
     "-" * lineLength
@@ -23,11 +21,15 @@ case class ConsoleElementView(maxLength: Int, elements: Array[Element], width: I
     if (headline.length > width) 0
     else (width - headline.length - 2) / 2
   }
-  private def displayElements(): Unit = {
+  private def elementContent: String = {
     val formatters = elements.map(element => ElementFormatter(element))
 
+    val str = new StringBuilder()
+    
     for i <- 0 until maxLength do
-      println(elementLine(formatters, i))
+      str.append(s"${elementLine(formatters, i)}\n")
+      
+    str.result()
   }
   private def elementLine(formatters: Array[ElementFormatter], index: Int): String = {
     val builder = new StringBuilder
@@ -39,14 +41,16 @@ case class ConsoleElementView(maxLength: Int, elements: Array[Element], width: I
 
     builder.result()
   }
-  private def displayElementNumbers(): Unit = {
-    println
+
+  private def elementNumbersContent: String = {
     val builder = new StringBuilder
+    builder.append("\n")
 
     for i <- elements.indices do
       builder.append(i)
       builder.append(" " * (maxLength - 1 + spacing))
 
-    println(builder.result())
+    builder.append("\n")
+    builder.result()
   }
 }
