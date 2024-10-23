@@ -18,7 +18,7 @@ class ElementControllerSpec extends UnitSpec {
         element.structure(1) should equal(Point(0, 0))
       }
     }
-    "when regenerate is called on slot 0" should {
+    "regenerate is called on slot 0" should {
       "have a new element at slot 0" in {
         val controller = new ElementController(RandomMock())
         val element = controller.regenerate(0)
