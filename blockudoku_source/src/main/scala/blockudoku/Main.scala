@@ -1,10 +1,7 @@
 package blockudoku
 
-import blockudoku.windows.{ConsoleWindow, TestWindow, Window}
-
-import sys.process.*
-
+import blockudoku.windows.{ConsoleWindow, Window}
 
 @main def main(): Unit =
-  val window: Window = TestWindow()
+  val window: Window = ConsoleWindow()
   window.display()

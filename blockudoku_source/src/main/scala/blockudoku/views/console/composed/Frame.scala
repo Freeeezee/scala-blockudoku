@@ -1,4 +1,4 @@
-package blockudoku.views.composed
+package blockudoku.views.console.composed
 
 trait Frame(elements: List[ConsoleElement]) extends ConsoleElement {
   override val size: Int = calculateSize

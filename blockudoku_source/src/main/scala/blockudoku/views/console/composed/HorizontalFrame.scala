@@ -1,4 +1,4 @@
-package blockudoku.views.composed
+package blockudoku.views.console.composed
 
 import blockudoku.services.console.ConsoleStyle.highlighted
 

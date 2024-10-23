@@ -1,4 +1,4 @@
-package blockudoku.views.composed
+package blockudoku.views.console.composed
 
 import blockudoku.services.console.ConsoleStyle.highlighted
 
@@ -8,6 +8,7 @@ case class VerticalFrame(elements: List[ConsoleElement])(spacing: Int, override 
 
     contents(highlightIndex).foreach { content =>
       str.append(content)
+      str.append("\n")
       str.append(space)
     }
 
