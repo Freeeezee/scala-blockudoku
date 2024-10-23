@@ -5,24 +5,22 @@ import blockudoku.views.console.{ConsoleHeadlineView, ConsoleView}
 import blockudoku.views.console.composed.RegularConsoleElement
 
 class ConsoleHeadlineViewSpec extends UnitSpec {
-  "HeadlineView" should {
-    "throw an IllegalArgumentException if the width is less than the headline length + 2" in {
-      assertThrows[IllegalArgumentException] {
-        ConsoleHeadlineView(5)
+  "HeadlineView" when {
+    "the width is less than the headline length + 2" should {
+      "throw an IllegalArgumentException" in {
+        assertThrows[IllegalArgumentException] {
+          ConsoleHeadlineView(5)
+        }
       }
     }
-    "be scalable in form of '-- Blockudoku_ --'" in {
-      val headlineView1 = ConsoleHeadlineView(15)
-      val expectedContent1 = "- Blockudoku_ -\n"
-      assert(viewContent(headlineView1) == expectedContent1)
+    "the width is large enough" should {
+      "be scalable in form of '-- Blockudoku_ --'" in {
+        viewContent(ConsoleHeadlineView(15)) should equal("- Blockudoku_ -\n")
 
-      val headlineView2 = ConsoleHeadlineView(20)
-      val expectedContent2 = "--- Blockudoku_ ---\n"
-      assert(viewContent(headlineView2) == expectedContent2)
+        viewContent(ConsoleHeadlineView(20)) should equal("--- Blockudoku_ ---\n")
 
-      val headlineView3 = ConsoleHeadlineView(30)
-      val expectedContent3 = "-------- Blockudoku_ --------\n"
-      assert(viewContent(headlineView3) == expectedContent3)
+        viewContent(ConsoleHeadlineView(30)) should equal("-------- Blockudoku_ --------\n")
+      }
     }
   }
 }
