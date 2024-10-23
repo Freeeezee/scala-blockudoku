@@ -1,12 +1,13 @@
 package test.views
 import test.UnitSpec
-import blockudoku.views.ConsoleGridView
 import blockudoku.controllers.GridController
+import blockudoku.views.console.ConsoleGridView
+
 class ConsoleGridViewSpec extends UnitSpec {
   "GridView" should {
     "display a 9x9 grid" in {
       val gridController = GridController()
-      val gridView = ConsoleGridView(gridController.grid)
+      val gridView = ConsoleGridView(gridController)
       val str = new StringBuilder()
       str.append("""x----x----x----x----x----x----x----x----x----x
                    || 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 |
@@ -29,7 +30,7 @@ class ConsoleGridViewSpec extends UnitSpec {
                    |x----x----x----x----x----x----x----x----x----x
                    |""".stripMargin)
       //str.append("")
-      gridView.content() should be (str.result())
+      viewContent(gridView) should be (str.result())
      }
   }
 }

@@ -1,8 +1,8 @@
 package test.views
 
 import test.UnitSpec
-import blockudoku.views.ConsoleHeadlineView
-import blockudoku.views.console.ConsoleHeadlineView
+import blockudoku.views.console.{ConsoleHeadlineView, ConsoleView}
+import blockudoku.views.console.composed.RegularConsoleElement
 
 class ConsoleHeadlineViewSpec extends UnitSpec {
   "HeadlineView" should {
@@ -13,16 +13,16 @@ class ConsoleHeadlineViewSpec extends UnitSpec {
     }
     "be scalable in form of '-- Blockudoku_ --'" in {
       val headlineView1 = ConsoleHeadlineView(15)
-      val expectedContent1 = "- Blockudoku_ -\n\n"
-      assert(headlineView1.content() == expectedContent1)
+      val expectedContent1 = "- Blockudoku_ -\n"
+      assert(viewContent(headlineView1) == expectedContent1)
 
       val headlineView2 = ConsoleHeadlineView(20)
-      val expectedContent2 = "--- Blockudoku_ ---\n\n"
-      assert(headlineView2.content() == expectedContent2)
+      val expectedContent2 = "--- Blockudoku_ ---\n"
+      assert(viewContent(headlineView2) == expectedContent2)
 
       val headlineView3 = ConsoleHeadlineView(30)
-      val expectedContent3 = "-------- Blockudoku_ --------\n\n"
-      assert(headlineView3.content() == expectedContent3)
+      val expectedContent3 = "-------- Blockudoku_ --------\n"
+      assert(viewContent(headlineView3) == expectedContent3)
     }
   }
 }

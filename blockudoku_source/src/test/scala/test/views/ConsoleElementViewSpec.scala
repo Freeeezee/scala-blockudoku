@@ -1,21 +1,20 @@
 package test.views
 
 import test.{RandomMock, UnitSpec}
-import blockudoku.views.ConsoleElementView
-import blockudoku.controllers.ElementController
+import blockudoku.controllers.{ElementController, GridController}
+import blockudoku.views.console.ConsoleElementView
 
 class ConsoleElementViewSpec extends UnitSpec {
   "ElementView" should {
     "display all elements in ElementController" in {
       val elementController = ElementController(RandomMock())
-      val elementView = ConsoleElementView(elementController.maxElementLength, elementController.elements, width = 50)
-      elementView.content() should be ("""------------------- Elements_ -------------------
+      val gridController = GridController()
+      val elementView = ConsoleElementView(gridController, elementController)
+      viewContent(elementView) should be ("""----------------- Elements_ -----------------
                                          |
-                                         |xx                xx                xx
+                                         |XX               XX               XX
                                          |
-                                         |
-                                         |
-                                         |0                 1                 2 """.stripMargin)
+                                         |""".stripMargin)
     }
   }
 }

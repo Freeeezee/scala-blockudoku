@@ -7,6 +7,8 @@ import blockudoku.views.console.composed.{ConsoleElement, RegularConsoleElement}
 case class ConsoleHeadlineView(width: Int) extends ConsoleView {
   private val headline = "Blockudoku_"
 
+  if (width < headline.length + 2) throw new IllegalArgumentException("Width must be greater than or equal to headline length + 2")
+
   override def consoleElement: ConsoleElement = {
     RegularConsoleElement(content)
   }
