@@ -11,6 +11,8 @@ case class ComposedConsoleView(element: ConsoleElement, selectedX: Int = 0, sele
   }
 
   private def highlightedIndex: Int = {
+    if !interactableIndices.contains(selectedY) || !interactableIndices(selectedY).contains(selectedX) then return -1
+
     interactableIndices(selectedY)(selectedX)
   }
 
