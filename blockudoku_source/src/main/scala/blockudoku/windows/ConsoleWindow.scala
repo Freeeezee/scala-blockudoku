@@ -17,16 +17,16 @@ class ConsoleWindow extends Window {
     views
   }
   private def initializeHeadlineView(): ConsoleView = {
-    val gridController = GridController()
+    val gridController = GridController(9, 9)
     val width = gridController.grid.xLength * 5 + 1
     ConsoleHeadlineView(width)
   }
   private def initializeGridView(): ConsoleView = {
-    val gridController = GridController()
+    val gridController = GridController(9, 9)
     ConsoleGridView(gridController)
   }
   private def initializeElementView(): ConsoleView = {
-    val gridController = GridController()
+    val gridController = GridController(9, 9)
     val elementController = ElementController(new RandomImpl())
     ConsoleElementView(gridController, elementController)
   }

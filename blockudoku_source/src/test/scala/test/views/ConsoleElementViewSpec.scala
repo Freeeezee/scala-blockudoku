@@ -8,7 +8,7 @@ class ConsoleElementViewSpec extends UnitSpec {
   "ElementView" should {
     "display all elements in ElementController" in {
       val elementController = ElementController(RandomMock())
-      val gridController = GridController()
+      val gridController = GridController(9, 9)
       val elementView = ConsoleElementView(gridController, elementController)
       viewContent(elementView) should be ("""----------------- Elements_ -----------------
                                          |
