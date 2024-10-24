@@ -10,10 +10,10 @@ class ConsoleElementViewSpec extends UnitSpec {
       val elementController = ElementController(RandomMock())
       val gridController = GridController(9, 9)
       val elementView = ConsoleElementView(gridController, elementController)
-      viewContent(elementView) should be ("""----------------- Elements_ -----------------
+      viewContent(elementView).replace("\r\n", "\n") should be ("""----------------- Elements_ -----------------
                                          |
                                          |XX               XX               XX
-                                         |""".stripMargin)
+                                         |""".stripMargin.replace("\r\n", "\n"))
     }
   }
 }
