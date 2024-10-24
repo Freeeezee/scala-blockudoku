@@ -1,5 +1,7 @@
 package blockudoku.views.console.composed
 
+import scala.util.Try
+
 case class ComposedConsoleFormatter(element: ConsoleElement, selectedX: Int = 0, selectedY: Int = 0) {
 
   private val interactableIndices = element.interactableIndices()
@@ -9,9 +11,7 @@ case class ComposedConsoleFormatter(element: ConsoleElement, selectedX: Int = 0,
   }
 
   private def highlightedIndex: Int = {
-    if !interactableIndices.contains(selectedY) || !interactableIndices(selectedY).contains(selectedX) then return -1
-
-    interactableIndices(selectedY)(selectedX)
+    Try(interactableIndices(selectedY)(selectedX)).getOrElse(-1)
   }
 
   def navigateRight: ComposedConsoleFormatter = {
@@ -25,7 +25,7 @@ case class ComposedConsoleFormatter(element: ConsoleElement, selectedX: Int = 0,
   def navigateDown: ComposedConsoleFormatter = {
     if selectedY + 1 < interactableIndices.length then {
       if selectedX < interactableIndices(selectedY + 1).length then copy(selectedY = selectedY + 1)
-      else copy(selectedY = selectedY + 1, selectedX = interactableIndices(selectedY).length - 1)
+      else copy(selectedY = selectedY + 1, selectedX = interactableIndices(selectedY + 1).length - 1)
     }
     else copy()
   }

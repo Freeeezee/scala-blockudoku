@@ -53,6 +53,6 @@ case class ConsoleGridView(gridController: GridController) extends ConsoleView {
   private def tileContent(tile: Tile): String = {
     tile.state match
       case TileState.empty => f"${tile.index}%02d"
-      case TileState.blocked => "xx"
+      //case TileState.blocked => "xx"
   }
 }
