@@ -2,14 +2,14 @@ package test.views
 import test.UnitSpec
 import blockudoku.controllers.GridController
 import blockudoku.views.console.ConsoleGridView
-
+// replace("\r\n", "\n") is used to make the tests pass on Windows
 class ConsoleGridViewSpec extends UnitSpec {
   "GridView" when {
     "size 9x9" should {
       "display a 9x9 grid" in {
         val gridController = GridController(9, 9)
         val gridView = ConsoleGridView(gridController)
-        viewContent(gridView) should be(
+        viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x----x----x----x----x----x
             || 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 |
             |x----x----x----x----x----x----x----x----x----x
@@ -29,14 +29,14 @@ class ConsoleGridViewSpec extends UnitSpec {
             |x----x----x----x----x----x----x----x----x----x
             || 72 | 73 | 74 | 75 | 76 | 77 | 78 | 79 | 80 |
             |x----x----x----x----x----x----x----x----x----x
-            |""".stripMargin)
+            |""".stripMargin.replace("\r\n", "\n"))
       }
     }
     "size 4x4" should {
       "display a 4x4 grid" in {
         val gridController = GridController(4, 4)
         val gridView = ConsoleGridView(gridController)
-        viewContent(gridView) should be(
+        viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x
             || 00 | 01 | 02 | 03 |
             |x----x----x----x----x
@@ -46,14 +46,14 @@ class ConsoleGridViewSpec extends UnitSpec {
             |x----x----x----x----x
             || 12 | 13 | 14 | 15 |
             |x----x----x----x----x
-            |""".stripMargin)
+            |""".stripMargin.replace("\r\n", "\n"))
       }
     }
     "size 6x6" should {
       "display a 6x6 grid" in {
         val gridController = GridController(6, 6)
         val gridView = ConsoleGridView(gridController)
-        viewContent(gridView) should be(
+        viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x----x----x
             || 00 | 01 | 02 | 03 | 04 | 05 |
             |x----x----x----x----x----x----x
@@ -67,7 +67,7 @@ class ConsoleGridViewSpec extends UnitSpec {
             |x----x----x----x----x----x----x
             || 30 | 31 | 32 | 33 | 34 | 35 |
             |x----x----x----x----x----x----x
-            |""".stripMargin)
+            |""".stripMargin.replace("\r\n", "\n"))
       }
     }
   }
