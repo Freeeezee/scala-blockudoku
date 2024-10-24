@@ -1,11 +1,12 @@
 package test
 
 import blockudoku.views.console.ConsoleView
-import org.scalatest.GivenWhenThen
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should
+import org.scalatest.prop.TableDrivenPropertyChecks
+import org.scalatest.propspec.AnyPropSpec
 
-abstract class UnitSpec extends AnyWordSpec with Matchers with GivenWhenThen {
+
+class UnitSpec extends AnyPropSpec with TableDrivenPropertyChecks with should.Matchers {
   def viewContent(view: ConsoleView): String = {
     view.consoleElement.content(-1)
   }
