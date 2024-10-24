@@ -1,26 +1,36 @@
 package test.views
 
+import blockudoku.views.console.ConsoleHeadlineView
 import test.UnitSpec
-import blockudoku.views.console.{ConsoleHeadlineView, ConsoleView}
-import blockudoku.views.console.composed.RegularConsoleElement
 
 class ConsoleHeadlineViewSpec extends UnitSpec {
-  "HeadlineView" when {
-    "the width is less than the headline length + 2" should {
-      "throw an IllegalArgumentException" in {
-        assertThrows[IllegalArgumentException] {
-          ConsoleHeadlineView(5)
-        }
+  info("Headline view should display the game's headline")
+  info("Headline should be displayed as a scaled version of '-- Blockudoku_ --'")
+  info("Scaling should be done by adding '-' to the beginning and end of the headline based on width")
+  info("Width should be at least headline length + 2, otherwise an IllegalArgumentException should be thrown")
+
+  Feature("Headline view") {
+    Scenario("Display a headline for width less than headline length + 2") {
+      Given("a width less than headline length + 2")
+      val width = 5
+
+      Then("an IllegalArgumentException should be thrown")
+      assertThrows[IllegalArgumentException] {
+        ConsoleHeadlineView(width)
       }
     }
-    "the width is large enough" should {
-      "be scalable in form of '-- Blockudoku_ --'" in {
-        viewContent(ConsoleHeadlineView(15)) should equal("- Blockudoku_ -\n")
+    Scenario("Display a headline for width large enough") {
+      Given("a width large enough")
+      val width1 = 15
+      val width2 = 20
+      val width3 = 30
 
-        viewContent(ConsoleHeadlineView(20)) should equal("--- Blockudoku_ ---\n")
+      Then("the view content should be")
+      viewContent(ConsoleHeadlineView(width1)) should equal("- Blockudoku_ -\n")
 
-        viewContent(ConsoleHeadlineView(30)) should equal("-------- Blockudoku_ --------\n")
-      }
+      viewContent(ConsoleHeadlineView(width2)) should equal("--- Blockudoku_ ---\n")
+
+      viewContent(ConsoleHeadlineView(width3)) should equal("-------- Blockudoku_ --------\n")
     }
   }
 }

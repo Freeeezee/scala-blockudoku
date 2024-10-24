@@ -2,10 +2,10 @@ package test
 
 import blockudoku.views.console.ConsoleView
 import org.scalatest.GivenWhenThen
+import org.scalatest.featurespec.AnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpec
 
-abstract class UnitSpec extends AnyWordSpec with Matchers with GivenWhenThen {
+class UnitSpec extends AnyFeatureSpec with GivenWhenThen with Matchers {
   def viewContent(view: ConsoleView): String = {
     view.consoleElement.content(-1)
   }
