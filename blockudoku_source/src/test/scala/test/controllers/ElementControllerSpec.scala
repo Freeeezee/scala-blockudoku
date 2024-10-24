@@ -2,11 +2,12 @@ package test.controllers
 
 import blockudoku.controllers.ElementController
 import blockudoku.models.Point
-import test.{RandomMock, UnitSpec}
+import test.RandomMock
+import test.UnitSpec
 class ElementControllerSpec extends UnitSpec {
-  "An ElementController" when {
-    "new" should {
-      "have 3 random elements with points at (1,0) and (0,0)" in {
+  describe("An ElementController") {
+    describe("when new") {
+      it("should have 3 random elements with points at (1,0) and (0,0)") {
         val controller = new ElementController(RandomMock())
         controller.elements should not be null
         controller.elements.length should be (3)
@@ -18,8 +19,8 @@ class ElementControllerSpec extends UnitSpec {
         element.structure(1) should equal(Point(0, 0))
       }
     }
-    "regenerate is called on slot 0" should {
-      "have a new element at slot 0" in {
+    describe("when regenerate is called on slot 0") {
+      it("should have a new element at slot 0") {
         val controller = new ElementController(RandomMock())
         val element = controller.regenerate(0)
         element.structure should not be null

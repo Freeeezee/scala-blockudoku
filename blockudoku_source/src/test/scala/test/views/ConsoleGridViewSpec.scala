@@ -1,12 +1,12 @@
 package test.views
-import test.UnitSpec
+
 import blockudoku.controllers.GridController
 import blockudoku.views.console.ConsoleGridView
-// replace("\r\n", "\n") is used to make the tests pass on Windows
+import test.UnitSpec
 class ConsoleGridViewSpec extends UnitSpec {
-  "GridView" when {
-    "size 9x9" should {
-      "display a 9x9 grid" in {
+  describe("GridView") {
+    describe("size 9x9") {
+      it("display a 9x9 grid") {
         val gridController = GridController(9, 9)
         val gridView = ConsoleGridView(gridController)
         viewContent(gridView).replace("\r\n", "\n") should be(
@@ -32,43 +32,44 @@ class ConsoleGridViewSpec extends UnitSpec {
             |""".stripMargin.replace("\r\n", "\n"))
       }
     }
-    "size 4x4" should {
-      "display a 4x4 grid" in {
-        val gridController = GridController(4, 4)
-        val gridView = ConsoleGridView(gridController)
-        viewContent(gridView).replace("\r\n", "\n") should be(
-          """x----x----x----x----x
-            || 00 | 01 | 02 | 03 |
-            |x----x----x----x----x
-            || 04 | 05 | 06 | 07 |
-            |x----x----x----x----x
-            || 08 | 09 | 10 | 11 |
-            |x----x----x----x----x
-            || 12 | 13 | 14 | 15 |
-            |x----x----x----x----x
-            |""".stripMargin.replace("\r\n", "\n"))
-      }
+  }
+  describe("4x4 Grid") {
+    it("display a 4x4 grid") {
+      val gridController = GridController(4, 4)
+      val gridView = ConsoleGridView(gridController)
+      viewContent(gridView).replace("\r\n", "\n") should be(
+        """x----x----x----x----x
+          || 00 | 01 | 02 | 03 |
+          |x----x----x----x----x
+          || 04 | 05 | 06 | 07 |
+          |x----x----x----x----x
+          || 08 | 09 | 10 | 11 |
+          |x----x----x----x----x
+          || 12 | 13 | 14 | 15 |
+          |x----x----x----x----x
+          |""".stripMargin.replace("\r\n", "\n"))
     }
-    "size 6x6" should {
-      "display a 6x6 grid" in {
-        val gridController = GridController(6, 6)
-        val gridView = ConsoleGridView(gridController)
-        viewContent(gridView).replace("\r\n", "\n") should be(
-          """x----x----x----x----x----x----x
-            || 00 | 01 | 02 | 03 | 04 | 05 |
-            |x----x----x----x----x----x----x
-            || 06 | 07 | 08 | 09 | 10 | 11 |
-            |x----x----x----x----x----x----x
-            || 12 | 13 | 14 | 15 | 16 | 17 |
-            |x----x----x----x----x----x----x
-            || 18 | 19 | 20 | 21 | 22 | 23 |
-            |x----x----x----x----x----x----x
-            || 24 | 25 | 26 | 27 | 28 | 29 |
-            |x----x----x----x----x----x----x
-            || 30 | 31 | 32 | 33 | 34 | 35 |
-            |x----x----x----x----x----x----x
-            |""".stripMargin.replace("\r\n", "\n"))
-      }
+  }
+  describe("6x6 Grid") {
+    it("display a 6x6 grid") {
+      val gridController = GridController(6, 6)
+      val gridView = ConsoleGridView(gridController)
+      viewContent(gridView).replace("\r\n", "\n") should be(
+        """x----x----x----x----x----x----x
+          || 00 | 01 | 02 | 03 | 04 | 05 |
+          |x----x----x----x----x----x----x
+          || 06 | 07 | 08 | 09 | 10 | 11 |
+          |x----x----x----x----x----x----x
+          || 12 | 13 | 14 | 15 | 16 | 17 |
+          |x----x----x----x----x----x----x
+          || 18 | 19 | 20 | 21 | 22 | 23 |
+          |x----x----x----x----x----x----x
+          || 24 | 25 | 26 | 27 | 28 | 29 |
+          |x----x----x----x----x----x----x
+          || 30 | 31 | 32 | 33 | 34 | 35 |
+          |x----x----x----x----x----x----x
+          |""".stripMargin.replace("\r\n", "\n"))
     }
   }
 }
+
