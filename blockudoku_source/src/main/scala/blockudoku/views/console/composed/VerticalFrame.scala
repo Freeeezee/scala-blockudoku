@@ -6,11 +6,12 @@ case class VerticalFrame(elements: List[ConsoleElement])(spacing: Int, override 
   override def content(highlightIndex: Int): String = {
     val str = new StringBuilder()
 
-    contents(highlightIndex).foreach { content =>
-      str.append(content)
+    val highlightedContents = contents(highlightIndex)
+
+    for i <- highlightedContents.indices do
+      str.append(highlightedContents(i))
       str.append("\n")
-      str.append(space)
-    }
+      if i < highlightedContents.length - 1 then str.append(space)
 
     if highlightIndex == size then highlighted(str.result())
     else str.result()

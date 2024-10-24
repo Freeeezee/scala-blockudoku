@@ -13,7 +13,6 @@ class ConsoleElementViewSpec extends UnitSpec {
       viewContent(elementView) should be ("""----------------- Elements_ -----------------
                                          |
                                          |XX               XX               XX
-                                         |
                                          |""".stripMargin)
     }
   }
