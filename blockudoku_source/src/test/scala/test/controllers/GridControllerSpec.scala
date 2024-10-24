@@ -1,13 +1,13 @@
 package test.controllers
 
-import blockudoku.controllers.GridController
+import org.scalatest.Assertion
 import test.UnitSpec
 
 class GridControllerSpec extends UnitSpec {
-  "A GridController" when {
-    "new" should {
-      "have a 9x9 grid" in {
-        val controller = new GridController(9, 9)
+  object `A GridController` {
+    object `when new` {
+      def `should have a 9x9 grid`: Assertion = {
+        val controller = new blockudoku.controllers.GridController(9, 9)
         controller.grid should not be null
         controller.grid.xLength should be(9)
         controller.grid.yLength should be(9)
