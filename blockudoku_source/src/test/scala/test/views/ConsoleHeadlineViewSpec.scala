@@ -1,19 +1,19 @@
 package test.views
 
-import test.UnitSpec
 import blockudoku.views.console.{ConsoleHeadlineView, ConsoleView}
 import blockudoku.views.console.composed.RegularConsoleElement
+import test.UnitSpec
 
 class ConsoleHeadlineViewSpec extends UnitSpec {
-  "HeadlineView" when {
-    "the width is less than the headline length + 2" should {
+  "HeadlineView" - {
+    "the width is less than the headline length + 2" - {
       "throw an IllegalArgumentException" in {
         assertThrows[IllegalArgumentException] {
           ConsoleHeadlineView(5)
         }
       }
     }
-    "the width is large enough" should {
+    "the width is large enough" - {
       "be scalable in form of '-- Blockudoku_ --'" in {
         viewContent(ConsoleHeadlineView(15)) should equal("- Blockudoku_ -\n")
 
