@@ -1,17 +1,17 @@
 package test.controllers
 
 import blockudoku.controllers.GridController
+import org.junit.Assert._
+import org.junit.Test
 import test.UnitSpec
 
-class GridControllerSpec extends UnitSpec {
-  "A GridController" when {
-    "new" should {
-      "have a 9x9 grid" in {
-        val controller = new GridController(9, 9)
-        controller.grid should not be null
-        controller.grid.xLength should be(9)
-        controller.grid.yLength should be(9)
-      }
-    }
+class GridControllerSpec extends UnitSpec{
+  @Test
+  def gridController_new_have_a_9x9_grid(): Unit = {
+    val controller = new GridController(9, 9)
+
+    assert(controller.grid != null)
+    assert(controller.grid.xLength == 9)
+    assert(controller.grid.yLength == 9)
   }
 }

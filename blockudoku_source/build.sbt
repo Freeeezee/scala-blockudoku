@@ -8,5 +8,5 @@ lazy val root = (project in file("."))
   )
 
 libraryDependencies += "org.jline" % "jline" % "3.26.2"
-libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.19"
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.19" % "test"
+
+libraryDependencies += "com.github.sbt" % "junit-interface" % "0.13.3" % "test"
