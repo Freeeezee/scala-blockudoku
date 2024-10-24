@@ -34,8 +34,11 @@ class ConsoleWindow extends Window {
   override def display(): Unit = {
     clearConsole()
 
-    println(formatter.content())
+    println(content)
   }
+  
+  def content: String = formatter.content()
+  
   private def clearConsole(): Unit = {
     println("\u001b[2J")
   }
