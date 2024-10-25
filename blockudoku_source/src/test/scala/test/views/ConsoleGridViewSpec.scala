@@ -4,9 +4,8 @@ import blockudoku.views.console.ConsoleGridView
 import test.UnitSpec
 
 class ConsoleGridViewSpec extends UnitSpec {
-  "GridView" - {
-    "size 9x9" - {
-      "display a 9x9 grid" in {
+  behavior of "GridView"
+      it should "display a 9x9 grid " in {
         val gridController = GridController(9, 9)
         val gridView = ConsoleGridView(gridController)
         viewContent(gridView).replace("\r\n", "\n") should be(
@@ -31,9 +30,7 @@ class ConsoleGridViewSpec extends UnitSpec {
             |x----x----x----x----x----x----x----x----x----x
             |""".stripMargin.replace("\r\n", "\n"))
       }
-    }
-    "size 4x4" - {
-      "display a 4x4 grid" in {
+       it should "display a 4x4 grid" in {
         val gridController = GridController(4, 4)
         val gridView = ConsoleGridView(gridController)
         viewContent(gridView).replace("\r\n", "\n") should be(
@@ -48,9 +45,7 @@ class ConsoleGridViewSpec extends UnitSpec {
             |x----x----x----x----x
             |""".stripMargin.replace("\r\n", "\n"))
       }
-    }
-    "size 6x6" - {
-      "display a 6x6 grid" in {
+      it should "display a 6x6 grid" in {
         val gridController = GridController(6, 6)
         val gridView = ConsoleGridView(gridController)
         viewContent(gridView).replace("\r\n", "\n") should be(
@@ -69,6 +64,4 @@ class ConsoleGridViewSpec extends UnitSpec {
             |x----x----x----x----x----x----x
             |""".stripMargin.replace("\r\n", "\n"))
       }
-    }
-  }
 }

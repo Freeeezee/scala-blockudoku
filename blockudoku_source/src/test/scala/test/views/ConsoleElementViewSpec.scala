@@ -6,8 +6,8 @@ import blockudoku.views.console.ConsoleElementView
 import test.UnitSpec
 
 class ConsoleElementViewSpec extends UnitSpec {
-  "ElementView" - {
-    "display all elements in ElementController" in {
+  behavior of "ElementView"
+    it should "display all elements in ElementController" in {
       val elementController = ElementController(RandomMock())
       val gridController = GridController(9, 9)
       val elementView = ConsoleElementView(gridController, elementController)
@@ -16,5 +16,4 @@ class ConsoleElementViewSpec extends UnitSpec {
                                                                   |XX               XX               XX
                                                                   |""".stripMargin.replace("\r\n", "\n"))
     }
-  }
 }
