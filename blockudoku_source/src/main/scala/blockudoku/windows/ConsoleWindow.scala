@@ -1,40 +1,50 @@
 package blockudoku.windows
 
-import blockudoku.Observer
+import blockudoku.RandomImpl
 import blockudoku.controllers.{ElementController, GridController}
-import blockudoku.views.{ConsoleElementView, ConsoleGridView, ConsoleHeadlineView, View}
+import blockudoku.views.console.composed.{ComposedConsoleFormatter, VerticalFrame}
+import blockudoku.views.console.{ConsoleElementView, ConsoleGridView, ConsoleHeadlineView, ConsoleView}
 
-class ConsoleWindow(gridController: GridController, elementController: ElementController) extends Window, Observer[ConsoleGridView] {
-  private val views = initializeViews(gridController, elementController)
+class ConsoleWindow extends Window {
+  private val views = initializeViews()
 
-  private def initializeViews(gridController: GridController, elementController: ElementController): List[View] = {
-    var views: List[View] = List()
+  private def initializeViews(): List[ConsoleView] = {
+    var views: List[ConsoleView] = List()
 
     views = views :+ initializeHeadlineView()
-    views = views :+ initializeGridView(gridController)
-    views = views :+ initializeElementView(gridController, elementController)
+    views = views :+ initializeGridView()
+    views = views :+ initializeElementView()
     views
   }
-  private def initializeHeadlineView(): View = {
-    val gridController = GridController()
+  private def initializeHeadlineView(): ConsoleView = {
+    val gridController = GridController(9, 9)
     val width = gridController.grid.xLength * 5 + 1
     ConsoleHeadlineView(width)
   }
-  private def initializeGridView(gridController: GridController): View = {
-
-    //val gridController = GridController()
+  private def initializeGridView(): ConsoleView = {
+    val gridController = GridController(9, 9)
     ConsoleGridView(gridController)
   }
-  private def initializeElementView(gridController: GridController, elementController: ElementController): View = {
-    //val gridController = GridController()
-    val width = gridController.grid.xLength * 5 + 1
-    //val elementController = ElementController()
-    ConsoleElementView(elementController.maxElementLength, elementController.elements, width)
+  private def initializeElementView(): ConsoleView = {
+    val gridController = GridController(9, 9)
+    val elementController = ElementController(new RandomImpl())
+    ConsoleElementView(gridController, elementController)
   }
-  override def display(): Unit = {
-    println("\u001b[2J") // Clear console
 
-    views.foreach(_.display())
+  override def display(): Unit = {
+    clearConsole()
+
+    println(content)
   }
-  override def receiveUpdate(): Unit = display() 
+  
+  def content: String = formatter.content()
+  
+  private def clearConsole(): Unit = {
+    println("\u001b[2J")
+  }
+  private def formatter: ComposedConsoleFormatter = {
+    // TODO: Not interactable at the moment and nothing is highlighted.
+    val verticalFrame = VerticalFrame(views.map(_.consoleElement))(0, isInteractable = false)
+    ComposedConsoleFormatter(verticalFrame, -1, -1)
+  }
 }
