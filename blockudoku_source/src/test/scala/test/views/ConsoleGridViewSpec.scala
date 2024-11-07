@@ -1,16 +1,18 @@
 package test.views
-import test.UnitSpec
-import blockudoku.controllers.GridController
+import blockudoku.controllers.{ElementController, GridController}
 import blockudoku.views.console.ConsoleGridView
+import blockudoku.views.console.composed.ComposedConsoleFormatter
 import blockudoku.windows.FocusManager
-import blockudoku.windows.FocusState.{Elements, Grid}
+import blockudoku.windows.FocusState.Grid
+import test.{RandomMock, UnitSpec}
 // replace("\r\n", "\n") is used to make the tests pass on Windows
 class ConsoleGridViewSpec extends UnitSpec {
   "GridView" when {
     "size 9x9" should {
       "display a 9x9 grid" in {
         val gridController = GridController(9, 9)
-        val gridView = ConsoleGridView(gridController, new FocusManager(Grid))
+        val focusManager = new FocusManager(Grid)
+        val gridView = ConsoleGridView(gridController, ElementController(RandomMock(), focusManager), focusManager)
         viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x----x----x----x----x----x
             ||    |    |    |    |    |    |    |    |    |
@@ -37,7 +39,8 @@ class ConsoleGridViewSpec extends UnitSpec {
     "size 4x4" should {
       "display a 4x4 grid" in {
         val gridController = GridController(4, 4)
-        val gridView = ConsoleGridView(gridController, new FocusManager(Grid))
+        val focusManager = new FocusManager(Grid)
+        val gridView = ConsoleGridView(gridController, ElementController(RandomMock(), focusManager), focusManager)
         viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x
             ||    |    |    |    |
@@ -54,7 +57,8 @@ class ConsoleGridViewSpec extends UnitSpec {
     "size 6x6" should {
       "display a 6x6 grid" in {
         val gridController = GridController(6, 6)
-        val gridView = ConsoleGridView(gridController, new FocusManager(Grid))
+        val focusManager = new FocusManager(Grid)
+        val gridView = ConsoleGridView(gridController, ElementController(RandomMock(), focusManager), focusManager)
         viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x----x----x
             ||    |    |    |    |    |    |
@@ -70,6 +74,47 @@ class ConsoleGridViewSpec extends UnitSpec {
             ||    |    |    |    |    |    |
             |x----x----x----x----x----x----x
             |""".stripMargin.replace("\r\n", "\n"))
+      }
+    }
+
+    "an element is added" should {
+      "display the element at the correct position" in {
+        val gridController = GridController(6, 6)
+        val focusManager = new FocusManager(Grid)
+        val elementController = ElementController(RandomMock(), focusManager)
+        val gridView = ConsoleGridView(gridController, elementController, focusManager)
+        gridController.setElement(elementController.elements(0), 0)
+
+        viewContent(gridView).replace("\r\n", "\n") should be(
+          """x----x----x----x----x----x----x
+            || xx | xx |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            |""".stripMargin.replace("\r\n", "\n"))
+      }
+    }
+    
+    "formatted" should {
+      "select the correct tile" in {
+        val gridController = GridController(6, 6)
+        val focusManager = new FocusManager(Grid)
+        val elementController = ElementController(RandomMock(), focusManager)
+        elementController.selectElement(elementController.elements(0))
+        val gridView = ConsoleGridView(gridController, elementController, focusManager)
+        val formatter = ComposedConsoleFormatter.create(gridView.consoleElement)
+
+        formatter.select()
+
+        gridController.grid.tiles.head.state should be(blockudoku.models.TileState.blocked)
       }
     }
   }
