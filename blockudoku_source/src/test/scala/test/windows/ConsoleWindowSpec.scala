@@ -1,17 +1,13 @@
 package test.windows
 
-import blockudoku.controllers.{ElementController, GridController}
-import blockudoku.windows.FocusState.Grid
-import test.{RandomMock, UnitSpec}
-import blockudoku.windows.{ConsoleWindow, FocusManager}
+import blockudoku.windows.ConsoleWindow
+import test.UnitSpec
 
 class ConsoleWindowSpec extends UnitSpec {
   "ConsoleWindow" when {
     "initialized with default values" should {
-      val focusManager = FocusManager(Grid)
-      val window = ConsoleWindow(GridController(9, 9), ElementController(RandomMock(), focusManager), focusManager)
-
       "contain a headline" in {
+        val window = ConsoleWindow(gridController, elementController, focusManager)
         window.content should include("Blockudoku_")
       }
 

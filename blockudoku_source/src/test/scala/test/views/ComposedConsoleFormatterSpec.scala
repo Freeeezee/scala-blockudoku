@@ -22,6 +22,12 @@ class ComposedConsoleFormatterSpec extends UnitSpec {
 
         formatter.content() should be(ConsoleStyle.highlighted(regular1.content))
       }
+
+      "throw an exception if trying to get a larger index" in {
+        assertThrows[IndexOutOfBoundsException] {
+          regular1.get(3)
+        }
+      }
     }
 
     "initialized with two regular elements in vertical frame" should {

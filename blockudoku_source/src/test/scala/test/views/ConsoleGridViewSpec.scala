@@ -10,9 +10,9 @@ class ConsoleGridViewSpec extends UnitSpec {
   "GridView" when {
     "size 9x9" should {
       "display a 9x9 grid" in {
-        val gridController = GridController(9, 9)
+        val newGridController = GridController(9, 9, elementController, new FocusManager(Grid))
         val focusManager = new FocusManager(Grid)
-        val gridView = ConsoleGridView(gridController, ElementController(RandomMock(), focusManager), focusManager)
+        val gridView = ConsoleGridView(newGridController, ElementController(RandomMock(), focusManager), focusManager)
         viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x----x----x----x----x----x
             ||    |    |    |    |    |    |    |    |    |
@@ -38,9 +38,9 @@ class ConsoleGridViewSpec extends UnitSpec {
     }
     "size 4x4" should {
       "display a 4x4 grid" in {
-        val gridController = GridController(4, 4)
+        val newGridController = GridController(4, 4, elementController, new FocusManager(Grid))
         val focusManager = new FocusManager(Grid)
-        val gridView = ConsoleGridView(gridController, ElementController(RandomMock(), focusManager), focusManager)
+        val gridView = ConsoleGridView(newGridController, ElementController(RandomMock(), focusManager), focusManager)
         viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x
             ||    |    |    |    |
@@ -56,9 +56,9 @@ class ConsoleGridViewSpec extends UnitSpec {
     }
     "size 6x6" should {
       "display a 6x6 grid" in {
-        val gridController = GridController(6, 6)
+        val newGridController = GridController(6, 6, elementController, new FocusManager(Grid))
         val focusManager = new FocusManager(Grid)
-        val gridView = ConsoleGridView(gridController, ElementController(RandomMock(), focusManager), focusManager)
+        val gridView = ConsoleGridView(newGridController, ElementController(RandomMock(), focusManager), focusManager)
         viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x----x----x
             ||    |    |    |    |    |    |
@@ -79,11 +79,12 @@ class ConsoleGridViewSpec extends UnitSpec {
 
     "an element is added" should {
       "display the element at the correct position" in {
-        val gridController = GridController(6, 6)
+        val newElementController = ElementController(RandomMock(), new FocusManager(Grid))
+        val newGridController = GridController(6, 6, newElementController, new FocusManager(Grid))
         val focusManager = new FocusManager(Grid)
         val elementController = ElementController(RandomMock(), focusManager)
-        val gridView = ConsoleGridView(gridController, elementController, focusManager)
-        gridController.setElement(elementController.elements(0), 0)
+        val gridView = ConsoleGridView(newGridController, newElementController, focusManager)
+        newGridController.setElement(newElementController.elements(0), 0)
 
         viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x----x----x
@@ -105,7 +106,6 @@ class ConsoleGridViewSpec extends UnitSpec {
     
     "formatted" should {
       "select the correct tile" in {
-        val gridController = GridController(6, 6)
         val focusManager = new FocusManager(Grid)
         val elementController = ElementController(RandomMock(), focusManager)
         elementController.selectElement(elementController.elements(0))
