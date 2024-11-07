@@ -15,7 +15,7 @@ class ElementController(random: Random, focusManager: FocusManager) {
   def regenerate(slot: Int): Element = {
     if slot >= elementCount then throw new IndexOutOfBoundsException("Slot must be smaller than element count.")
 
-    elements(slot) = generateElement
+    elements(slot) = generateElement(slot)
 
     elements(slot)
   }
@@ -24,19 +24,19 @@ class ElementController(random: Random, focusManager: FocusManager) {
     val array: Array[Element] = new Array[Element](elementCount)
 
     for i <- 0 until elementCount do
-      array(i) = generateElement
+      array(i) = generateElement(i)
 
     array
   }
 
-  private def generateElement: Element = {
+  private def generateElement(slot: Int): Element = {
     var points = List[Point](Point(0, 0))
     val length = random.between(1, maxElementLength)
 
     for i <- 0 until length do
       points = generateNextPoint(points) :: points
 
-    Element(points)
+    Element(points, slot)
   }
 
   private def generateNextPoint(points: List[Point]): Point = {

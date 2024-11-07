@@ -1,8 +1,9 @@
 package blockudoku.controllers
 
 import blockudoku.models.{Element, Grid, Point, Tile, TileState}
+import blockudoku.windows.{FocusManager, FocusState}
 
-class GridController(val xLength: Int, val yLength: Int) {
+class GridController(val xLength: Int, val yLength: Int, elementController: ElementController, focusManager: FocusManager) {
   val grid: Grid = generateGrid(xLength, yLength)
   
   private def generateGrid(xLength: Int, yLength: Int): Grid = {
@@ -34,6 +35,10 @@ class GridController(val xLength: Int, val yLength: Int) {
         val tile = grid.tile(x, y)
         tile.state = TileState.blocked
       }
+      
+      elementController.regenerate(element.slot)
+      
+      focusManager.focusState = FocusState.Elements
     }
   }
 }

@@ -29,9 +29,9 @@ object App {
 
   private def initializeWindow(): ConsoleWindow = {
     val focusManager = new FocusManager(focusState = Elements)
-    
-    val gridController = GridController(9, 9)
+
     val elementController = ElementController(new RandomImpl(), focusManager)
+    val gridController = GridController(9, 9, elementController, focusManager)
     
     new ConsoleWindow(gridController, elementController, focusManager)
   }
