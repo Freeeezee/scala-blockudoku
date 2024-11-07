@@ -50,7 +50,7 @@ case class VerticalFrame(elements: List[ConsoleElement])(spacing: Int, override 
         interactableIndices = interactableIndices :+ row
       }
 
-      index = currentIndex + element.size
+      index += element.size
     }
 
     interactableIndices
