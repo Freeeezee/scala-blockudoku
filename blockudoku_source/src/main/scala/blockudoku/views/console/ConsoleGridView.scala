@@ -36,7 +36,7 @@ case class ConsoleGridView(gridController: GridController, focusManager: FocusMa
     var list = List[ConsoleElement]()
 
     for column <- 0 until gridController.grid.xLength do {
-      list = list ++ tileElements(gridController.grid.tile(row, column))
+      list = list ++ tileElements(gridController.grid.tile(column, row))
     }
 
     list = list :+ RegularConsoleElement("|")
