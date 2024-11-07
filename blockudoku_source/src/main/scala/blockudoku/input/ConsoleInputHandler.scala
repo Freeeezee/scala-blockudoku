@@ -1,34 +1,37 @@
 package blockudoku.input
 
-import blockudoku.App
-import blockudoku.views.console.composed.Direction
-import blockudoku.views.console.composed.Direction.{Up, Down, Left, Right}
-import blockudoku.windows.ConsoleWindow
+import blockudoku.services.Event
 
-class ConsoleInputHandler(consoleWindow: ConsoleWindow) {
-  private val reader = new ConsoleReader()
+class ConsoleInputHandler(reader: ConsoleReader) {
+  val arrowUpKey: Event = Event()
+  val arrowDownKey: Event = Event()
+  val arrowLeftKey: Event = Event()
+  val arrowRightKey: Event = Event()
+  
+  val enterKey: Event = Event()
+  val qKey: Event = Event()
   
   def run(): Unit = {
     val key = reader.readKey()
     
-    if key == 27 && reader.readKey() == 91 then arrows()
-    else if key == 13 then enter()
-    else if key == 'q'.toInt then exit()
+    if key == 27 && reader.readKey() == 91 then arrowsPressed()
+    else if key == 13 then enterPressed()
+    else if key == 'q'.toInt then qPressed()
   }
   
-  private def arrows(): Unit = {
+  private def arrowsPressed(): Unit = {
     val arrow = reader.readKey()
     arrow match {
-      case 65 => consoleWindow.navigate(Up)
-      case 68 => consoleWindow.navigate(Left)
-      case 66 => consoleWindow.navigate(Down)
-      case 67 => consoleWindow.navigate(Right)
+      case 65 => arrowUpKey.invoke()
+      case 68 => arrowLeftKey.invoke()
+      case 66 => arrowDownKey.invoke()
+      case 67 => arrowRightKey.invoke()
     }
   }
 
-  private def enter(): Unit = consoleWindow.select()
+  private def enterPressed(): Unit = enterKey.invoke()
   
-  private def exit(): Unit = App.exit()
+  private def qPressed(): Unit = qKey.invoke()
   
   def close(): Unit = {
     reader.close()
