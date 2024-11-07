@@ -14,7 +14,16 @@ case class ComposedConsoleFormatter(element: ConsoleElement, selectedX: Int = 0,
     Try(interactableIndices(selectedY)(selectedX)).getOrElse(-1)
   }
 
-  def navigateRight: ComposedConsoleFormatter = {
+  def navigate(direction: Direction): ComposedConsoleFormatter = {
+    direction match {
+      case Direction.Up => navigateUp
+      case Direction.Down => navigateDown
+      case Direction.Left => navigateLeft
+      case Direction.Right => navigateRight
+    }
+  }
+  
+  private def navigateRight: ComposedConsoleFormatter = {
     if selectedX + 1 < interactableIndices(selectedY).length then {
       copy(selectedX = selectedX + 1)
     }
@@ -22,7 +31,7 @@ case class ComposedConsoleFormatter(element: ConsoleElement, selectedX: Int = 0,
     else copy()
   }
 
-  def navigateDown: ComposedConsoleFormatter = {
+  private def navigateDown: ComposedConsoleFormatter = {
     if selectedY + 1 < interactableIndices.length then {
       if selectedX < interactableIndices(selectedY + 1).length then copy(selectedY = selectedY + 1)
       else copy(selectedY = selectedY + 1, selectedX = interactableIndices(selectedY + 1).length - 1)
@@ -30,7 +39,7 @@ case class ComposedConsoleFormatter(element: ConsoleElement, selectedX: Int = 0,
     else copy()
   }
 
-  def navigateLeft: ComposedConsoleFormatter = {
+  private def navigateLeft: ComposedConsoleFormatter = {
     if selectedX > 0 then copy(selectedX = selectedX - 1)
     else {
       if selectedY > 0 then copy(selectedY = selectedY - 1, selectedX = interactableIndices(selectedY - 1).length - 1)
@@ -38,7 +47,7 @@ case class ComposedConsoleFormatter(element: ConsoleElement, selectedX: Int = 0,
     }
   }
 
-  def navigateUp: ComposedConsoleFormatter = {
+  private def navigateUp: ComposedConsoleFormatter = {
     if selectedY > 0 then {
       if selectedX < interactableIndices(selectedY - 1).length then copy(selectedY = selectedY - 1)
       else copy(selectedY = selectedY - 1, selectedX = interactableIndices(selectedY - 1).length - 1)

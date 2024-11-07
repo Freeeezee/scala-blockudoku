@@ -2,11 +2,14 @@ package blockudoku.windows
 
 import blockudoku.RandomImpl
 import blockudoku.controllers.{ElementController, GridController}
-import blockudoku.views.console.composed.{ComposedConsoleFormatter, VerticalFrame}
+import blockudoku.views.console.composed.{ComposedConsoleFormatter, Direction, VerticalFrame}
 import blockudoku.views.console.{ConsoleElementView, ConsoleGridView, ConsoleHeadlineView, ConsoleView}
 
 class ConsoleWindow extends Window {
   private val views = initializeViews()
+
+  var changed: Boolean = true
+  private var formatter = initializedFormatter
 
   private def initializeViews(): List[ConsoleView] = {
     var views: List[ConsoleView] = List()
@@ -35,6 +38,8 @@ class ConsoleWindow extends Window {
     clearConsole()
 
     println(content)
+    
+    changed = false
   }
   
   def content: String = formatter.content()
@@ -42,9 +47,14 @@ class ConsoleWindow extends Window {
   private def clearConsole(): Unit = {
     println("\u001b[2J")
   }
-  private def formatter: ComposedConsoleFormatter = {
-    // TODO: Not interactable at the moment and nothing is highlighted.
-    val verticalFrame = VerticalFrame(views.map(_.consoleElement))(0, isInteractable = false)
-    ComposedConsoleFormatter(verticalFrame, -1, -1)
+
+  private def initializedFormatter: ComposedConsoleFormatter = {
+    val verticalFrame = VerticalFrame(views.map(_.consoleElement))(0, isInteractable = true)
+    ComposedConsoleFormatter(verticalFrame)
+  }
+
+  def navigate(direction: Direction): Unit = {
+    formatter = formatter.navigate(direction)
+    changed = true
   }
 }
