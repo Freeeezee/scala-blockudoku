@@ -8,10 +8,10 @@ class GridController(val xLength: Int, val yLength: Int) {
   private def generateGrid(xLength: Int, yLength: Int): Grid = {
     val array = new Array[Tile](xLength * yLength)
 
-    for i <- 0 until xLength do
-      for j <- 0 until yLength do
-        val index = i * xLength + j
-        array(index) = Tile(index, Point(i, j))
+    for y <- 0 until yLength do
+      for x <- 0 until xLength do
+        val index = y * xLength + x
+        array(index) = Tile(index, Point(x, y))
 
     Grid(xLength, yLength)(array)
   }
@@ -30,9 +30,8 @@ class GridController(val xLength: Int, val yLength: Int) {
       val baseTile = grid.tiles(selectedPos)
       element.structure.foreach { point =>
         val x = baseTile.position.xPos + point.xPos
-        val y = baseTile.position.yPos + point.yPos
-        val index = y * grid.xLength + x
-        val tile = grid.tiles(index)
+        val y = baseTile.position.yPos - point.yPos
+        val tile = grid.tile(x, y)
         tile.state = TileState.blocked
       }
     }
