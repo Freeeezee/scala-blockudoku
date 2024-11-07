@@ -23,7 +23,7 @@ class ConsoleWindow(gridController: GridController, elementController: ElementCo
     ConsoleHeadlineView(width, focusManager)
   }
   private def initializeGridView(): ConsoleView = {
-    ConsoleGridView(gridController, focusManager)
+    ConsoleGridView(gridController, elementController, focusManager)
   }
   private def initializeElementView(): ConsoleView = {
     ConsoleElementView(gridController, elementController, focusManager)

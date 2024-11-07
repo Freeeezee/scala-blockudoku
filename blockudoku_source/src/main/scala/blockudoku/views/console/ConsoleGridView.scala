@@ -1,11 +1,12 @@
 package blockudoku.views.console
 
-import blockudoku.controllers.GridController
+import blockudoku.controllers.{ElementController, GridController}
 import blockudoku.models.{Tile, TileState}
 import blockudoku.views.console.composed.{ConsoleElement, HorizontalFrame, RegularConsoleElement, VerticalFrame}
 import blockudoku.windows.{FocusManager, FocusState}
 
-case class ConsoleGridView(gridController: GridController, focusManager: FocusManager) extends ConsoleView(focusManager) {
+case class ConsoleGridView(gridController: GridController, elementController: ElementController,
+                           focusManager: FocusManager) extends ConsoleView(focusManager) {
   override val interactableFocusStates: Set[FocusState] = Set(FocusState.Grid)
   
   override def consoleElement: ConsoleElement = formatted
@@ -47,7 +48,7 @@ case class ConsoleGridView(gridController: GridController, focusManager: FocusMa
   private def tileElements(tile: Tile): List[ConsoleElement] = {
     List[ConsoleElement](
       RegularConsoleElement("| "),
-      RegularConsoleElement(tileContent(tile), isInteractable = true),
+      RegularConsoleElement(tileContent(tile), isInteractable = true, onSelect = () => onTileSelected(tile)),
       RegularConsoleElement(" ")
     )
   }
@@ -56,5 +57,9 @@ case class ConsoleGridView(gridController: GridController, focusManager: FocusMa
     tile.state match
       case TileState.empty => "  "
       case TileState.blocked => "xx"
+  }
+  
+  private def onTileSelected(tile: Tile): Unit = {
+    gridController.setElement(elementController.selectedElement.get, tile.index)
   }
 }
