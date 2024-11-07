@@ -38,7 +38,7 @@ case class HorizontalFrame(elements: List[ConsoleElement])(spacing: Int, overrid
       str.append(" " * spacing)
     }
 
-    str.result()
+    str.result().stripTrailing()
   }
   private def computedElementContent(lines: Array[String])(index: Int): String = {
     val maxWidth = lines.map(stripAnsiCodes(_).length).max
