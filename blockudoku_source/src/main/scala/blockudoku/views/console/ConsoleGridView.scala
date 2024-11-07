@@ -54,7 +54,7 @@ case class ConsoleGridView(gridController: GridController, focusManager: FocusMa
 
   private def tileContent(tile: Tile): String = {
     tile.state match
-      case TileState.empty => f"${tile.index}%02d"
-      //case TileState.blocked => "xx"
+      case TileState.empty => "  "
+      case TileState.blocked => "xx"
   }
 }
