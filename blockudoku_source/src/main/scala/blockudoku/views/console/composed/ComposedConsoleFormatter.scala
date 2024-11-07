@@ -59,11 +59,13 @@ case class ComposedConsoleFormatter private (element: ConsoleElement, interactab
 }
 
 object ComposedConsoleFormatter {
-  def create(element: ConsoleElement, selectedX: Int, selectedY: Int): ComposedConsoleFormatter = {
+  def create(element: ConsoleElement, selectedX: Int = 0, selectedY: Int = 0): ComposedConsoleFormatter = {
     val interactableIndices = element.interactableIndices()
-
-    ComposedConsoleFormatter(element, interactableIndices,
-      if selectedX < interactableIndices(selectedY).length then selectedX else interactableIndices(selectedY).length - 1,
-      if selectedY < interactableIndices.length then selectedY else interactableIndices.length - 1)
+    
+    if selectedY == -1 || selectedX == -1 then ComposedConsoleFormatter(element, interactableIndices, selectedX, selectedY)
+    else
+      ComposedConsoleFormatter(element, interactableIndices,
+        if selectedX < interactableIndices(selectedY).length then selectedX else interactableIndices(selectedY).length - 1,
+        if selectedY < interactableIndices.length then selectedY else interactableIndices.length - 1)
   }
 }
