@@ -1,7 +1,8 @@
 package test.views
 
 import blockudoku.services.console.ConsoleStyle
-import blockudoku.views.console.composed.{ComposedConsoleFormatter, HorizontalFrame, RegularConsoleElement, VerticalFrame}
+import blockudoku.views.console.composed.Direction.*
+import blockudoku.views.console.composed.{ComposedConsoleFormatter, Direction, HorizontalFrame, RegularConsoleElement, VerticalFrame}
 import test.UnitSpec
 
 class ComposedConsoleFormatterSpec extends UnitSpec {
@@ -35,42 +36,42 @@ class ComposedConsoleFormatterSpec extends UnitSpec {
       }
 
       "show the second element as highlighted if navigated down" in {
-        val formatter = ComposedConsoleFormatter(verticalFrame).navigateDown
+        val formatter = ComposedConsoleFormatter(verticalFrame).navigate(Down)
 
         formatter.content() should include(ConsoleStyle.highlighted(regular2.content))
         formatter.content() should not include ConsoleStyle.highlighted(regular1.content)
       }
 
       "show the second element as highlighted if navigated right" in {
-        val formatter = ComposedConsoleFormatter(verticalFrame).navigateRight
+        val formatter = ComposedConsoleFormatter(verticalFrame).navigate(Right)
 
         formatter.content() should include(ConsoleStyle.highlighted(regular2.content))
         formatter.content() should not include ConsoleStyle.highlighted(regular1.content)
       }
 
       "still show the first element as highlighted if navigated up" in {
-        val formatter = ComposedConsoleFormatter(verticalFrame).navigateUp
+        val formatter = ComposedConsoleFormatter(verticalFrame).navigate(Up)
 
         formatter.content() should include(ConsoleStyle.highlighted(regular1.content))
         formatter.content() should not include ConsoleStyle.highlighted(regular2.content)
       }
 
       "still show the first element as highlighted if navigated left" in {
-        val formatter = ComposedConsoleFormatter(verticalFrame).navigateLeft
+        val formatter = ComposedConsoleFormatter(verticalFrame).navigate(Left)
 
         formatter.content() should include(ConsoleStyle.highlighted(regular1.content))
         formatter.content() should not include ConsoleStyle.highlighted(regular2.content)
       }
 
       "show the first element as highlighted if navigated down and then up" in {
-        val formatter = ComposedConsoleFormatter(verticalFrame).navigateDown.navigateUp
+        val formatter = ComposedConsoleFormatter(verticalFrame).navigate(Down).navigate(Up)
 
         formatter.content() should include(ConsoleStyle.highlighted(regular1.content))
         formatter.content() should not include ConsoleStyle.highlighted(regular2.content)
       }
 
       "show the first element as highlighted if navigated right and then left" in {
-        val formatter = ComposedConsoleFormatter(verticalFrame).navigateRight.navigateLeft
+        val formatter = ComposedConsoleFormatter(verticalFrame).navigate(Right).navigate(Left)
 
         formatter.content() should include(ConsoleStyle.highlighted(regular1.content))
         formatter.content() should not include ConsoleStyle.highlighted(regular2.content)
@@ -89,49 +90,49 @@ class ComposedConsoleFormatterSpec extends UnitSpec {
       }
 
       "show the second element as highlighted if navigated right" in {
-        val formatter = ComposedConsoleFormatter(horizontalFrame).navigateRight
+        val formatter = ComposedConsoleFormatter(horizontalFrame).navigate(Right)
 
         formatter.content() should include(ConsoleStyle.highlighted(regular2.content))
         formatter.content() should not include ConsoleStyle.highlighted(regular1.content)
       }
 
       "still show the first element as highlighted if navigated down" in {
-        val formatter = ComposedConsoleFormatter(horizontalFrame).navigateDown
+        val formatter = ComposedConsoleFormatter(horizontalFrame).navigate(Down)
 
         formatter.content() should include(ConsoleStyle.highlighted(regular1.content))
         formatter.content() should not include ConsoleStyle.highlighted(regular2.content)
       }
 
       "still show the first element as highlighted if navigated up" in {
-        val formatter = ComposedConsoleFormatter(horizontalFrame).navigateUp
+        val formatter = ComposedConsoleFormatter(horizontalFrame).navigate(Up)
 
         formatter.content() should include(ConsoleStyle.highlighted(regular1.content))
         formatter.content() should not include ConsoleStyle.highlighted(regular2.content)
       }
 
       "still show the first element as highlighted if navigated left" in {
-        val formatter = ComposedConsoleFormatter(horizontalFrame).navigateLeft
+        val formatter = ComposedConsoleFormatter(horizontalFrame).navigate(Left)
 
         formatter.content() should include(ConsoleStyle.highlighted(regular1.content))
         formatter.content() should not include ConsoleStyle.highlighted(regular2.content)
       }
 
       "show the first element as highlighted if navigated down and then up" in {
-        val formatter = ComposedConsoleFormatter(horizontalFrame).navigateDown.navigateUp
+        val formatter = ComposedConsoleFormatter(horizontalFrame).navigate(Down).navigate(Up)
 
         formatter.content() should include(ConsoleStyle.highlighted(regular1.content))
         formatter.content() should not include ConsoleStyle.highlighted(regular2.content)
       }
 
       "show the first element as highlighted if navigated right and then left" in {
-        val formatter = ComposedConsoleFormatter(horizontalFrame).navigateRight.navigateLeft
+        val formatter = ComposedConsoleFormatter(horizontalFrame).navigate(Right).navigate(Left)
 
         formatter.content() should include(ConsoleStyle.highlighted(regular1.content))
         formatter.content() should not include ConsoleStyle.highlighted(regular2.content)
       }
 
       "show the second element as highlighted if navigated right thrice" in {
-        val formatter = ComposedConsoleFormatter(horizontalFrame).navigateRight.navigateRight.navigateRight
+        val formatter = ComposedConsoleFormatter(horizontalFrame).navigate(Right).navigate(Right).navigate(Right)
 
         formatter.content() should include(ConsoleStyle.highlighted(regular2.content))
         formatter.content() should not include ConsoleStyle.highlighted(regular1.content)
@@ -156,7 +157,7 @@ class ComposedConsoleFormatterSpec extends UnitSpec {
       val formatter = ComposedConsoleFormatter(verticalFrame)
 
       "show the third element as highlighted if navigated right once and down once" in {
-        val formatter = ComposedConsoleFormatter(verticalFrame).navigateRight.navigateDown
+        val formatter = ComposedConsoleFormatter(verticalFrame).navigate(Right).navigate(Down)
 
         formatter.content() should include(ConsoleStyle.highlighted(regular1.content))
         formatter.content() should not include ConsoleStyle.highlighted(regular2.content)
@@ -168,7 +169,7 @@ class ComposedConsoleFormatterSpec extends UnitSpec {
       val formatter = ComposedConsoleFormatter(verticalFrame)
 
       "show the first element highlighted if navigated down, right, and up" in {
-        val formatter = ComposedConsoleFormatter(verticalFrame).navigateDown.navigateRight.navigateUp
+        val formatter = ComposedConsoleFormatter(verticalFrame).navigate(Down).navigate(Right).navigate(Up)
 
         formatter.content() should include(ConsoleStyle.highlighted(regular1.content))
         formatter.content() should not include ConsoleStyle.highlighted(regular2.content)
