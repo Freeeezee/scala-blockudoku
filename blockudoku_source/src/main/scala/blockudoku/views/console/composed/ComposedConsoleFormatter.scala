@@ -2,10 +2,8 @@ package blockudoku.views.console.composed
 
 import scala.util.Try
 
-case class ComposedConsoleFormatter(element: ConsoleElement, selectedX: Int = 0, selectedY: Int = 0) {
-
-  private val interactableIndices = element.interactableIndices()
-
+case class ComposedConsoleFormatter private (element: ConsoleElement, interactableIndices: List[List[Int]],
+                                             selectedX: Int = 0, selectedY: Int = 0) {
   def content(): String = {
     element.content(highlightedIndex)
   }
@@ -53,5 +51,19 @@ case class ComposedConsoleFormatter(element: ConsoleElement, selectedX: Int = 0,
       else copy(selectedY = selectedY - 1, selectedX = interactableIndices(selectedY - 1).length - 1)
     }
     else copy()
+  }
+
+  def select(): Unit = {
+    element.get(highlightedIndex).onSelect()
+  }
+}
+
+object ComposedConsoleFormatter {
+  def create(element: ConsoleElement, selectedX: Int, selectedY: Int): ComposedConsoleFormatter = {
+    val interactableIndices = element.interactableIndices()
+
+    ComposedConsoleFormatter(element, interactableIndices,
+      if selectedX < interactableIndices(selectedY).length then selectedX else interactableIndices(selectedY).length - 1,
+      if selectedY < interactableIndices.length then selectedY else interactableIndices.length - 1)
   }
 }

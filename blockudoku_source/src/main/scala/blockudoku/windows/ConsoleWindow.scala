@@ -1,15 +1,14 @@
 package blockudoku.windows
 
-import blockudoku.RandomImpl
 import blockudoku.controllers.{ElementController, GridController}
 import blockudoku.views.console.composed.{ComposedConsoleFormatter, Direction, VerticalFrame}
 import blockudoku.views.console.{ConsoleElementView, ConsoleGridView, ConsoleHeadlineView, ConsoleView}
 
-class ConsoleWindow extends Window {
+class ConsoleWindow(gridController: GridController, elementController: ElementController, focusManager: FocusManager) extends Window {
   private val views = initializeViews()
 
   var changed: Boolean = true
-  private var formatter = initializedFormatter
+  private var formatter = createFormatter(0, 0)
 
   private def initializeViews(): List[ConsoleView] = {
     var views: List[ConsoleView] = List()
@@ -20,18 +19,14 @@ class ConsoleWindow extends Window {
     views
   }
   private def initializeHeadlineView(): ConsoleView = {
-    val gridController = GridController(9, 9)
     val width = gridController.grid.xLength * 5 + 1
-    ConsoleHeadlineView(width)
+    ConsoleHeadlineView(width, focusManager)
   }
   private def initializeGridView(): ConsoleView = {
-    val gridController = GridController(9, 9)
-    ConsoleGridView(gridController)
+    ConsoleGridView(gridController, focusManager)
   }
   private def initializeElementView(): ConsoleView = {
-    val gridController = GridController(9, 9)
-    val elementController = ElementController(new RandomImpl())
-    ConsoleElementView(gridController, elementController)
+    ConsoleElementView(gridController, elementController, focusManager)
   }
 
   override def display(): Unit = {
@@ -42,19 +37,27 @@ class ConsoleWindow extends Window {
     changed = false
   }
   
-  def content: String = formatter.content()
+  def content: String = {
+    formatter = createFormatter(formatter.selectedX, formatter.selectedY)
+    formatter.content()
+  }
   
   private def clearConsole(): Unit = {
     println("\u001b[2J")
   }
 
-  private def initializedFormatter: ComposedConsoleFormatter = {
+  private def createFormatter(selectedX: Int, selectedY: Int): ComposedConsoleFormatter = {
     val verticalFrame = VerticalFrame(views.map(_.consoleElement))(0, isInteractable = true)
-    ComposedConsoleFormatter(verticalFrame)
+    ComposedConsoleFormatter.create(verticalFrame, selectedX, selectedY)
   }
 
   def navigate(direction: Direction): Unit = {
     formatter = formatter.navigate(direction)
+    changed = true
+  }
+
+  def select(): Unit = {
+    formatter.select()
     changed = true
   }
 }

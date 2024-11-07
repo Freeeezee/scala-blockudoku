@@ -2,7 +2,8 @@ package blockudoku.views.console.composed
 
 import blockudoku.services.console.ConsoleStyle.highlighted
 
-case class HorizontalFrame(elements: List[ConsoleElement])(spacing: Int, override val isInteractable: Boolean = false) extends Frame(elements) {
+case class HorizontalFrame(elements: List[ConsoleElement])
+                          (spacing: Int, override val isInteractable: Boolean = false) extends Frame(elements) {
   override def content(highlightIndex: Int): String = {
     val elementLines = computedElementLines(highlightIndex)
     val lineMax = elementLines.map(_.length).max

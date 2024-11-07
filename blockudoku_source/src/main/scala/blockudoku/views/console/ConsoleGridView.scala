@@ -2,10 +2,12 @@ package blockudoku.views.console
 
 import blockudoku.controllers.GridController
 import blockudoku.models.{Tile, TileState}
-import blockudoku.views.console.ConsoleView
 import blockudoku.views.console.composed.{ConsoleElement, HorizontalFrame, RegularConsoleElement, VerticalFrame}
+import blockudoku.windows.{FocusManager, FocusState}
 
-case class ConsoleGridView(gridController: GridController) extends ConsoleView {
+case class ConsoleGridView(gridController: GridController, focusManager: FocusManager) extends ConsoleView(focusManager) {
+  override val interactableFocusStates: Set[FocusState] = Set(FocusState.Grid)
+  
   override def consoleElement: ConsoleElement = formatted
 
   private def formatted: ConsoleElement = {
@@ -18,7 +20,7 @@ case class ConsoleGridView(gridController: GridController) extends ConsoleView {
 
     list = list :+ divider
 
-    VerticalFrame(list)(0, isInteractable = true)
+    VerticalFrame(list)(0, isInteractable = focused)
   }
 
   private def divider: ConsoleElement = {

@@ -2,7 +2,8 @@ package blockudoku.views.console.composed
 
 import blockudoku.services.console.ConsoleStyle.highlighted
 
-case class RegularConsoleElement(content: String, override val isInteractable: Boolean = false) extends ConsoleElement {
+case class RegularConsoleElement(content: String, override val isInteractable: Boolean = false, 
+                                 override val onSelect: () => Unit = () => ()) extends ConsoleElement {
   override val size: Int = 1
 
   override def content(highlightIndex: Int): String = {
@@ -17,5 +18,10 @@ case class RegularConsoleElement(content: String, override val isInteractable: B
   override def interactableIndices(currentIndex: Int): List[List[Int]] = {
     if isInteractable then List[List[Int]](List(currentIndex))
     else List[List[Int]]()
+  }
+
+  override def get(index: Int): ConsoleElement = {
+    if index == size then this 
+    else throw new IndexOutOfBoundsException
   }
 }

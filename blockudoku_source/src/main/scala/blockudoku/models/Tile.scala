@@ -2,8 +2,8 @@ package blockudoku.models
 
 case class Tile(index: Int, position: Point):
   var state : TileState = TileState.empty
-  //var tileIndex: Int = index
-  //def isOccupied: Boolean = state == TileState.blocked
+  var tileIndex: Int = index
+  def isOccupied: Boolean = state == TileState.blocked
   
   
 

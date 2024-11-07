@@ -1,10 +1,11 @@
 package blockudoku.views.console
 
-import blockudoku.models.Grid
-import blockudoku.views.console.ConsoleView
 import blockudoku.views.console.composed.{ConsoleElement, RegularConsoleElement}
+import blockudoku.windows.{FocusManager, FocusState}
 
-case class ConsoleHeadlineView(width: Int) extends ConsoleView {
+case class ConsoleHeadlineView(width: Int, focusManager: FocusManager) extends ConsoleView(focusManager) {
+  override val interactableFocusStates: Set[FocusState] = Set()
+  
   private val headline = "Blockudoku_"
 
   if (width < headline.length + 2) throw new IllegalArgumentException("Width must be greater than or equal to headline length + 2")

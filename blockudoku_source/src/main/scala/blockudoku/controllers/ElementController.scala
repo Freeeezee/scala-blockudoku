@@ -1,14 +1,16 @@
 package blockudoku.controllers
 
 import blockudoku.models.{Element, Point}
-
 import blockudoku.Random
+import blockudoku.windows.{FocusManager, FocusState}
 
-class ElementController(random: Random) {
+class ElementController(random: Random, focusManager: FocusManager) {
   val maxElementLength: Int = 3
   val elementCount: Int = 3
   
   val elements: Array[Element] = generateInitialElements
+  
+  var selectedElement: Option[Element] = None
 
   def regenerate(slot: Int): Element = {
     if slot >= elementCount then throw new IndexOutOfBoundsException("Slot must be smaller than element count.")
@@ -58,5 +60,11 @@ class ElementController(random: Random) {
       case 5 => Point(point.xPos - 1, point.yPos + 1) // north-west
       case 6 => Point(point.xPos, point.yPos + 1) // north
       case 7 => Point(point.xPos + 1, point.yPos + 1) // north-east
+  }
+  
+  def selectElement(element: Element): Unit = {
+    selectedElement = Some(element)
+    
+    focusManager.focusState = FocusState.Grid
   }
 }

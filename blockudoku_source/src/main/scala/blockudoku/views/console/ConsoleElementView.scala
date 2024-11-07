@@ -3,10 +3,13 @@ package blockudoku.views.console
 import blockudoku.controllers.{ElementController, GridController}
 import blockudoku.models.Element
 import blockudoku.services.console.ElementFormatter
-import blockudoku.views.console.ConsoleView
 import blockudoku.views.console.composed.{ConsoleElement, HorizontalFrame, RegularConsoleElement, VerticalFrame}
+import blockudoku.windows.{FocusManager, FocusState}
 
-case class ConsoleElementView(gridController: GridController, elementController: ElementController) extends ConsoleView {
+case class ConsoleElementView(gridController: GridController, elementController: ElementController,
+                              focusManager: FocusManager) extends ConsoleView(focusManager) {
+  override val interactableFocusStates: Set[FocusState] = Set(FocusState.Elements)
+  
   private val headline = "Elements_"
   private val spacing = 15
 
@@ -18,7 +21,7 @@ case class ConsoleElementView(gridController: GridController, elementController:
       formattedElements,
     )
 
-    VerticalFrame(list)(1, isInteractable = true)
+    VerticalFrame(list)(1, isInteractable = focused)
   }
 
   private def formattedHeadline: ConsoleElement = {
@@ -37,7 +40,8 @@ case class ConsoleElementView(gridController: GridController, elementController:
   private def formattedElements: ConsoleElement = {
     val list = elementController.elements
       .map(ElementFormatter.apply)
-      .map(formatter => RegularConsoleElement(formatter.content, isInteractable = true))
+      .map(formatter => RegularConsoleElement(formatter.content, isInteractable = true, 
+        onSelect = () => elementController.selectElement(formatter.element)))
       .toList
 
     HorizontalFrame(list)(spacing, isInteractable = true)

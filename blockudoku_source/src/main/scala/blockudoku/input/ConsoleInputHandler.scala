@@ -12,6 +12,7 @@ class ConsoleInputHandler(consoleWindow: ConsoleWindow) {
     val key = reader.readKey()
     
     if key == 27 && reader.readKey() == 91 then arrows()
+    else if key == 13 then enter()
     else if key == 'q'.toInt then exit()
   }
   
@@ -24,6 +25,8 @@ class ConsoleInputHandler(consoleWindow: ConsoleWindow) {
       case 67 => consoleWindow.navigate(Right)
     }
   }
+
+  private def enter(): Unit = consoleWindow.select()
   
   private def exit(): Unit = App.exit()
   
