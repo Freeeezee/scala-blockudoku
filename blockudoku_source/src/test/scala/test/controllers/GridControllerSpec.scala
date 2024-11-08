@@ -1,9 +1,6 @@
 package test.controllers
 
-import blockudoku.controllers.{ElementController, GridController}
-import blockudoku.windows.FocusManager
-import blockudoku.windows.FocusState.Grid
-import test.{RandomMock, UnitSpec}
+import test.UnitSpec
 
 class GridControllerSpec extends UnitSpec {
   "A GridController" when {
@@ -24,6 +21,19 @@ class GridControllerSpec extends UnitSpec {
         gridController.grid.tiles(0).state should be(blockudoku.models.TileState.blocked)
         gridController.grid.tiles(1).state should be(blockudoku.models.TileState.blocked)
       }
+    }
+  }
+
+  "A Grid " should {
+    "return None if the tile is out of bounds" in {
+      gridController.grid.tile(-1, 0) should be(None)
+      gridController.grid.tile(0, -1) should be(None)
+      gridController.grid.tile(9, 0) should be(None)
+      gridController.grid.tile(0, 9) should be(None)
+    }
+    "return None if trying to get element tiles out of bounds" in {
+      val element = elementController.elements(0)
+      gridController.grid.elementTiles(element, 8) should be(None)
     }
   }
 }

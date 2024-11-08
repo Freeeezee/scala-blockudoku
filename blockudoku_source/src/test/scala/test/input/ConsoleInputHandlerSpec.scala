@@ -30,6 +30,8 @@ class ConsoleInputHandlerSpec extends UnitSpec {
       for (_ <- 1 to 6)
         handler.run()
 
+      handler.close()
+
       verification should be(6)
     }
   }

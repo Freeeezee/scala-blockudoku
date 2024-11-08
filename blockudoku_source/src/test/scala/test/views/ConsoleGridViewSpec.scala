@@ -117,5 +117,86 @@ class ConsoleGridViewSpec extends UnitSpec {
         gridController.grid.tiles.head.state should be(blockudoku.models.TileState.blocked)
       }
     }
+
+    "previewing" should {
+      "display a green preview when the element can be placed" in {
+        val focusManager = new FocusManager(Grid)
+        val elementController = ElementController(RandomMock(), focusManager)
+        elementController.selectElement(elementController.elements(0))
+        val newGridController = GridController(6, 6, elementController, focusManager)
+        val gridView = ConsoleGridView(newGridController, elementController, focusManager)
+
+        gridView.onTileHighlighted(newGridController.grid.tile(0, 0).get)
+
+        viewContent(gridView).replace("\r\n", "\n") should be(
+          """x----x----x----x----x----x----x
+            || [32mxx[0m | [32mxx[0m |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            |""".stripMargin.replace("\r\n", "\n"))
+      }
+      "display a red preview when the element is blocked by another" in {
+        val focusManager = new FocusManager(Grid)
+        val elementController = ElementController(RandomMock(), focusManager)
+        elementController.selectElement(elementController.elements(0))
+        val newGridController = GridController(6, 6, elementController, focusManager)
+        val gridView = ConsoleGridView(newGridController, elementController, focusManager)
+
+        newGridController.setElement(elementController.elements(0), 0)
+
+        gridView.onTileHighlighted(newGridController.grid.tile(0, 0).get)
+
+        viewContent(gridView).replace("\r\n", "\n") should be(
+          """x----x----x----x----x----x----x
+            || [31mxx[0m | [31mxx[0m |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            |""".stripMargin.replace("\r\n", "\n"))
+      }
+
+      "not display anything when the element is out of bounds" in {
+        val focusManager = new FocusManager(Grid)
+        val elementController = ElementController(RandomMock(), focusManager)
+        elementController.selectElement(elementController.elements(0))
+        val newGridController = GridController(6, 6, elementController, focusManager)
+        val gridView = ConsoleGridView(newGridController, elementController, focusManager)
+
+        gridView.onTileHighlighted(newGridController.grid.tile(5, 0).get)
+
+        viewContent(gridView).replace("\r\n", "\n") should be(
+          """x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            ||    |    |    |    |    |    |
+            |x----x----x----x----x----x----x
+            |""".stripMargin.replace("\r\n", "\n"))
+      }
+    }
   }
 }

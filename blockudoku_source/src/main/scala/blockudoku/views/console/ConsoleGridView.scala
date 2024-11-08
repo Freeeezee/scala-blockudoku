@@ -71,7 +71,7 @@ case class ConsoleGridView(gridController: GridController, elementController: El
       case TileState.previewInvalid => ConsoleStyle.colorized("xx", ConsoleStyle.RED)
   }
   
-  private def onTileHighlighted(tile: Tile): Unit = {
+  def onTileHighlighted(tile: Tile): Unit = {
     highlightedIndex = tile.index
   }
   
