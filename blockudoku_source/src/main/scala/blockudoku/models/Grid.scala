@@ -28,7 +28,10 @@ case class Grid(xLength: Int, yLength: Int)(val tiles: Array[Tile]):
         list = list :+ currentTile.get
       }
 
-    Some(list)
+    if list.length != element.structure.length + 1 then
+      None
+    else
+      Some(list)
   }
 
   def copy(): Grid = Grid(xLength, yLength)(tiles.map(_.copy()))
