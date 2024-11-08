@@ -13,7 +13,10 @@ case class HorizontalFrame(elements: List[ConsoleElement])
       str.append(computedLine(elementLines, i))
       if i < lineMax - 1 then str.append("\n")
 
-    if highlightIndex == size then highlighted(str.result())
+    if highlightIndex == size then {
+      onHighlighted()
+      highlighted(str.result())
+    } 
     else str.result()
   }
 

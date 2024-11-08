@@ -22,6 +22,9 @@ object App {
       }
 
       inputHandler.run()
+
+      window.display()
+      window.display()
     }
 
     inputHandler.close()

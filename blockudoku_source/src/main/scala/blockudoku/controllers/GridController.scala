@@ -1,6 +1,6 @@
 package blockudoku.controllers
 
-import blockudoku.models.{Element, Grid, Point, Tile, TileState}
+import blockudoku.models.*
 import blockudoku.windows.{FocusManager, FocusState}
 
 class GridController(val xLength: Int, val yLength: Int, elementController: ElementController, focusManager: FocusManager) {
@@ -17,28 +17,19 @@ class GridController(val xLength: Int, val yLength: Int, elementController: Elem
     Grid(xLength, yLength)(array)
   }
 
-  private def isOccupied(element: Element, selectedPos: Int): Boolean = {
-    val baseTile = grid.tiles(selectedPos)
-    element.structure.exists { point => 
-      val x = baseTile.position.xPos + point.xPos
-      val y = baseTile.position.yPos - point.yPos
-      grid.tile(x, y).state == TileState.blocked
+  def setElement(element: Element, selectedPos: Int): Unit = {
+    val tiles = grid.elementTiles(element, selectedPos)
+    
+    if tiles.isEmpty || isOccupied(tiles.get) then {
+      return
     }
+    
+    tiles.get.foreach(tile => tile.state = TileState.blocked)
+    elementController.regenerate(element.slot)
+    focusManager.focusState = FocusState.Elements
   }
 
-  def setElement(element: Element, selectedPos: Int): Unit = {
-    if (!isOccupied(element, selectedPos)) {
-      val baseTile = grid.tiles(selectedPos)
-      element.structure.foreach { point =>
-        val x = baseTile.position.xPos + point.xPos
-        val y = baseTile.position.yPos - point.yPos
-        val tile = grid.tile(x, y)
-        tile.state = TileState.blocked
-      }
-      
-      elementController.regenerate(element.slot)
-      
-      focusManager.focusState = FocusState.Elements
-    }
+  private def isOccupied(tiles: List[Tile]): Boolean = {
+    tiles.exists(tile => tile.state == TileState.blocked)
   }
 }

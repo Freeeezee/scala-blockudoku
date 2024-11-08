@@ -3,11 +3,15 @@ package blockudoku.views.console.composed
 import blockudoku.services.console.ConsoleStyle.highlighted
 
 case class RegularConsoleElement(content: String, override val isInteractable: Boolean = false, 
-                                 override val onSelect: () => Unit = () => ()) extends ConsoleElement {
+                                 override val onSelect: () => Unit = () => (),
+                                 override val onHighlighted: () => Unit = () => ()) extends ConsoleElement {
   override val size: Int = 1
 
   override def content(highlightIndex: Int): String = {
-    if highlightIndex == size then highlightedContent
+    if highlightIndex == size then {
+      onHighlighted()
+      highlightedContent
+    }
     else content
   }
 

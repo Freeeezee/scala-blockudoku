@@ -4,6 +4,7 @@ trait ConsoleElement {
   val isInteractable: Boolean = false
   val size: Int
   
+  val onHighlighted: () => Unit = () => ()
   val onSelect: () => Unit = () => ()
 
   def content(highlightIndex: Int): String

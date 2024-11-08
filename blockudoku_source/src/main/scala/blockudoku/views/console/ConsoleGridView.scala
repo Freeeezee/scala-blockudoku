@@ -1,43 +1,51 @@
 package blockudoku.views.console
 
 import blockudoku.controllers.{ElementController, GridController}
-import blockudoku.models.{Tile, TileState}
+import blockudoku.models.{Grid, Tile, TileState}
+import blockudoku.services.GridPreviewBuilder
+import blockudoku.services.console.ConsoleStyle
 import blockudoku.views.console.composed.{ConsoleElement, HorizontalFrame, RegularConsoleElement, VerticalFrame}
 import blockudoku.windows.{FocusManager, FocusState}
 
 case class ConsoleGridView(gridController: GridController, elementController: ElementController,
                            focusManager: FocusManager) extends ConsoleView(focusManager) {
   override val interactableFocusStates: Set[FocusState] = Set(FocusState.Grid)
+
+  private val previewBuilder = GridPreviewBuilder(gridController, elementController)
+
+  private var highlightedIndex = -1
   
   override def consoleElement: ConsoleElement = formatted
 
   private def formatted: ConsoleElement = {
     var list = List[ConsoleElement]()
 
-    for row <- 0 until gridController.grid.yLength do {
-      list = list :+ divider
-      list = list :+ formattedHorizontal(row)
+    val grid = previewBuilder.buildGrid(highlightedIndex)
+
+    for row <- 0 until grid.yLength do {
+      list = list :+ divider(grid)
+      list = list :+ formattedHorizontal(row, grid)
     }
 
-    list = list :+ divider
+    list = list :+ divider(grid)
 
     VerticalFrame(list)(0, isInteractable = focused)
   }
 
-  private def divider: ConsoleElement = {
+  private def divider(grid: Grid): ConsoleElement = {
     val builder = new StringBuilder
 
     builder.append('x')
-    builder.append("----x" * gridController.grid.xLength)
+    builder.append("----x" * grid.xLength)
 
     RegularConsoleElement(builder.result())
   }
 
-  private def formattedHorizontal(row: Int): ConsoleElement = {
+  private def formattedHorizontal(row: Int, grid: Grid): ConsoleElement = {
     var list = List[ConsoleElement]()
 
-    for column <- 0 until gridController.grid.xLength do {
-      list = list ++ tileElements(gridController.grid.tile(column, row))
+    for column <- 0 until grid.xLength do {
+      list = list ++ tileElements(grid.tile(column, row).get)
     }
 
     list = list :+ RegularConsoleElement("|")
@@ -48,7 +56,9 @@ case class ConsoleGridView(gridController: GridController, elementController: El
   private def tileElements(tile: Tile): List[ConsoleElement] = {
     List[ConsoleElement](
       RegularConsoleElement("| "),
-      RegularConsoleElement(tileContent(tile), isInteractable = true, onSelect = () => onTileSelected(tile)),
+      RegularConsoleElement(tileContent(tile), isInteractable = true, 
+        onHighlighted = () => onTileHighlighted(tile),
+        onSelect = () => onTileSelected(tile)),
       RegularConsoleElement(" ")
     )
   }
@@ -57,9 +67,16 @@ case class ConsoleGridView(gridController: GridController, elementController: El
     tile.state match
       case TileState.empty => "  "
       case TileState.blocked => "xx"
+      case TileState.previewValid => ConsoleStyle.colorized("xx", ConsoleStyle.GREEN)
+      case TileState.previewInvalid => ConsoleStyle.colorized("xx", ConsoleStyle.RED)
+  }
+  
+  private def onTileHighlighted(tile: Tile): Unit = {
+    highlightedIndex = tile.index
   }
   
   private def onTileSelected(tile: Tile): Unit = {
     gridController.setElement(elementController.selectedElement.get, tile.index)
+    highlightedIndex = -1
   }
 }
