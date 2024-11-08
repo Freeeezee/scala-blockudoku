@@ -13,11 +13,7 @@ case class VerticalFrame(elements: List[ConsoleElement])(spacing: Int, override 
       str.append("\n")
       if i < highlightedContents.length - 1 then str.append(space)
 
-    if highlightIndex == size then {
-      onHighlighted()
-      highlighted(str.result())
-    }
-    else str.result()
+    str.result()
   }
 
   private def contents(highlightIndex: Int): List[String] = {

@@ -1,7 +1,5 @@
 package blockudoku.views.console.composed
 
-import blockudoku.services.console.ConsoleStyle.highlighted
-
 case class HorizontalFrame(elements: List[ConsoleElement])
                           (spacing: Int, override val isInteractable: Boolean = false) extends Frame(elements) {
   override def content(highlightIndex: Int): String = {
@@ -13,11 +11,7 @@ case class HorizontalFrame(elements: List[ConsoleElement])
       str.append(computedLine(elementLines, i))
       if i < lineMax - 1 then str.append("\n")
 
-    if highlightIndex == size then {
-      onHighlighted()
-      highlighted(str.result())
-    } 
-    else str.result()
+    str.result()
   }
 
   private def computedElementLines(highlightIndex: Int) : List[Array[String]] = {
