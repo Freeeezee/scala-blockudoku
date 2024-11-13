@@ -1,4 +1,4 @@
-package blockudoku
+package blockudoku.services
 
 trait Random {
   def nextInt(upperLimit: Int): Int

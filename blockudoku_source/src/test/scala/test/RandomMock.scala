@@ -1,5 +1,6 @@
 package test
-import blockudoku.Random
+
+import blockudoku.services.Random
 
 class RandomMock extends Random{
    def nextInt(upperLimit: Int): Int = 0

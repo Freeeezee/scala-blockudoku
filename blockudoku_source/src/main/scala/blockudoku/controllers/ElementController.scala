@@ -1,7 +1,7 @@
 package blockudoku.controllers
 
 import blockudoku.models.{Element, Point}
-import blockudoku.Random
+import blockudoku.services.Random
 import blockudoku.windows.{FocusManager, FocusState}
 
 class ElementController(random: Random, focusManager: FocusManager) {

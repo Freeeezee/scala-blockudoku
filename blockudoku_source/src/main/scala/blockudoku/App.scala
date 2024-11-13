@@ -2,6 +2,7 @@ package blockudoku
 
 import blockudoku.controllers.{ElementController, GridController}
 import blockudoku.input.{ConsoleInputHandler, ConsoleReaderImpl}
+import blockudoku.services.RandomImpl
 import blockudoku.views.console.composed.Direction.*
 import blockudoku.windows.FocusState.Elements
 import blockudoku.windows.{ConsoleWindow, FocusManager}
