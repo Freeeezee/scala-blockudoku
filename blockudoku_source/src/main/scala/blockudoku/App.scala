@@ -1,7 +1,7 @@
 package blockudoku
 
 import blockudoku.controllers.{ElementController, GridController}
-import blockudoku.input.{ConsoleInputHandler, ConsoleReaderImpl}
+import blockudoku.input.ConsoleInputHandler
 import blockudoku.views.console.composed.Direction.*
 import blockudoku.windows.FocusState.Elements
 import blockudoku.windows.{ConsoleWindow, FocusManager}
@@ -12,7 +12,7 @@ object App {
   def run(): Unit = {
     val window = initializeWindow()
 
-    val inputHandler = new ConsoleInputHandler(new ConsoleReaderImpl())
+    val inputHandler = new ConsoleInputHandler()
 
     initializeEvents(inputHandler, window)
     
@@ -26,8 +26,6 @@ object App {
       window.display()
       window.display()
     }
-
-    inputHandler.close()
   }
 
   private def initializeWindow(): ConsoleWindow = {
