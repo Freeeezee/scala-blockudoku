@@ -1,9 +1,10 @@
 package blockudoku.controllers
 
 import blockudoku.models.*
+import blockudoku.observer.Observable
 import blockudoku.windows.{FocusManager, FocusState}
 
-class GridController(val xLength: Int, val yLength: Int, elementController: ElementController, focusManager: FocusManager) {
+class GridController(val xLength: Int, val yLength: Int, elementController: ElementController, focusManager: FocusManager) extends Observable {
   val grid: Grid = generateGrid(xLength, yLength)
   
   private def generateGrid(xLength: Int, yLength: Int): Grid = {
@@ -20,6 +21,7 @@ class GridController(val xLength: Int, val yLength: Int, elementController: Elem
   def setElement(element: Element, selectedPos: Int): Unit = {
     val tiles = grid.elementTiles(element, selectedPos)
     
+    
     if tiles.isEmpty || isOccupied(tiles.get) then {
       return
     }
@@ -27,6 +29,7 @@ class GridController(val xLength: Int, val yLength: Int, elementController: Elem
     tiles.get.foreach(tile => tile.state = TileState.blocked)
     elementController.regenerate(element.slot)
     focusManager.focusState = FocusState.Elements
+    notifyObservers()
   }
 
   private def isOccupied(tiles: List[Tile]): Boolean = {

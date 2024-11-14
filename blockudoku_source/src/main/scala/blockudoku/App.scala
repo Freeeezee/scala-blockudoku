@@ -18,7 +18,7 @@ object App {
     initializeEvents(inputHandler, window)
     
     while (!exitRequested) {
-      if (window.changed) {
+      if (window.anyChange()) {
         window.display()
       }
 

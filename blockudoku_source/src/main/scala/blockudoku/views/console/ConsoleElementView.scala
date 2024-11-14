@@ -2,19 +2,26 @@ package blockudoku.views.console
 
 import blockudoku.controllers.{ElementController, GridController}
 import blockudoku.models.Element
+import blockudoku.observer.{Observable, Observer}
 import blockudoku.services.console.ElementFormatter
 import blockudoku.views.console.composed.{ConsoleElement, HorizontalFrame, RegularConsoleElement, VerticalFrame}
 import blockudoku.windows.{FocusManager, FocusState}
 
 case class ConsoleElementView(gridController: GridController, elementController: ElementController,
-                              focusManager: FocusManager) extends ConsoleView(focusManager) {
+                              focusManager: FocusManager) extends ConsoleView(focusManager), Observer {
   override val interactableFocusStates: Set[FocusState] = Set(FocusState.Elements)
+
+  elementController.addObserver(this)
   
   private val headline = "Elements_"
   private val spacing = 15
 
-  override def consoleElement: ConsoleElement = formatted
+  override def consoleElement: ConsoleElement = {
+    changed = false
+    formatted
+  }
 
+  
   private def formatted: ConsoleElement = {
     val list = List[ConsoleElement](
       formattedHeadline,
@@ -45,5 +52,9 @@ case class ConsoleElementView(gridController: GridController, elementController:
       .toList
 
     HorizontalFrame(list)(spacing, isInteractable = true)
+  }
+
+  override def update(): Unit = {
+    changed = true
   }
 }
