@@ -25,7 +25,7 @@ jobs:
       - name: Upload dependency graph
         uses: scalacenter/sbt-dependency-submission@ab086b50c947c9774b70f39fc7f6e20ca2706c91
         with:
-          working-directory: <blockudoku_source>
+          working-directory: blockudoku_source
         
   run_tests:
     runs-on: ubuntu-latest
