@@ -4,9 +4,16 @@ ThisBuild / scalaVersion := "3.5.0"
 
 lazy val root = (project in file("."))
   .settings(
-    name := "blockudoku_source"
+    name := "blockudoku_source",
+    libraryDependencies ++= Seq(
+      "org.jline" % "jline" % "3.26.2",
+      "org.scalactic" %% "scalactic" % "3.2.19",
+      "org.scalatest" %% "scalatest" % "3.2.19" % Test
+    ),
+    scalacOptions ++= Seq(
+      "-deprecation",
+      "-feature",
+      "-unchecked",
+      "-encoding", "UTF-8"
+    )
   )
-
-libraryDependencies += "org.jline" % "jline" % "3.26.2"
-libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.19"
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.19" % "test"
