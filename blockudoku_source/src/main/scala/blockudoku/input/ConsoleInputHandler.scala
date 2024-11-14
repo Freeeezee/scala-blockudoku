@@ -1,8 +1,10 @@
 package blockudoku.input
 
 import blockudoku.services.Event
+import org.jline.keymap.{BindingReader, KeyMap}
+import org.jline.terminal.TerminalBuilder
 
-class ConsoleInputHandler(reader: ConsoleReader) {
+class ConsoleInputHandler() {
   val arrowUpKey: Event = Event()
   val arrowDownKey: Event = Event()
   val arrowLeftKey: Event = Event()
@@ -10,30 +12,35 @@ class ConsoleInputHandler(reader: ConsoleReader) {
   
   val enterKey: Event = Event()
   val qKey: Event = Event()
-  
+
+  private val terminal = TerminalBuilder.builder().system(true).build()
+  terminal.enterRawMode()
+  private val reader = BindingReader(terminal.reader())
+
+  private val keyMap = initializeKeymap()
+
   def run(): Unit = {
-    val key = reader.readKey()
-    
-    if key == 27 && reader.readKey() == 91 then arrowsPressed()
-    else if key == 13 then enterPressed()
-    else if key == 'q'.toInt then qPressed()
-  }
-  
-  private def arrowsPressed(): Unit = {
-    val arrow = reader.readKey()
-    arrow match {
-      case 65 => arrowUpKey.invoke()
-      case 68 => arrowLeftKey.invoke()
-      case 66 => arrowDownKey.invoke()
-      case 67 => arrowRightKey.invoke()
+    Option(reader.readBinding(keyMap)) match {
+      case Some(binding) => binding.apply()
     }
   }
 
   private def enterPressed(): Unit = enterKey.invoke()
   
   private def qPressed(): Unit = qKey.invoke()
-  
-  def close(): Unit = {
-    reader.close()
+
+  private def initializeKeymap(): KeyMap[() => Unit] = {
+    val keyMap = new KeyMap[() => Unit]()
+    keyMap.bind(() => arrowUpKey.invoke(), "\u001B[A")
+    keyMap.bind(() => arrowDownKey.invoke(), "\u001B[B")
+    keyMap.bind(() => arrowLeftKey.invoke(), "\u001B[D")
+    keyMap.bind(() => arrowRightKey.invoke(), "\u001B[C")
+    keyMap.bind(() => enterKey.invoke(), "\r")
+    keyMap.bind(() => qKey.invoke(), "q")
+    keyMap.bind(() => arrowUpKey.invoke(), "\u001bOA")
+    keyMap.bind(() => arrowDownKey.invoke(), "\u001bOB")
+    keyMap.bind(() => arrowLeftKey.invoke(), "\u001bOD")
+    keyMap.bind(() => arrowRightKey.invoke(), "\u001BOC")
+    keyMap
   }
 }
