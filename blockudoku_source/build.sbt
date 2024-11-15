@@ -5,7 +5,7 @@ ThisBuild / scalaVersion := "3.5.0"
 lazy val root = (project in file("."))
   .settings(
     coverageEnabled := true,
-    coverageReport := true
+    coverageReport := true,
     name := "blockudoku_source",
     libraryDependencies ++= Seq(
       "org.jline" % "jline" % "3.26.2",
