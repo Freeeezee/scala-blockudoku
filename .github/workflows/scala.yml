@@ -14,17 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v4
-        with:
-          java-version: '11'
-          distribution: 'corretto'
+      - name: coursier-setup-action
+        uses: coursier/setup-action@v1.3.8
+        with: 
+          jmv: corretto:11
+          apps: sbt sbtn
       - name: Set up SBT
         uses: olafurpg/setup-scala@v12
-      - name: Check Java version
-        run: |
-          java -version
-          echo "JAVA_HOME=$JAVA_HOME"
       - name: Run tests
         run: |
           cd blockudoku_source
