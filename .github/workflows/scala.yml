@@ -19,8 +19,6 @@ jobs:
         with: 
           jmv: corretto:11
           apps: sbt sbtn
-      - name: Set up SBT
-        uses: olafurpg/setup-scala@v12
       - name: Run tests
         run: |
           cd blockudoku_source
