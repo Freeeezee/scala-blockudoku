@@ -4,7 +4,7 @@ import blockudoku.services.Event
 import org.jline.keymap.{BindingReader, KeyMap}
 import org.jline.terminal.TerminalBuilder
 
-class ConsoleInputHandler() {
+class ConsoleInputHandler {
   val arrowUpKey: Event = Event()
   val arrowDownKey: Event = Event()
   val arrowLeftKey: Event = Event()
@@ -22,6 +22,7 @@ class ConsoleInputHandler() {
   def run(): Unit = {
     Option(reader.readBinding(keyMap)) match {
       case Some(binding) => binding.apply()
+      case None =>
     }
   }
 
