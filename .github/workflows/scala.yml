@@ -14,28 +14,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: 'temurin'
-          cache: 'sbt'
+      - name: coursier-setup-action
+        uses: coursier/setup-action@v1.3.8
+        with: 
+          jvm: corretto:11
+          apps: sbt sbtn
       - name: Run tests
-        run: sbt test
-      - name: Upload dependency graph
-        uses: scalacenter/sbt-dependency-submission@ab086b50c947c9774b70f39fc7f6e20ca2706c91
-        with:
-          working-directory: blockudoku_source
+        run: |
+          cd blockudoku_source
+          sbt -v -java-home $JAVA_HOME test
         
   run_tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: coursier-setup-action
+        uses: coursier/setup-action@v1.3.8
+        with: 
+          jvm: corretto:11
+          apps: sbt sbtn
       - name: Build Project and export Coverage
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: |
-          export CI_BRANCH="${GITHUB_REF#refs/heads/}"
-          sbt clean jacoco jacocoCoveralls
-        working-directory: blockudoku_source
+          cd blockudoku_source
+          sbt clean coverage test coverageReport coverageAggregate
+          sbt coveralls
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: blockudoku_source/target/scala-2.13/scoverage-report/
+          fail_ci_if_error: true
