@@ -21,10 +21,14 @@ jobs:
           distribution: 'corretto'
       - name: Set up SBT
         uses: olafurpg/setup-scala@v12
+      - name: Check Java version
+        run: |
+          java -version
+          echo "JAVA_HOME=$JAVA_HOME"
       - name: Run tests
         run: |
           cd blockudoku_source
-          sbt test
+          sbt -v -java-home $JAVA_HOME test
       - name: Upload dependency graph
         uses: scalacenter/sbt-dependency-submission@ab086b50c947c9774b70f39fc7f6e20ca2706c91
         with:
