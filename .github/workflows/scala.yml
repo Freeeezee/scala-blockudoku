@@ -20,6 +20,8 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: 'sbt'
+      - name: Set up SBT
+        uses: olafurpg/setup-scala@v12
       - name: Run tests
         run: sbt test
       - name: Upload dependency graph
