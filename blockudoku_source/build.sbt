@@ -18,6 +18,7 @@ lazy val root = (project in file("."))
       "-unchecked",
       "-encoding", "UTF-8"
     ),
+    enablePlugins(JacocoPlugin),
     jacocoCoverallsServiceName := "github-actions",
     jacocoCoverallsBranch := sys.env.get("CI_BRANCH"),
     jacocoCoverallsPullRequest := sys.env.get("GITHUB_EVENT_NAME"),
