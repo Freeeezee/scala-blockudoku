@@ -17,7 +17,7 @@ jobs:
       - name: coursier-setup-action
         uses: coursier/setup-action@v1.3.8
         with: 
-          jmv: corretto:11
+          jvm: corretto:11
           apps: sbt sbtn
       - name: Run tests
         run: |
