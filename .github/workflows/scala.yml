@@ -37,6 +37,7 @@ jobs:
         run: |
           cd blockudoku_source
           sbt clean coverage test coverageAggregate
+          cd ..
           sbt coverageReport coveralls
         env: 
           COVERALLS_FLAG_NAME: Scala ${{ matrix.scala }}
