@@ -36,9 +36,8 @@ jobs:
       - name: Run tests and record coverage
         run: |
           cd blockudoku_source
-          sbt clean coverage test
+          sbt clean coverage test coverageAggregate
           sbt coverageReport coveralls
         env: 
           COVERALLS_FLAG_NAME: Scala ${{ matrix.scala }}
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-
