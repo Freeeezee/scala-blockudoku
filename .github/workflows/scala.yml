@@ -47,6 +47,7 @@ jobs:
       - name: Run tests and record coverage
         run: |
           cd blockudoku_source
+          export GIT_DIR=../.git
           sbt clean coverage test 
           sbt coverageAggregate coveralls
         env: 
