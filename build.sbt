@@ -7,7 +7,7 @@ ThisBuild / scalaVersion := "3.5.0"
 lazy val root = (project in file("."))
   .enablePlugins(JacocoPlugin)
   .settings(
-    assembly / assemblyJarName := s"blockudoku-$ver.jar",
+    assembly / assemblyJarName := s"blockudoku.jar",
     coverageEnabled := true,
     coverageReport := true,
     name := "blockudoku",
