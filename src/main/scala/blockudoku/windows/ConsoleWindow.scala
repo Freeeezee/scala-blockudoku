@@ -31,10 +31,9 @@ class ConsoleWindow(gridController: GridController, elementController: ElementCo
 
   override def display(): Unit = {
     clearConsole()
-
+    
     println(content)
     
-    changed = false
   }
   
   def content: String = {
@@ -58,6 +57,8 @@ class ConsoleWindow(gridController: GridController, elementController: ElementCo
 
   def select(): Unit = {
     formatter.select()
-    changed = true
+  }
+  def anyChange(): Boolean = {
+    views.exists(_.changed) || changed
   }
 }

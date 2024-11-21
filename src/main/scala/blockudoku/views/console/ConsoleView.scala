@@ -5,6 +5,7 @@ import blockudoku.windows.{FocusManager, FocusState}
 
 trait ConsoleView(focusManager: FocusManager) {
   val interactableFocusStates: Set[FocusState]
+  var changed = false
 
   def consoleElement: ConsoleElement
   

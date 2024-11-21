@@ -3,8 +3,9 @@ package blockudoku.controllers
 import blockudoku.models.{Element, Point}
 import blockudoku.services.Random
 import blockudoku.windows.{FocusManager, FocusState}
+import blockudoku.observer.Observable
 
-class ElementController(random: Random, focusManager: FocusManager) {
+class ElementController(random: Random, focusManager: FocusManager) extends Observable {
   val maxElementLength: Int = 3
   val elementCount: Int = 3
   
@@ -17,6 +18,8 @@ class ElementController(random: Random, focusManager: FocusManager) {
 
     elements(slot) = generateElement(slot)
 
+    notifyObservers()
+    
     elements(slot)
   }
 
@@ -64,6 +67,8 @@ class ElementController(random: Random, focusManager: FocusManager) {
   
   def selectElement(element: Element): Unit = {
     selectedElement = Some(element)
+
+    notifyObservers()
     
     focusManager.focusState = FocusState.Grid
   }
