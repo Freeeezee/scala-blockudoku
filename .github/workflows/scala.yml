@@ -44,7 +44,6 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Run tests and record coverage
         run: |
-          echo "TOKEN: $COVERALLS_REPO_TOKEN"
           sbt clean coverage test 
           sbt coverageAggregate coveralls
         env: 
