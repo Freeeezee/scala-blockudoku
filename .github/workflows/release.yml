@@ -47,8 +47,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with: 
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./target/scala-3.5.0/blockudoku-${{ github.ref_name }}.jar
-          asset_name: blockudoku-${{ github.ref_name }}.jar
+          asset_path: ./target/scala-3.5.0/blockudoku-${{ github.ref_name == 'v'* && github.ref_name[1:] || github.ref_name }}.jar
+          asset_name: blockudoku-${{ github.ref_name == 'v'* && github.ref_name[1:] || github.ref_name }}.jar
           asset_content_type: application/java-archive
           
           
