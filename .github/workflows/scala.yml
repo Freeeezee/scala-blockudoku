@@ -34,13 +34,11 @@ jobs:
           jvm: corretto:11
           apps: sbt sbtn
       - name: Run tests and record coverage
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: |
           cd blockudoku_source
           sbt clean coverage test
-      - name: Upload coverage to Codecov
-        run: sbt coverageReport coveralls
+          sbt coverageReport coveralls
         env: 
           COVERALLS_FLAG_NAME: Scala ${{ matrix.scala }}
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+
