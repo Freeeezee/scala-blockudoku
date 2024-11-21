@@ -4,7 +4,7 @@ import blockudoku.services.Event
 import org.jline.keymap.{BindingReader, KeyMap}
 import org.jline.terminal.TerminalBuilder
 
-class ConsoleInputHandler() {
+class ConsoleInputHandler {
   val arrowUpKey: Event = Event()
   val arrowDownKey: Event = Event()
   val arrowLeftKey: Event = Event()

@@ -2,7 +2,7 @@ package blockudoku.views.console
 
 import blockudoku.controllers.{ElementController, GridController}
 import blockudoku.models.Element
-import blockudoku.observer.{Observable, Observer}
+import blockudoku.observer.Observer
 import blockudoku.services.console.ElementFormatter
 import blockudoku.views.console.composed.{ConsoleElement, HorizontalFrame, RegularConsoleElement, VerticalFrame}
 import blockudoku.windows.{FocusManager, FocusState}
