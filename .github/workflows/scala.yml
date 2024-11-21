@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: coursier-setup-action
+      - name: Java setup
         uses: coursier/setup-action@v1.3.8
         with: 
           jvm: corretto:11
@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: coursier-setup-action
+      - name: Java setup
         uses: coursier/setup-action@v1.3.8
         with: 
           jvm: corretto:11
@@ -42,10 +42,10 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
-      - name: Run tests and record coverage
-        run: |
-          sbt clean coverage test 
-          sbt coverageAggregate coveralls
+      - name: Record coverage
+        run: sbt clean coverage test
+      - name: Upload coverage
+        run: sbt coverageAggregate coveralls
         env: 
           COVERALLS_FLAG_NAME: Scala ${{ matrix.scala }}
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
