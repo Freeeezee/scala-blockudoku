@@ -22,6 +22,9 @@ jobs:
         id: build_project
         run: |
           sbt clean assembly
+        env:
+          CI_RELEASE: true
+          VERSION: ${{ github.ref }}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
