@@ -20,9 +20,7 @@ jobs:
           jvm: corretto:11
           apps: sbt sbtn
       - name: Run tests
-        run: |
-          cd blockudoku_source
-          sbt -v -java-home $JAVA_HOME test
+        run: sbt -v -java-home $JAVA_HOME test
         
   run_tests:
     runs-on: ubuntu-latest
@@ -46,8 +44,6 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Run tests and record coverage
         run: |
-          cd blockudoku_source
-          export GIT_DIR=../.git
           sbt clean coverage test 
           sbt coverageAggregate coveralls
         env: 
