@@ -1,13 +1,17 @@
-ThisBuild / version := "0.1.0-SNAPSHOT"
+val ver = sys.env.getOrElse("VERSION", "???")
+val ci_release = sys.env.getOrElse("CI_RELEASE", "false").toBoolean
+
+ThisBuild / version := ver
 
 ThisBuild / scalaVersion := "3.5.0"
 
 lazy val root = (project in file("."))
-  .enablePlugins(JacocoPlugin)
+  .enablePlugins(JacocoPlugin, AssemblyPlugin)
   .settings(
-    coverageEnabled := true,
-    coverageReport := true,
-    name := "blockudoku_source",
+    assembly / assemblyJarName := s"blockudoku$ver.jar",
+    coverageEnabled := !ci_release,
+    coverageReport := !ci_release,
+    name := "blockudoku",
     libraryDependencies ++= Seq(
       "org.jline" % "jline" % "3.26.2",
       "org.scalactic" %% "scalactic" % "3.2.19",
