@@ -33,6 +33,17 @@ jobs:
         with: 
           jvm: corretto:11
           apps: sbt sbtn
+      - name: Git checkout (merge)
+        uses: actions/checkout@v3
+        if: github.event_name != 'pull_request'
+        with:
+          fetch-depth: 0
+      - name: Git checkout (PR)
+        uses: actions/checkout@v3
+        if: github.event_name == 'pull_request'
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: Run tests and record coverage
         run: |
           cd blockudoku_source
