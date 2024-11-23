@@ -1,6 +1,6 @@
 package test.dependencyInjection
 
-import blockudoku.dependencyInjection.ComponentContainer
+import blockudoku.dependencyInjection.{ComponentContainer, MissingDependencyException}
 import blockudoku.dependencyInjection.Lifetime.Singleton
 import test.UnitSpec
 
@@ -31,15 +31,23 @@ class DependencyInjectionSpec extends UnitSpec {
       }
     }
     "being built" should {
-      "throw an exception if a required component is not registered" in {
+      "throw an exception if a required component is not registered and using dependency check" in {
         val container = new ComponentContainer
 
-        container.register[AImpl](Singleton)
+        container.register[A, AImpl](Singleton)
         container.register[C](Singleton)
 
-        assertThrows[MissingDependencyException] {
-          val provider = container.buildProvider
+        assertThrows[MissingDependencyException[C, B]] {
+          val provider = container.buildProvider(checkDependencies = true)
         }
+      }
+      "not throw an exception if a required component is not registered and not using dependency check" in {
+        val container = new ComponentContainer
+
+        container.register[A, AImpl](Singleton)
+        container.register[C](Singleton)
+
+        val provider = container.buildProvider(checkDependencies = false)
       }
     }
     "built with all required components registered" should {
@@ -51,11 +59,9 @@ class DependencyInjectionSpec extends UnitSpec {
         container.register[C](Singleton)
         container.register[D](Singleton)
 
-        val provider = container.buildProvider
+        val provider = container.buildProvider()
 
         val d = provider.get[D]
-        
-        d should not be empty
       }
     }
     "return a provider that can not provide instances of components that are not registered" in {
@@ -63,11 +69,25 @@ class DependencyInjectionSpec extends UnitSpec {
 
       container.register[A, AImpl](Singleton)
       
-      val provider = container.buildProvider
-      
-      val b = provider.get[B]
-      
-      b shouldBe empty
+      val provider = container.buildProvider()
+
+      assertThrows[IllegalArgumentException] {
+        val b = provider.get[B]
+      }
+    }
+  }
+  "built without all required components registered" should {
+    "thrown an exception when trying to get an instance with missing dependency" in {
+      val container = new ComponentContainer
+
+      container.register[A, AImpl](Singleton)
+      container.register[C](Singleton)
+
+      val provider = container.buildProvider(checkDependencies = false)
+
+      assertThrows[MissingDependencyException[C, B]] {
+        val c = provider.get[C]
+      }
     }
   }
 }
