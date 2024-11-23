@@ -20,8 +20,11 @@ class ComponentProvider(private val components: Vector[ComponentDescriptor]) {
   
   private def factoryMethodFromDescriptor(descriptor: ComponentDescriptor): Any => Any = {
     descriptor.factory match {
-      case Some(factory) => factory.asInstanceOf[Any => Any]
-      case None => 
+      case Some(factory) =>
+        val wrapped: Any => Any = _ => factory()
+        wrapped
+
+      case None =>
         val constructors = descriptor.implTag.runtimeClass.getDeclaredConstructors
 
         wrapConstructor(constructors.head)
@@ -30,7 +33,6 @@ class ComponentProvider(private val components: Vector[ComponentDescriptor]) {
 
   private def wrapConstructor(constructor: Constructor[?]): Any => Any = {
     case args: Seq[_] => constructor.newInstance(args.map(_.asInstanceOf[Object])*)
-    case arg => constructor.newInstance(arg.asInstanceOf[Object])
   }
 
   /**

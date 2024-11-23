@@ -18,12 +18,12 @@ class ComponentContainer {
    * @tparam C An instantiable component type. 
    * @see [[Lifetime]]
    */
-  def register[C: ClassTag](factory: => C, lifetime: Lifetime)(using cc: ClassTag[C]): Unit = {
+  def register[C: ClassTag](factory: () => C, lifetime: Lifetime)(using cc: ClassTag[C]): Unit = {
     ThrowIfExistsAlready[C](using cc)
 
-    components = components :+ ComponentDescriptor(None, cc, Some(() => factory), lifetime)
+    components = components :+ ComponentDescriptor(None, cc, Some(factory), lifetime)
   }
-  
+
   /**
    * Registers a component.
    * @param lifetime The lifetime of the component.
@@ -58,10 +58,10 @@ class ComponentContainer {
    * @tparam C An instantiable component type derived from the trait.
    * @see [[Lifetime]]
    */
-  def register[T: ClassTag, C <: T](factory: => C, lifetime: Lifetime)(using ct: ClassTag[T], cc: ClassTag[C]): Unit = {
+  def register[T: ClassTag, C <: T](factory: () => C, lifetime: Lifetime)(using ct: ClassTag[T], cc: ClassTag[C]): Unit = {
     ThrowIfExistsAlready[T, C](using ct, cc)
 
-    components = components :+ ComponentDescriptor(Some(ct), cc, Some(() => factory), lifetime)
+    components = components :+ ComponentDescriptor(Some(ct), cc, Some(factory), lifetime)
   }
 
   private def ThrowIfExistsAlready[C](using cc: ClassTag[C]): Unit = {
