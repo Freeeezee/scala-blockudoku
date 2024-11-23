@@ -1,20 +1,17 @@
 package test.dependencyInjection
 
+import blockudoku.dependencyInjection.ComponentContainer
+import blockudoku.dependencyInjection.Lifetime.Singleton
 import test.UnitSpec
 
 class DependencyInjectionSpec extends UnitSpec {
-  override def beforeEach(): Unit = {
-    super.beforeEach()
-    
-    given container: ComponentContainer = new ComponentContainer
-  }
-  
   "A Dependency Injection container" when {
     "registering components" should {
       "throw an exception if a component of the registered type is already registered" in {
-        val container = summon[ComponentContainer]
+        val container = new ComponentContainer
         
         container.register[A, AImpl](Singleton)
+
         assertThrows[IllegalArgumentException] {
           container.register[A, AImpl](Singleton)
         }
@@ -27,7 +24,7 @@ class DependencyInjectionSpec extends UnitSpec {
       }
       
       "register components with or without a corresponding trait" in {
-        val container = summon[ComponentContainer]
+        val container = new ComponentContainer
         
         container.register[AImpl](Singleton)
         container.register[B, BImpl](Singleton)
@@ -35,7 +32,7 @@ class DependencyInjectionSpec extends UnitSpec {
     }
     "being built" should {
       "throw an exception if a required component is not registered" in {
-        val container = summon[ComponentContainer]
+        val container = new ComponentContainer
 
         container.register[AImpl](Singleton)
         container.register[C](Singleton)
@@ -47,7 +44,7 @@ class DependencyInjectionSpec extends UnitSpec {
     }
     "built with all required components registered" should {
       "return a provider that can provide instances of the registered components" in {
-        val container = summon[ComponentContainer]
+        val container = new ComponentContainer
 
         container.register[A, AImpl](Singleton)
         container.register[B, BImpl](Singleton)
@@ -62,8 +59,8 @@ class DependencyInjectionSpec extends UnitSpec {
       }
     }
     "return a provider that can not provide instances of components that are not registered" in {
-      val container = summon[ComponentContainer]
-      
+      val container = new ComponentContainer
+
       container.register[A, AImpl](Singleton)
       
       val provider = container.buildProvider
