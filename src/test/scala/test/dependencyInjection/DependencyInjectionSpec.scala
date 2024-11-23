@@ -62,6 +62,8 @@ class DependencyInjectionSpec extends UnitSpec {
         val provider = container.buildProvider()
 
         val d = provider.get[D]
+
+        d.getD shouldBe "AImpl.doA BImpl.doB"
       }
     }
     "return a provider that can not provide instances of components that are not registered" in {
@@ -93,32 +95,31 @@ class DependencyInjectionSpec extends UnitSpec {
 }
 
 trait A {
-  def doA(): Unit
+  def getA: String
 }
 
 trait B {
-  def doB(): Unit
+  def getB: String
 }
 
 class AImpl extends A {
-  override def doA(): Unit = println("AImpl.doA")
+  override def getA: String = "AImpl.doA"
 }
 
 class AImpl2 extends A {
-  override def doA(): Unit = println("AImpl2.doA")
+  override def getA: String = "AImpl2.doA"
 }
 
 class BImpl extends B {
-  override def doB(): Unit = println("BImpl.doB")
+  override def getB: String = "BImpl.doB"
 }
 
 class C(a: A, b: B) {
-  def doC(): Unit = {
-    a.doA()
-    b.doB()
+  def getC: String = {
+    s"${a.getA} ${b.getB}"
   }
 }
 
 class D(c: C) {
-  def doD(): Unit = c.doC()
+  def getD: String = c.getC
 }
