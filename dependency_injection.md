@@ -8,16 +8,17 @@
 
 ## Options & Frameworks
 
-| **Name**             | **Automatic** | **Compile-Time Safe** | **Ease of configuration**                                    |
-| -------------------- | ------------- | --------------------- | ------------------------------------------------------------ |
-| Guice                | ❌             | ❌                     | ✅                                                            |
-| Spring               | ✅             | ❌                     | ✅ though pretty verbose                                      |
-| Macwire              | ✅             | ✅                     | partially, requires same scope and explicit calls to wire functions |
-| Native Given         | ✅             | ✅                     | partially, requires same scope and setup is not clearly related to DI. |
-| Reflection Container | ✅             | ❌                     | ✅                                                            |
+| **Name**             | **Automatic** | **Compile-Time Safe**                   | **Ease of configuration**                                    |
+| -------------------- | ------------- | --------------------------------------- | ------------------------------------------------------------ |
+| Guice                | ❌             | ❌                                       | ✅                                                            |
+| Spring               | ✅             | ❌                                       | ✅  at least the code approach, though pretty verbose         |
+| Macwire              | ✅             | ✅                                       | partially, requires same scope and explicit calls to wire functions |
+| Native Given         | ✅             | ✅                                       | partially, requires same scope and setup is not clearly related to DI. |
+| Reflection Container | ✅             | ❌ but can check dependencies in startup | ✅                                                            |
 
 ## Reflection Container
 
 - A custom implementation of DI in a similar way to the .NET framework. 
 - Components are registered at a container data structure and injected through reflection. 
-- Not compile-time safe but can be configured to check dependencies at startup.
+- Container is built at the end and immutable from that point on.
+- Not compile-time safe but can be configured to check dependencies on container build.
