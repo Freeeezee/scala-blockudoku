@@ -3,6 +3,11 @@ package blockudoku.dependencyInjection
 import java.lang.reflect.Constructor
 import scala.reflect.ClassTag
 
+/**
+ * The actual injector. Creates instances of components and manages their lifetimes.
+ * @param components The components to be managed by the injector.
+ * @see [[ComponentContainer]], [[Lifetime]]
+ */
 class ComponentProvider(private val components: Vector[ComponentDescriptor]) {
   private val componentFactories: Map[ComponentDescriptor, Any => Any] = initializeComponentFactories
   private var instances: Map[ClassTag[?], Any] = Map.empty
@@ -27,7 +32,13 @@ class ComponentProvider(private val components: Vector[ComponentDescriptor]) {
     case args: Seq[_] => constructor.newInstance(args.map(_.asInstanceOf[Object])*)
     case arg => constructor.newInstance(arg.asInstanceOf[Object])
   }
-  
+
+  /**
+   * Gets an instance of a component.
+   * @tparam C The type of the component to get.
+   * @return An instance of the component.
+   * @throws IllegalArgumentException If no component is registered for the given type.
+   */
   def get[C: ClassTag]: C = {
     val desc = descriptorFromClassTag[C]
     throwIfDescriptorEmpty(desc)
