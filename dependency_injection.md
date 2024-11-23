@@ -22,3 +22,4 @@
 - Components are registered at a container data structure and injected through reflection. 
 - Container is built at the end and immutable from that point on.
 - Not compile-time safe but can be configured to check dependencies on container build.
+- Constructor methods should be prebuilt on container built.
