@@ -75,18 +75,18 @@ class DependencyInjectionSpec extends UnitSpec {
         val b = provider.get[B]
       }
     }
-  }
-  "built without all required components registered" should {
-    "thrown an exception when trying to get an instance with missing dependency" in {
-      val container = new ComponentContainer
+    "built without all required components registered" should {
+      "thrown an exception when trying to get an instance with missing dependency" in {
+        val container = new ComponentContainer
 
-      container.register[A, AImpl](Singleton)
-      container.register[C](Singleton)
+        container.register[A, AImpl](Singleton)
+        container.register[C](Singleton)
 
-      val provider = container.buildProvider(checkDependencies = false)
+        val provider = container.buildProvider(checkDependencies = false)
 
-      assertThrows[MissingDependencyException[C, B]] {
-        val c = provider.get[C]
+        assertThrows[MissingDependencyException[C, B]] {
+          val c = provider.get[C]
+        }
       }
     }
   }
