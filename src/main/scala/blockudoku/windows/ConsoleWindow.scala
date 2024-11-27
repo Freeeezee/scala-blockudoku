@@ -1,11 +1,11 @@
 package blockudoku.windows
 
-import blockudoku.controllers.{ElementController, GridController}
+import blockudoku.controllers.{ControllerMediator, ElementController, GridController}
 import blockudoku.input.ConsoleInputHandler
 import blockudoku.views.console.composed.{ComposedConsoleFormatter, Direction, VerticalFrame}
 import blockudoku.views.console.{ConsoleElementView, ConsoleGridView, ConsoleHeadlineView, ConsoleView}
 
-class ConsoleWindow(gridController: GridController, elementController: ElementController, focusManager: FocusManager, inputHandler: ConsoleInputHandler) extends Window {
+class ConsoleWindow(mediator: ControllerMediator, gridController: GridController, elementController: ElementController, focusManager: FocusManager, inputHandler: ConsoleInputHandler) extends Window {
   private val views = initializeViews()
 
   var changed: Boolean = true
@@ -24,10 +24,10 @@ class ConsoleWindow(gridController: GridController, elementController: ElementCo
     ConsoleHeadlineView(width, focusManager)
   }
   private def initializeGridView(): ConsoleView = {
-    ConsoleGridView(gridController, elementController, focusManager)
+    ConsoleGridView(mediator, gridController, elementController, focusManager)
   }
   private def initializeElementView(): ConsoleView = {
-    ConsoleElementView(gridController, elementController, focusManager)
+    ConsoleElementView(mediator, gridController, elementController, focusManager)
   }
 
   override def display(): Unit = {

@@ -1,9 +1,9 @@
 package blockudoku.windows
 
-import blockudoku.controllers.{ElementController, GridController}
+import blockudoku.controllers.{ControllerMediator, ElementController, GridController}
 
 class TestWindowFactory extends WindowFactory {
-  def createWindow(gridController: GridController, elementController: ElementController, focusManager: FocusManager): Window = {
+  def createWindow(mediator: ControllerMediator, gridController: GridController, elementController: ElementController, focusManager: FocusManager): Window = {
     new TestWindow
   }
 }

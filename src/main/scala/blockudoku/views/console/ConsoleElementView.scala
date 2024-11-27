@@ -1,13 +1,13 @@
 package blockudoku.views.console
 
-import blockudoku.controllers.{ElementController, GridController}
+import blockudoku.controllers.{ControllerMediator, ElementController, GridController}
 import blockudoku.models.Element
 import blockudoku.observer.Observer
 import blockudoku.services.console.ElementFormatter
 import blockudoku.views.console.composed.{ConsoleElement, HorizontalFrame, RegularConsoleElement, VerticalFrame}
 import blockudoku.windows.{FocusManager, FocusState}
 
-case class ConsoleElementView(gridController: GridController, elementController: ElementController,
+case class ConsoleElementView(mediator: ControllerMediator, gridController: GridController, elementController: ElementController,
                               focusManager: FocusManager) extends ConsoleView(focusManager), Observer {
   override val interactableFocusStates: Set[FocusState] = Set(FocusState.Elements)
 
@@ -48,7 +48,7 @@ case class ConsoleElementView(gridController: GridController, elementController:
     val list = elementController.elements
       .map(ElementFormatter.apply)
       .map(formatter => RegularConsoleElement(formatter.content, isInteractable = true, 
-        onSelect = () => elementController.selectElement(formatter.element)))
+        onSelect = () => mediator.selectElement(formatter.element)))
       .toList
 
     HorizontalFrame(list)(spacing, isInteractable = true)

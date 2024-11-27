@@ -1,16 +1,15 @@
 package blockudoku.windows
 
 import blockudoku.App
-import blockudoku.controllers.GridController
-import blockudoku.controllers.ElementController
+import blockudoku.controllers.{ControllerMediator, ElementController, GridController}
 import blockudoku.input.ConsoleInputHandler
 import blockudoku.views.console.composed.Direction.*
 
 class ConsoleWindowFactory extends WindowFactory {
   
-  override def createWindow(gridController: GridController, elementController: ElementController, focusManager: FocusManager): Window = {
+  override def createWindow(mediator: ControllerMediator, gridController: GridController, elementController: ElementController, focusManager: FocusManager): Window = {
     val inputHandler = new ConsoleInputHandler()
-    val window = ConsoleWindow(gridController, elementController, focusManager, inputHandler)
+    val window = ConsoleWindow(mediator, gridController, elementController, focusManager, inputHandler)
     initializeEvents(inputHandler, window)
     window
   }
