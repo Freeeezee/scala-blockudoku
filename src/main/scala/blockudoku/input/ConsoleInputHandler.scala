@@ -1,8 +1,7 @@
 package blockudoku.input
 
 import blockudoku.services.Event
-import org.jline.keymap.{BindingReader, KeyMap}
-import org.jline.terminal.TerminalBuilder
+import org.jline.keymap.KeyMap
 
 class ConsoleInputHandler {
   val arrowUpKey: Event = Event()
@@ -13,17 +12,11 @@ class ConsoleInputHandler {
   val enterKey: Event = Event()
   val qKey: Event = Event()
 
-  private val terminal = TerminalBuilder.builder().system(true).build()
-  terminal.enterRawMode()
-  private val reader = BindingReader(terminal.reader())
-
   private val keyMap = initializeKeymap()
+  private val reader = ConsoleReader(keyMap)
 
   def run(): Unit = {
-    Option(reader.readBinding(keyMap)) match {
-      case Some(binding) => binding.apply()
-      case None =>
-    }
+    reader.readAndExecute()
   }
 
   private def enterPressed(): Unit = enterKey.invoke()

@@ -1,4 +1,4 @@
-val ver = sys.env.getOrElse("VERSION", "???").stripPrefix("refs/tags/")
+val ver = sys.env.getOrElse("VERSION", "").stripPrefix("refs/tags/")
 val ci_release = sys.env.getOrElse("CI_RELEASE", "false").toBoolean
 
 ThisBuild / version := ver
