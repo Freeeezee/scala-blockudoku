@@ -13,4 +13,14 @@ class ControllerMediator(gridController: GridController, elementController: Elem
     elementController.selectElement(element)
     focusManager.focusState = FocusState.Grid
   }
+  def createSnapshot(): Unit = {
+    gridController.createSnapshot()
+    elementController.createSnapshot()
+    focusManager.createSnapshot()
+  }
+  def revertSnapshot(): Unit = {
+    gridController.revertSnapshot()
+    elementController.revertSnapshot()
+    focusManager.revertSnapshot()
+  }
 }
