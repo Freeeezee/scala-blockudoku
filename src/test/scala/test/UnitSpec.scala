@@ -1,6 +1,6 @@
 package test
 
-import blockudoku.controllers.{ElementController, GridController}
+import blockudoku.controllers.{ControllerMediator, ControllerMediatorImpl, ElementController, ElementControllerImpl, GridController, GridControllerImpl}
 import blockudoku.views.console.ConsoleView
 import blockudoku.windows.FocusManager
 import blockudoku.windows.FocusState.Elements
@@ -14,13 +14,15 @@ abstract class UnitSpec extends AnyWordSpec with Matchers with GivenWhenThen wit
   protected var focusManager: FocusManager = uninitialized
   protected var elementController: ElementController = uninitialized
   protected var gridController: GridController = uninitialized
+  protected var mediator: ControllerMediator = uninitialized
 
   override def beforeEach(): Unit = {
     super.beforeEach()
 
     focusManager = FocusManager(Elements)
-    elementController = ElementController(RandomMock(), focusManager)
-    gridController = GridController(9, 9, elementController, focusManager)
+    elementController = ElementControllerImpl(RandomMock(), focusManager)
+    gridController = GridControllerImpl(9, 9, elementController, focusManager)
+    mediator = ControllerMediatorImpl(gridController, elementController, focusManager)
   }
 
   def viewContent(view: ConsoleView): String = {

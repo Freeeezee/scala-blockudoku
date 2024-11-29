@@ -10,7 +10,7 @@ import blockudoku.windows.FocusState.Elements
 class ConsoleElementViewSpec extends UnitSpec {
   "ElementView" should {
     "display all elements in ElementController" in {
-      val elementView = ConsoleElementView(gridController, elementController, new FocusManager(Elements))
+      val elementView = ConsoleElementView(mediator, gridController, elementController, new FocusManager(Elements))
       viewContent(elementView).replace("\r\n", "\n") should be ("""----------------- Elements_ -----------------
                                          |
                                          |XX               XX               XX
@@ -18,7 +18,7 @@ class ConsoleElementViewSpec extends UnitSpec {
     }
 
     "select the highlighted element in ElementController" in {
-      val elementView = ConsoleElementView(gridController, elementController, new FocusManager(Elements))
+      val elementView = ConsoleElementView(mediator, gridController, elementController, new FocusManager(Elements))
       val formatter = ComposedConsoleFormatter.create(elementView.consoleElement)
 
       formatter.select()

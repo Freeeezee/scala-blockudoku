@@ -1,15 +1,15 @@
 package blockudoku
 
-import blockudoku.controllers.{ControllerMediator, ElementController, ElementControllerImpl, GridController, GridControllerImpl}
+import blockudoku.controllers.{ControllerMediatorImpl, ElementControllerImpl, GridControllerImpl}
 import blockudoku.services.RandomImpl
 import blockudoku.windows.FocusState.Elements
-import blockudoku.windows.{ConsoleWindowFactory, FocusManager, TestWindowFactory, Window, WindowFactory}
+import blockudoku.windows.{ConsoleWindowFactory, FocusManager, Window, WindowFactory}
 
 object App {
   private var exitRequested = false
 
   def run(): Unit = {
-    val windowFactory: WindowFactory = TestWindowFactory()
+    val windowFactory: WindowFactory = ConsoleWindowFactory()
     
     val window = initializeWindow(windowFactory)
     
@@ -27,7 +27,7 @@ object App {
 
     val elementController = ElementControllerImpl(new RandomImpl(), focusManager)
     val gridController = GridControllerImpl(9, 9, elementController, focusManager)
-    val mediator = ControllerMediator(gridController, elementController, focusManager)
+    val mediator = ControllerMediatorImpl(gridController, elementController, focusManager)
     
     windowFactory.createWindow(mediator, gridController, elementController, focusManager)
   }
