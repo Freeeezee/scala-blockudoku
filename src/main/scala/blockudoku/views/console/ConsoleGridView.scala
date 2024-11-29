@@ -1,5 +1,6 @@
 package blockudoku.views.console
 
+import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ControllerMediator, ElementController, GridController}
 import blockudoku.models.{Grid, Tile, TileState}
 import blockudoku.observer.Observer
@@ -8,7 +9,7 @@ import blockudoku.services.console.ConsoleStyle
 import blockudoku.views.console.composed.{ConsoleElement, HorizontalFrame, RegularConsoleElement, VerticalFrame}
 import blockudoku.windows.{FocusManager, FocusState}
 
-case class ConsoleGridView(mediator: ControllerMediator, gridController: GridController, elementController: ElementController,
+case class ConsoleGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController,
                            focusManager: FocusManager) extends ConsoleView(focusManager), Observer {
   override val interactableFocusStates: Set[FocusState] = Set(FocusState.Grid)
 
@@ -80,7 +81,8 @@ case class ConsoleGridView(mediator: ControllerMediator, gridController: GridCon
   }
   
   private def onTileSelected(tile: Tile): Unit = {
-    mediator.setElement(elementController.selectedElement.get, tile.index)
+    val command = commandFactory.createSetElementCommand(elementController.selectedElement.get, tile.index)
+    commandInvoker.execute(command)
     highlightedIndex = -1
   }
   override def update(): Unit = {

@@ -1,9 +1,10 @@
 package blockudoku.controllers
 
+import blockudoku.commands.Snapshotable
 import blockudoku.models.Element
 import blockudoku.windows.{FocusManager, FocusState}
 
-class ControllerMediator(gridController: GridController, elementController: ElementController, focusManager: FocusManager) {
+class ControllerMediator(gridController: GridController, elementController: ElementController, focusManager: FocusManager) extends Snapshotable[?] {
   def setElement(element: Element, pos: Int) : Unit = {
     gridController.setElement(element, pos)
     elementController.regenerate(element.slot)

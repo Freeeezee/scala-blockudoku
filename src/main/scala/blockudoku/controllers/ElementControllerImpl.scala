@@ -2,31 +2,31 @@ package blockudoku.controllers
 
 import blockudoku.models.{Element, Point}
 import blockudoku.services.Random
-import blockudoku.windows.{FocusManager, FocusState}
-import blockudoku.observer.Observable
+import blockudoku.windows.FocusManager
 
 class ElementControllerImpl(random: Random, focusManager: FocusManager) extends ElementController {
   val maxElementLength: Int = 3
   val elementCount: Int = 3
   
-  val elements: Array[Element] = generateInitialElements
+  var elements: List[Element] = generateInitialElements
 
   def regenerate(slot: Int): Element = {
     if slot >= elementCount then throw new IndexOutOfBoundsException("Slot must be smaller than element count.")
 
-    elements(slot) = generateElement(slot)
+    elements = elements.updated(slot, generateElement(slot))
 
     notifyObservers()
     
     elements(slot)
   }
 
-  private def generateInitialElements: Array[Element] = {
-    val array: Array[Element] = new Array[Element](elementCount)
+  private def generateInitialElements: List[Element] = {
+    var array: List[Element] = List[Element]()
 
+    
     for i <- 0 until elementCount do
-      array(i) = generateElement(i)
-
+      array = array :+ generateElement(i)
+      
     array
   }
 

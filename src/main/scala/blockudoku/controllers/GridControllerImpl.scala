@@ -5,7 +5,7 @@ import blockudoku.observer.Observable
 import blockudoku.windows.{FocusManager, FocusState}
 
 class GridControllerImpl(val xLength: Int, val yLength: Int, elementController: ElementController, focusManager: FocusManager) extends GridController {
-  val grid: Grid = generateGrid(xLength, yLength)
+  var grid: Grid = generateGrid(xLength, yLength)
   
   private def generateGrid(xLength: Int, yLength: Int): Grid = {
     val array = new Array[Tile](xLength * yLength)

@@ -1,6 +1,12 @@
 package blockudoku.commands
 
-trait Command {
-  def execute() : Unit
-  def undo() : Unit
+trait Command(snapshotables : List[Snapshotable[?]]) {
+  def execute() : Unit = {
+    snapshotables.foreach(_.createSnapshot())
+    handleExecute()
+  }
+  def undo() : Unit = {
+    snapshotables.foreach(_.revertSnapshot())
+  }
+  def handleExecute() : Unit
 }
