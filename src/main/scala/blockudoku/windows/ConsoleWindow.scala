@@ -2,39 +2,21 @@ package blockudoku.windows
 
 import blockudoku.controllers.{ControllerMediator, ElementController, GridController}
 import blockudoku.input.ConsoleInputHandler
+import blockudoku.views.console.builders.{GameViewBuilder, ViewBuilder}
 import blockudoku.views.console.composed.{ComposedConsoleFormatter, Direction, VerticalFrame}
 import blockudoku.views.console.{ConsoleElementView, ConsoleGridView, ConsoleHeadlineView, ConsoleView}
 
 class ConsoleWindow(mediator: ControllerMediator, gridController: GridController, elementController: ElementController, focusManager: FocusManager, inputHandler: ConsoleInputHandler) extends Window {
-  private val views = initializeViews()
+  private val viewBuilder: ViewBuilder = GameViewBuilder(mediator, gridController, elementController, focusManager)
+  private val views = viewBuilder.build()
 
   var changed: Boolean = true
   private var formatter = createFormatter(0, 0)
-
-  private def initializeViews(): List[ConsoleView] = {
-    var views: List[ConsoleView] = List()
-
-    views = views :+ initializeHeadlineView()
-    views = views :+ initializeGridView()
-    views = views :+ initializeElementView()
-    views
-  }
-  private def initializeHeadlineView(): ConsoleView = {
-    val width = gridController.grid.xLength * 5 + 1
-    ConsoleHeadlineView(width, focusManager)
-  }
-  private def initializeGridView(): ConsoleView = {
-    ConsoleGridView(mediator, gridController, elementController, focusManager)
-  }
-  private def initializeElementView(): ConsoleView = {
-    ConsoleElementView(mediator, gridController, elementController, focusManager)
-  }
 
   override def display(): Unit = {
     clearConsole()
     
     println(content)
-    
   }
   
   def content: String = {
