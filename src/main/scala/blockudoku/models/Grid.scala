@@ -3,7 +3,7 @@ package blockudoku.models
 import scala.util.boundary
 import scala.util.boundary.break
 
-case class Grid(xLength: Int, yLength: Int)(val tiles: Array[Tile]):
+case class Grid(xLength: Int, yLength: Int)(val tiles: List[Tile]):
   def tile(xPos: Int, yPos: Int): Option[Tile] = {
     if xPos < 0 || xPos >= xLength || yPos < 0 || yPos >= yLength then
       None
@@ -35,3 +35,15 @@ case class Grid(xLength: Int, yLength: Int)(val tiles: Array[Tile]):
   }
 
   def copy(): Grid = Grid(xLength, yLength)(tiles.map(_.copy()))
+  
+  def copyWithNewState(updatedTiles: List[Tile], newState: TileState): Grid = {
+    var tileList = List[Tile]()
+    
+    for (i <- tiles.indices) {
+      if updatedTiles.exists(tile => tile.index == i) then
+        tileList = tileList :+ tiles(i).copy(state = newState)
+      else
+        tileList = tileList :+ tiles(i).copy()
+    }
+    Grid(xLength, yLength)(tileList)
+  }

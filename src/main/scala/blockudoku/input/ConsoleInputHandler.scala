@@ -11,6 +11,8 @@ class ConsoleInputHandler {
   
   val enterKey: Event = Event()
   val qKey: Event = Event()
+  val zKey: Event = Event()
+  val rKey: Event = Event()
 
   private val keyMap = initializeKeymap()
   private val reader = ConsoleReader(keyMap)
@@ -35,6 +37,8 @@ class ConsoleInputHandler {
     keyMap.bind(() => arrowDownKey.invoke(), "\u001bOB")
     keyMap.bind(() => arrowLeftKey.invoke(), "\u001bOD")
     keyMap.bind(() => arrowRightKey.invoke(), "\u001BOC")
+    keyMap.bind(() => zKey.invoke(), "z")
+    keyMap.bind(() => rKey.invoke(), "r")
     keyMap
   }
 }

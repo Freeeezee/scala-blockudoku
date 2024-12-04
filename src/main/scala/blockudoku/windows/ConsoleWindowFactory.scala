@@ -21,6 +21,9 @@ class ConsoleWindowFactory extends WindowFactory {
     handler.arrowDownKey.addListener(() => window.navigate(Down))
     handler.arrowLeftKey.addListener(() => window.navigate(Left))
     handler.arrowRightKey.addListener(() => window.navigate(Right))
+    
+    handler.zKey.addListener(() => window.undo())
+    handler.rKey.addListener(() => window.redo())
 
     handler.enterKey.addListener(() => window.select())
 

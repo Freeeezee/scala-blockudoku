@@ -8,6 +8,7 @@ class ControllerMediator(gridController: GridController, elementController: Elem
   def setElement(element: Element, pos: Int) : Unit = {
     gridController.setElement(element, pos)
     elementController.regenerate(element.slot)
+    elementController.resetSelectedElement()
     focusManager.focusState = FocusState.Elements
   }
   def selectElement(element: Element): Unit = {

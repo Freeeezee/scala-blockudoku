@@ -16,6 +16,10 @@ trait ElementController extends Observable, Snapshotable[ElementController#Eleme
   
   def selectElement(element: Element): Unit
   
+  def resetSelectedElement(): Unit = {
+    selectedElement = None
+  }
+  
   case class ElementControllerSnapshot(selectedElement: Option[Element], elements: List[Element])
   
   def createSnapshot(): Unit = {

@@ -68,4 +68,10 @@ class ConsoleWindow(commandFactory: CommandFactory, commandInvoker: CommandInvok
   override def handleInput(): Unit = {
     inputHandler.run()
   }
+  def undo(): Unit = {
+    commandInvoker.undo()
+  }
+  def redo(): Unit = {
+    commandInvoker.redo()
+  }
 }
