@@ -2,6 +2,7 @@ package blockudoku.views.gui
 
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ElementController, GridController}
+import blockudoku.observer.Observer
 import blockudoku.services.console.ElementFormatter
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Node
@@ -24,9 +25,11 @@ class GuiElementView (commandFactory: CommandFactory, commandInvoker: CommandInv
       text = elementContent(index)
       minHeight = 100
       minWidth = 100
-      elementController.elements.onChange { (_, _, _) =>
-        text = elementContent(index)
-      }
+      elementController.addObserver(new Observer {
+        override def update(): Unit = {
+          text = elementContent(index)
+        }
+      })
       onAction = _ => {
         val command = commandFactory.createSelectElementCommand(elementController.elements.value(index))
         commandInvoker.execute(command)

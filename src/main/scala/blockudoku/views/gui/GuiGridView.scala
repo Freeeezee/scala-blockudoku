@@ -3,8 +3,6 @@ import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ElementController, GridController}
 import blockudoku.models.{Tile, TileState}
 import blockudoku.observer.Observer
-import scalafx.Includes.handle
-import scalafx.event.ActionEvent
 import scalafx.scene.Node
 import scalafx.scene.control.Button
 import scalafx.scene.layout.{HBox, VBox}
@@ -32,9 +30,12 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
       text = buttonContent(column, row)
       minHeight = 40
       minWidth = 40
-      gridController.grid.onChange { (_, _, _) =>
-        text = buttonContent(column, row)
-      }
+      gridController.addObserver(new Observer {
+        override def update(): Unit = {
+          text = buttonContent(column, row)
+          style = s"-fx-text-fill: ${computeColor(gridController.grid.value.tile(column, row).get)}"
+        }
+      })
       onAction = _ => {
         print("hi")
         val tile = gridController.grid.value.tile(column, row).get
@@ -53,6 +54,16 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
     tile.state match {
       case TileState.empty => ""
       case TileState.blocked => "X"
+      case TileState.previewInvalid => "X"
+      case TileState.previewValid => ""
+    }
+  }
+  private def computeColor(tile: Tile): String = {
+    tile.state match {
+      case TileState.empty => "grey"
+      case TileState.blocked => "black"
+      case TileState.previewInvalid => "red"
+      case TileState.previewValid => "green"
     }
   }
 }
