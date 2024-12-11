@@ -81,7 +81,7 @@ case class ConsoleGridView(commandFactory: CommandFactory, commandInvoker: Comma
   }
   
   private def onTileSelected(tile: Tile): Unit = {
-    val command = commandFactory.createSetElementCommand(elementController.selectedElement.get, tile.index)
+    val command = commandFactory.createSetElementCommand(elementController.selectedElement.value.get, tile.index)
     commandInvoker.execute(command)
     highlightedIndex = -1
   }

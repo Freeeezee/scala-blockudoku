@@ -16,7 +16,7 @@ lazy val root = (project in file("."))
       "org.jline" % "jline" % "3.26.2",
       "org.scalactic" %% "scalactic" % "3.2.19",
       "org.scalatest" %% "scalatest" % "3.2.19" % Test,
-      "org.scala-lang.modules" %% "scala-swing" % "3.0.0",
+      "org.scalafx" %% "scalafx" % "22.0.0-R33",
 
     ),
     scalacOptions ++= Seq(

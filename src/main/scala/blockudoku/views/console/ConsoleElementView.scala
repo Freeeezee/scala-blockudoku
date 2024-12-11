@@ -39,18 +39,17 @@ case class ConsoleElementView(commandFactory: CommandFactory, commandInvoker: Co
     "-" * headlineDividerLineLength
   }
   private def headlineDividerLineLength: Int = {
-    val width = gridController.grid.xLength * 5 + 1
+    val width = gridController.grid.value.xLength * 5 + 1
 
     if (headline.length > width) 0
     else (width - headline.length - 2) / 2
   }
 
   private def formattedElements: ConsoleElement = {
-    val list = elementController.elements
+    val list = elementController.elements.value
       .map(ElementFormatter.apply)
       .map(formatter => RegularConsoleElement(formatter.content, isInteractable = true, 
         onSelect = () => selectElementCommand(formatter.element)))
-      .toList
 
     HorizontalFrame(list)(spacing, isInteractable = true)
   }

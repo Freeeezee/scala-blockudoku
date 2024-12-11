@@ -3,21 +3,22 @@ package blockudoku.controllers
 import blockudoku.models.{Element, Point}
 import blockudoku.services.Random
 import blockudoku.windows.FocusManager
+import scalafx.beans.property.ObjectProperty
 
 class ElementControllerImpl(random: Random, focusManager: FocusManager) extends ElementController {
   val maxElementLength: Int = 3
   val elementCount: Int = 3
   
-  var elements: List[Element] = generateInitialElements
+  var elements: ObjectProperty[List[Element]] = ObjectProperty(generateInitialElements)
 
   def regenerate(slot: Int): Element = {
     if slot >= elementCount then throw new IndexOutOfBoundsException("Slot must be smaller than element count.")
 
-    elements = elements.updated(slot, generateElement(slot))
+    elements.value = elements.value.updated(slot, generateElement(slot))
 
     notifyObservers()
     
-    elements(slot)
+    elements.value(slot)
   }
 
   private def generateInitialElements: List[Element] = {
@@ -64,7 +65,7 @@ class ElementControllerImpl(random: Random, focusManager: FocusManager) extends 
   }
   
   def selectElement(element: Element): Unit = {
-    selectedElement = Some(element)
+    selectedElement.value = Some(element)
 
     notifyObservers()
     

@@ -21,7 +21,7 @@ class ConsoleWindow(commandFactory: CommandFactory, commandInvoker: CommandInvok
     views
   }
   private def initializeHeadlineView(): ConsoleView = {
-    val width = gridController.grid.xLength * 5 + 1
+    val width = gridController.grid.value.xLength * 5 + 1
     ConsoleHeadlineView(width, focusManager)
   }
   private def initializeGridView(): ConsoleView = {

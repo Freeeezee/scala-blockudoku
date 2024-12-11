@@ -3,9 +3,10 @@ package blockudoku.controllers
 import blockudoku.models.*
 import blockudoku.observer.Observable
 import blockudoku.windows.{FocusManager, FocusState}
+import scalafx.beans.property.ObjectProperty
 
 class GridControllerImpl(val xLength: Int, val yLength: Int, elementController: ElementController, focusManager: FocusManager) extends GridController {
-  var grid: Grid = generateGrid(xLength, yLength)
+  val grid: ObjectProperty[Grid] = ObjectProperty(generateGrid(xLength, yLength))
   
   private def generateGrid(xLength: Int, yLength: Int): Grid = {
     var list = List[Tile]()
@@ -20,14 +21,14 @@ class GridControllerImpl(val xLength: Int, val yLength: Int, elementController: 
   }
 
   def setElement(element: Element, selectedPos: Int): Unit = {
-    val tiles = grid.elementTiles(element, selectedPos)
+    val tiles = grid.value.elementTiles(element, selectedPos)
     
     
     if tiles.isEmpty || isOccupied(tiles.get) then {
       return
     }
     
-    grid = grid.copyWithNewState(tiles.get, TileState.blocked)
+    grid.value = grid.value.copyWithNewState(tiles.get, TileState.blocked)
     
     notifyObservers()
   }

@@ -10,7 +10,7 @@ object App {
   private var exitRequested = false
 
   def run(): Unit = {
-    val windowFactory: WindowFactory = ConsoleWindowFactory()
+    val windowFactory: WindowFactory = GuiWindowFactory()
     
     val window = initializeWindow(windowFactory)
     
