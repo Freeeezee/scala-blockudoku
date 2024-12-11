@@ -4,7 +4,7 @@ import blockudoku.commands.{CommandFactoryImpl, CommandInvoker}
 import blockudoku.controllers.{ControllerMediator, ElementController, ElementControllerImpl, GridController, GridControllerImpl}
 import blockudoku.services.RandomImpl
 import blockudoku.windows.FocusState.Elements
-import blockudoku.windows.{ConsoleWindowFactory, FocusManager, Window, WindowFactory}
+import blockudoku.windows.{ConsoleWindowFactory, FocusManager, GuiWindowFactory, Window, WindowFactory}
 
 object App {
   private var exitRequested = false

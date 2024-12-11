@@ -15,7 +15,9 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       "org.jline" % "jline" % "3.26.2",
       "org.scalactic" %% "scalactic" % "3.2.19",
-      "org.scalatest" %% "scalatest" % "3.2.19" % Test
+      "org.scalatest" %% "scalatest" % "3.2.19" % Test,
+      "org.scala-lang.modules" %% "scala-swing" % "3.0.0",
+
     ),
     scalacOptions ++= Seq(
       "-deprecation",
@@ -26,5 +28,5 @@ lazy val root = (project in file("."))
     jacocoCoverallsServiceName := "github-actions",
     jacocoCoverallsBranch := sys.env.get("CI_BRANCH"),
     jacocoCoverallsPullRequest := sys.env.get("GITHUB_EVENT_NAME"),
-    jacocoCoverallsRepoToken := sys.env.get("COVERALLS_REPO_TOKEN")
+    jacocoCoverallsRepoToken := sys.env.get("COVERALLS_REPO_TOKEN"),
   )
