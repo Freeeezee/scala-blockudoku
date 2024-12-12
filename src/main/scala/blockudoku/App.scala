@@ -1,38 +1,44 @@
 package blockudoku
 
 import blockudoku.commands.{CommandFactoryImpl, CommandInvoker}
-import blockudoku.controllers.{ControllerMediator, ElementController, ElementControllerImpl, GridController, GridControllerImpl}
-import blockudoku.services.RandomImpl
+import blockudoku.controllers.{ControllerMediator, ElementControllerImpl, GridControllerImpl}
+import blockudoku.services.{ApplicationThread, RandomImpl}
 import blockudoku.windows.FocusState.Elements
-import blockudoku.windows.{ConsoleWindowFactory, FocusManager, GuiWindowFactory, Window, WindowFactory}
+import blockudoku.windows.*
 
 object App {
   private var exitRequested = false
 
+  val focusManager = new FocusManager(focusState = Elements)
+
+  val elementController = ElementControllerImpl(new RandomImpl(), focusManager)
+  val gridController = GridControllerImpl(9, 9, elementController, focusManager)
+  val mediator = ControllerMediator(gridController, elementController, focusManager)
+  val commandFactory = new CommandFactoryImpl(mediator)
+  val commandInvoker = new CommandInvoker()
+
   def run(): Unit = {
-    val windowFactory: WindowFactory = GuiWindowFactory()
+    val guiFactory: WindowFactory = GuiWindowFactory()
+    val consoleFactory: WindowFactory = ConsoleWindowFactory()
     
-    val window = initializeWindow(windowFactory)
-    
+    val guiWindow = initializeWindow(guiFactory)
+    val consoleWindow = initializeWindow(consoleFactory)
+
+    ApplicationThread().run {
+      guiWindow.display()
+    }
+
     while (!exitRequested) {
-      if (window.anyChange()) {
-        window.display()
+      if (consoleWindow.anyChange()) {
+        consoleWindow.display()
       }
-      window.handleInput()
-      window.display()
-      window.display()
+      consoleWindow.handleInput()
+      consoleWindow.display()
+      consoleWindow.display()
     }
   }
 
   private def initializeWindow(windowFactory: WindowFactory): Window = {
-    val focusManager = new FocusManager(focusState = Elements)
-
-    val elementController = ElementControllerImpl(new RandomImpl(), focusManager)
-    val gridController = GridControllerImpl(9, 9, elementController, focusManager)
-    val mediator = ControllerMediator(gridController, elementController, focusManager)
-    val commandFactory = new CommandFactoryImpl(mediator)
-    val commandInvoker = new CommandInvoker()
-    
     windowFactory.createWindow(commandFactory, commandInvoker, gridController, elementController, focusManager)
   }
   
