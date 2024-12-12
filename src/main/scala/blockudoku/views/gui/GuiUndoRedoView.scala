@@ -17,12 +17,14 @@ class GuiUndoRedoView(commandInvoker: CommandInvoker) extends GuiView {
         new Button {
           text = "Undo"
           font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 20)
+          style = "-fx-background-color: #8499B1"
           onAction = _ => {
             commandInvoker.undo()
           }
         },
         new Button {
           text = "Redo"
+          style = "-fx-background-color: #8499B1"
           font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 20)
           onAction = _ => {
             commandInvoker.redo()

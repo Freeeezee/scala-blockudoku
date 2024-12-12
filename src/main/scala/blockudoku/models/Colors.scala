@@ -2,12 +2,12 @@ package blockudoku.models
 
 enum Colors {
   
+  case Byzantium
   case Blue
-  case Yellow
-  case Purple
-  case Orange
-  case Lime
-  case Pink
-  case Cyan
+  case RaspberryRose
+  case Cerise
+  case Eminence
+  case BrightPink
+  case CoralPink
   
 }
