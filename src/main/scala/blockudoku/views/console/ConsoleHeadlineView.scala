@@ -1,9 +1,9 @@
 package blockudoku.views.console
 
 import blockudoku.views.console.composed.{ConsoleElement, RegularConsoleElement}
-import blockudoku.windows.{FocusManager, FocusState}
+import blockudoku.windows.{FocusManager, FocusState, Window}
 
-case class ConsoleHeadlineView(width: Int, focusManager: FocusManager) extends ConsoleView(focusManager) {
+case class ConsoleHeadlineView(width: Int, focusManager: FocusManager, window: Window) extends ConsoleView(focusManager, window) {
   override val interactableFocusStates: Set[FocusState] = Set()
   
   private val headline = "Blockudoku_"

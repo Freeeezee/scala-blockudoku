@@ -1,7 +1,8 @@
 package blockudoku.services
 
 import java.util.concurrent.{CancellationException, Executors}
-import scala.concurrent.{ExecutionContext, Future, Promise}
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContext, Future, Promise}
 
 class ApplicationThread {
   private val executor = Executors.newSingleThreadExecutor()
@@ -38,6 +39,9 @@ class CancelableTask(
 
     // Return true if the task was successfully cancelled
     !cancelResult.isEmpty
+  }
+  def await(): Unit = {
+    Await.result(future, Duration.Inf)
   }
 
   def isCancelled: Boolean = promise.future.value.exists(_.isFailure)

@@ -6,10 +6,10 @@ import blockudoku.models.Element
 import blockudoku.observer.Observer
 import blockudoku.services.console.ElementFormatter
 import blockudoku.views.console.composed.{ConsoleElement, HorizontalFrame, RegularConsoleElement, VerticalFrame}
-import blockudoku.windows.{FocusManager, FocusState}
+import blockudoku.windows.{FocusManager, FocusState, Window}
 
 case class ConsoleElementView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController,
-                              focusManager: FocusManager) extends ConsoleView(focusManager), Observer {
+                              focusManager: FocusManager, window: Window) extends ConsoleView(focusManager, window), Observer {
   override val interactableFocusStates: Set[FocusState] = Set(FocusState.Elements)
 
   elementController.addObserver(this)
@@ -18,7 +18,6 @@ case class ConsoleElementView(commandFactory: CommandFactory, commandInvoker: Co
   private val spacing = 15
 
   override def consoleElement: ConsoleElement = {
-    changed = false
     formatted
   }
 
@@ -59,6 +58,6 @@ case class ConsoleElementView(commandFactory: CommandFactory, commandInvoker: Co
   }
 
   override def update(): Unit = {
-    changed = true
+    setUpdated()
   }
 }

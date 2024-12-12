@@ -7,10 +7,10 @@ import blockudoku.observer.Observer
 import blockudoku.services.GridPreviewBuilder
 import blockudoku.services.console.ConsoleStyle
 import blockudoku.views.console.composed.{ConsoleElement, HorizontalFrame, RegularConsoleElement, VerticalFrame}
-import blockudoku.windows.{FocusManager, FocusState}
+import blockudoku.windows.{FocusManager, FocusState, Window}
 
 case class ConsoleGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController,
-                           focusManager: FocusManager) extends ConsoleView(focusManager), Observer {
+                           focusManager: FocusManager, window: Window) extends ConsoleView(focusManager, window), Observer {
   override val interactableFocusStates: Set[FocusState] = Set(FocusState.Grid)
 
   private val previewBuilder = GridPreviewBuilder(gridController, elementController)
@@ -18,7 +18,6 @@ case class ConsoleGridView(commandFactory: CommandFactory, commandInvoker: Comma
   private var highlightedIndex = -1
   
   override def consoleElement: ConsoleElement = {
-    changed = false
     formatted
   }
 
@@ -86,6 +85,6 @@ case class ConsoleGridView(commandFactory: CommandFactory, commandInvoker: Comma
     highlightedIndex = -1
   }
   override def update(): Unit = {
-    changed = true
+    setUpdated()
   }
 }

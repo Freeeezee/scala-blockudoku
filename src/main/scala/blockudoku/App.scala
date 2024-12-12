@@ -7,8 +7,7 @@ import blockudoku.windows.FocusState.Elements
 import blockudoku.windows.*
 
 object App {
-  private var exitRequested = false
-
+  
   val focusManager = new FocusManager(focusState = Elements)
 
   val elementController = ElementControllerImpl(new RandomImpl(), focusManager)
@@ -27,15 +26,8 @@ object App {
     ApplicationThread().run {
       guiWindow.display()
     }
-
-    while (!exitRequested) {
-      if (consoleWindow.anyChange()) {
-        consoleWindow.display()
-      }
-      consoleWindow.handleInput()
-      consoleWindow.display()
-      consoleWindow.display()
-    }
+    
+    consoleWindow.display()
   }
 
   private def initializeWindow(windowFactory: WindowFactory): Window = {
@@ -43,6 +35,6 @@ object App {
   }
   
   def exit(): Unit = {
-    exitRequested = true
+    System.exit(0)
   }
 }

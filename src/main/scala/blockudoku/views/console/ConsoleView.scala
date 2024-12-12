@@ -1,11 +1,14 @@
 package blockudoku.views.console
 
 import blockudoku.views.console.composed.ConsoleElement
-import blockudoku.windows.{FocusManager, FocusState}
+import blockudoku.windows.{FocusManager, FocusState, Window}
 
-trait ConsoleView(focusManager: FocusManager) {
+trait ConsoleView(focusManager: FocusManager, window: Window) {
   val interactableFocusStates: Set[FocusState]
-  var changed = false
+  
+  def setUpdated(): Unit = {
+    window.setUpdated()
+  }
 
   def consoleElement: ConsoleElement
   

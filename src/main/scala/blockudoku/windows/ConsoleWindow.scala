@@ -3,14 +3,16 @@ package blockudoku.windows
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ControllerMediator, ElementController, GridController}
 import blockudoku.input.ConsoleInputHandler
+import blockudoku.services.{ApplicationThread, CancelableTask}
 import blockudoku.views.console.composed.{ComposedConsoleFormatter, Direction, VerticalFrame}
 import blockudoku.views.console.{ConsoleElementView, ConsoleGridView, ConsoleHeadlineView, ConsoleView}
 
 class ConsoleWindow(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager, inputHandler: ConsoleInputHandler) extends Window {
   private val views = initializeViews()
 
-  var changed: Boolean = true
   private var formatter = createFormatter(0, 0)
+
+  private var inputTask : Option[CancelableTask] = None
 
   private def initializeViews(): List[ConsoleView] = {
     var views: List[ConsoleView] = List()
@@ -22,20 +24,27 @@ class ConsoleWindow(commandFactory: CommandFactory, commandInvoker: CommandInvok
   }
   private def initializeHeadlineView(): ConsoleView = {
     val width = gridController.grid.value.xLength * 5 + 1
-    ConsoleHeadlineView(width, focusManager)
+    ConsoleHeadlineView(width, focusManager, this)
   }
   private def initializeGridView(): ConsoleView = {
-    ConsoleGridView(commandFactory, commandInvoker, gridController, elementController, focusManager)
+    ConsoleGridView(commandFactory, commandInvoker, gridController, elementController, focusManager, this)
   }
   private def initializeElementView(): ConsoleView = {
-    ConsoleElementView(commandFactory, commandInvoker, gridController, elementController, focusManager)
+    ConsoleElementView(commandFactory, commandInvoker, gridController, elementController, focusManager, this)
   }
 
   override def display(): Unit = {
-    clearConsole()
-    
-    println(content)
-    
+
+    while(true) {
+      println(content)
+      inputTask = Some(ApplicationThread().run {
+        handleInput()
+      })
+      inputTask match {
+        case Some(task) => task.await()
+        case None => ()
+      }
+    }
   }
   
   def content: String = {
@@ -54,18 +63,13 @@ class ConsoleWindow(commandFactory: CommandFactory, commandInvoker: CommandInvok
 
   def navigate(direction: Direction): Unit = {
     formatter = formatter.navigate(direction)
-    changed = true
   }
 
   def select(): Unit = {
     formatter.select()
   }
   
-  override def anyChange(): Boolean = {
-    views.exists(_.changed) || changed
-  }
-  
-  override def handleInput(): Unit = {
+  private def handleInput(): Unit = {
     inputHandler.run()
   }
   def undo(): Unit = {
@@ -73,5 +77,15 @@ class ConsoleWindow(commandFactory: CommandFactory, commandInvoker: CommandInvok
   }
   def redo(): Unit = {
     commandInvoker.redo()
+  }
+
+  override def setUpdated(): Unit = {
+
+    inputTask match {
+      case Some(task) =>
+        task.cancel()
+        inputTask = None
+      case None => ()
+    }
   }
 }
