@@ -35,16 +35,16 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
       alignment = Pos.Center
       val stateRectangle = new Rectangle {
         alignment = Pos.Center
-        width = 30
-        height = 30
+        width = 40
+        height = 40
         fill = computeColor(gridController.grid.value.tile(column, row).get)
         //stroke = "black"
       }
 
       graphic = stateRectangle
 
-      minHeight = 40
-      minWidth = 40
+      minHeight = 30
+      minWidth = 30
 
       gridController.addObserver(new Observer {
         override def update(): Unit = {

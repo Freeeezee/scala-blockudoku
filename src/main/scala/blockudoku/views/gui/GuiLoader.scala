@@ -2,7 +2,6 @@ package blockudoku.views.gui
 
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ElementController, GridController}
-import scalafx.Includes.*
 import scalafx.application.JFXApp3
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
@@ -18,6 +17,7 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
     views = views :+ initializeHeadlineView()
     views = views :+ initializeGridView()
     views = views :+ initializeElementView()
+    views = views :+ initialzeUndoRedoView()
     views
   }
 
@@ -33,12 +33,18 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
     new GuiElementView(commandFactory, commandInvoker, gridController, elementController)
   }
 
+  private def initialzeUndoRedoView(): GuiView = {
+    new GuiUndoRedoView(commandInvoker)
+  }
+
 
   override def start(): Unit = {
     stage = new JFXApp3.PrimaryStage {
       title.value = "Blockudoku"
-      scene = new Scene(800, 600) {
-        content = new VBox {
+      height = 800
+      width = 600
+      scene = new Scene {
+        root = new VBox {
           alignment = Pos.Center
           padding = Insets(20)
           children = viewList.map(_.element)
