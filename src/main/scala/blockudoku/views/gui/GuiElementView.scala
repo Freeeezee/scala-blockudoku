@@ -4,6 +4,7 @@ import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ElementController, GridController}
 import blockudoku.observer.Observer
 import blockudoku.services.console.ElementFormatter
+import scalafx.application.Platform
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Node
 import scalafx.scene.control.Button
@@ -31,7 +32,9 @@ class GuiElementView (commandFactory: CommandFactory, commandInvoker: CommandInv
       minWidth = 100
       elementController.addObserver(new Observer {
         override def update(): Unit = {
-          graphic = elementContent(index)
+          Platform.runLater( () => {
+            graphic = elementContent(index)
+          })
         }
       })
       onAction = _ => {
