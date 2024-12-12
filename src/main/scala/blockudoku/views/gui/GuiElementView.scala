@@ -14,20 +14,24 @@ class GuiElementView (commandFactory: CommandFactory, commandInvoker: CommandInv
   override def element: Node = {
     new HBox {
       alignment = Pos.Center
+      spacing = 10
+      padding = Insets(10)
       children = List()
       for index <- elementController.elements.value.indices do {
         children.add(elementButton(index))
       }
     }
   }
+
   private def elementButton(index: Int): Node = {
-    new Button {
-      text = elementContent(index)
+    new Button { // hier weiter
+      graphic = elementContent(index)
+
       minHeight = 100
       minWidth = 100
       elementController.addObserver(new Observer {
         override def update(): Unit = {
-          text = elementContent(index)
+          graphic = elementContent(index)
         }
       })
       onAction = _ => {
@@ -36,8 +40,9 @@ class GuiElementView (commandFactory: CommandFactory, commandInvoker: CommandInv
       }
     }
   }
-  private def elementContent(index: Int): String = {
+
+  private def elementContent(index: Int): Node = {
     val element = elementController.elements.value(index)
-    ElementFormatter(element).content
+    GuiElementFormatter(element).content
   }
 }
