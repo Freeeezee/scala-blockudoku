@@ -4,10 +4,10 @@ import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ElementController, GridController}
 import blockudoku.views.gui.GuiLoader
 
-class GuiWindow(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController) extends Window {
+class GuiWindow(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager) extends Window {
   
   override def display(): Unit = {
-    val loader = GuiLoader(commandFactory, commandInvoker, gridController, elementController)
+    val loader = GuiLoader(commandFactory, commandInvoker, gridController, elementController, focusManager)
     loader.main(Array())
   }
   

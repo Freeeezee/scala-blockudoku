@@ -9,11 +9,11 @@ class ControllerMediator(gridController: GridController, elementController: Elem
     if !gridController.setElement(element, pos) then return
     elementController.regenerate(element.slot)
     elementController.resetSelectedElement()
-    focusManager.focusState = FocusState.Elements
+    focusManager.setFocusState(FocusState.Elements)
   }
   def selectElement(element: Element): Unit = {
     elementController.selectElement(element)
-    focusManager.focusState = FocusState.Grid
+    focusManager.setFocusState(FocusState.Grid)
   }
   def createSnapshot(): Unit = {
     gridController.createSnapshot()

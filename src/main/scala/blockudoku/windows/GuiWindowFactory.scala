@@ -5,6 +5,6 @@ import blockudoku.controllers.{ElementController, GridController}
 
 class GuiWindowFactory extends WindowFactory {
   override def createWindow(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager): Window = {
-    new GuiWindow(commandFactory, commandInvoker, gridController, elementController)
+    new GuiWindow(commandFactory, commandInvoker, gridController, elementController, focusManager)
   }
 }

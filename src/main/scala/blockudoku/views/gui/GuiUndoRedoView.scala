@@ -28,5 +28,4 @@ class GuiUndoRedoView(commandInvoker: CommandInvoker) extends GuiView {
       )
     }
   }
-
 }

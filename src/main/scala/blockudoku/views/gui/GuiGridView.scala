@@ -3,6 +3,7 @@ import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ElementController, GridController}
 import blockudoku.models.{Tile, TileState}
 import blockudoku.observer.Observer
+import blockudoku.windows.{FocusManager, FocusState}
 import scalafx.geometry.Pos
 import scalafx.scene.Node
 import scalafx.scene.control.Button
@@ -10,7 +11,7 @@ import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.Rectangle
 
-class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController) extends GuiView {
+class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager) extends GuiView {
 
   override def element: Node = {
     new VBox {
@@ -57,6 +58,11 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
         val command = commandFactory.createSetElementCommand(elementController.selectedElement.value.get, tile.index)
         commandInvoker.execute(command)
       }
+      focusManager.addObserver(new Observer {
+        override def update(): Unit = {
+          disable = focusManager.getFocusState != FocusState.Grid
+        }
+      })
     }
   }
 

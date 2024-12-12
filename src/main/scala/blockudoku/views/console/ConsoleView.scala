@@ -12,5 +12,5 @@ trait ConsoleView(focusManager: FocusManager, window: Window) {
 
   def consoleElement: ConsoleElement
   
-  def focused: Boolean = interactableFocusStates.contains(focusManager.focusState)
+  def focused: Boolean = interactableFocusStates.contains(focusManager.getFocusState)
 }
