@@ -6,7 +6,7 @@ import blockudoku.observer.Observable
 
 trait GridController extends Observable, Snapshotable[GridController#GridControllerSnapshot] {
   var grid: Grid
-  def setElement(element: Element, selectedPos: Int): Unit
+  def setElement(element: Element, selectedPos: Int): Boolean
   case class GridControllerSnapshot(grid: Grid)
 
   def createSnapshot(): Unit = {

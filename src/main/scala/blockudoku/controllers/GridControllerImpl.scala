@@ -19,17 +19,18 @@ class GridControllerImpl(val xLength: Int, val yLength: Int, elementController: 
     Grid(xLength, yLength)(list)
   }
 
-  def setElement(element: Element, selectedPos: Int): Unit = {
+  def setElement(element: Element, selectedPos: Int): Boolean = {
     val tiles = grid.elementTiles(element, selectedPos)
     
     
     if tiles.isEmpty || isOccupied(tiles.get) then {
-      return
+      return false
     }
     
     grid = grid.copyWithNewState(tiles.get, TileState.blocked)
     
     notifyObservers()
+    true
   }
 
   private def isOccupied(tiles: List[Tile]): Boolean = {
