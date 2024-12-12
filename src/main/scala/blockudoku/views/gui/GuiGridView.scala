@@ -58,6 +58,7 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
         val command = commandFactory.createSetElementCommand(elementController.selectedElement.value.get, tile.index)
         commandInvoker.execute(command)
       }
+
       focusManager.addObserver(new Observer {
         override def update(): Unit = {
           disable = focusManager.getFocusState != FocusState.Grid
@@ -69,7 +70,7 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
   private def computeColor(tile: Tile): Color = {
     tile.state match {
       case TileState.empty => Color.Transparent
-      case TileState.blocked => Color.Black
+      case TileState.blocked => GuiColorTranslator.convertColor(tile.colors)
       case TileState.previewInvalid => Color.Red
       case TileState.previewValid => Color.Green
     }

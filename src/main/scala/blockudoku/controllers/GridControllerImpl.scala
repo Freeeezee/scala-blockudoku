@@ -28,7 +28,7 @@ class GridControllerImpl(val xLength: Int, val yLength: Int, elementController: 
       return false
     }
     
-    grid.value = grid.value.copyWithNewState(tiles.get, TileState.blocked)
+    grid.value = grid.value.copyWithNewState(tiles.get, TileState.blocked, element.colors)
     
     notifyObservers()
     true

@@ -36,9 +36,21 @@ case class Grid(xLength: Int, yLength: Int)(val tiles: List[Tile]):
 
   def copy(): Grid = Grid(xLength, yLength)(tiles.map(_.copy()))
   
-  def copyWithNewState(updatedTiles: List[Tile], newState: TileState): Grid = {
+  def copyWithNewState(updatedTiles: List[Tile], newState: TileState, newColors: Colors): Grid = {
     var tileList = List[Tile]()
     
+    for (i <- tiles.indices) {
+      if updatedTiles.exists(tile => tile.index == i) then
+        tileList = tileList :+ tiles(i).copy(state = newState, colors = newColors)
+      else
+        tileList = tileList :+ tiles(i).copy()
+    }
+    Grid(xLength, yLength)(tileList)
+  }
+
+  def copyWithNewState(updatedTiles: List[Tile], newState: TileState): Grid = {
+    var tileList = List[Tile]()
+
     for (i <- tiles.indices) {
       if updatedTiles.exists(tile => tile.index == i) then
         tileList = tileList :+ tiles(i).copy(state = newState)

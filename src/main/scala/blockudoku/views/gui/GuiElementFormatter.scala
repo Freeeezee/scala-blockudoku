@@ -25,7 +25,7 @@ class GuiElementFormatter (element: Element) {
         val rect = new Rectangle() {
           width = 30
           height = 30
-          fill = if element.structure.contains(point) then Color.Black else Color.Transparent
+          fill = if element.structure.contains(point) then GuiColorTranslator.convertColor(element.colors) else Color.Transparent
         }
         children.add(rect)
     }
