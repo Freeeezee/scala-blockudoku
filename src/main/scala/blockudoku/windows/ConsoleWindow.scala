@@ -36,7 +36,7 @@ class ConsoleWindow(commandFactory: CommandFactory, commandInvoker: CommandInvok
   override def display(): Unit = {
 
     while(true) {
-      println(content)
+      printContent()
       inputTask = Some(ApplicationThread().run {
         handleInput()
       })
@@ -46,8 +46,15 @@ class ConsoleWindow(commandFactory: CommandFactory, commandInvoker: CommandInvok
       }
     }
   }
+
+  private def printContent(): Unit = {
+    clearConsole()
+    println(content)
+    clearConsole()
+    println(content)
+  }
   
-  def content: String = {
+  private def content: String = {
     formatter = createFormatter(formatter.selectedX, formatter.selectedY)
     formatter.content()
   }

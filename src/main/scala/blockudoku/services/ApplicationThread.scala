@@ -17,9 +17,11 @@ class ApplicationThread {
         promise.success(())
       } catch {
         case e: CancellationException =>
-          promise.failure(e)
+          promise.tryFailure(e)
+          promise
         case t: Throwable =>
-          promise.failure(t)
+          promise.tryFailure(t)
+          promise
       }
     }
 
@@ -33,11 +35,9 @@ class CancelableTask(
                       private val executor: java.util.concurrent.ExecutorService
                     ) {
   def cancel(): Boolean = {
-    // Attempt to cancel the running task
     val cancelResult = executor.shutdownNow()
     promise.tryFailure(new CancellationException("Task was cancelled"))
 
-    // Return true if the task was successfully cancelled
     !cancelResult.isEmpty
   }
   def await(): Unit = {
