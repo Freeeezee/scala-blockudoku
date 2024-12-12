@@ -6,7 +6,7 @@ import blockudoku.windows.{FocusManager, FocusState}
 
 class ControllerMediator(gridController: GridController, elementController: ElementController, focusManager: FocusManager) extends Snapshotable[?] {
   def setElement(element: Element, pos: Int) : Unit = {
-    gridController.setElement(element, pos)
+    if !gridController.setElement(element, pos) then return
     elementController.regenerate(element.slot)
     elementController.resetSelectedElement()
     focusManager.focusState = FocusState.Elements

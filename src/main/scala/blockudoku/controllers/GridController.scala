@@ -7,7 +7,7 @@ import scalafx.beans.property.ObjectProperty
 
 trait GridController extends Observable, Snapshotable[GridController#GridControllerSnapshot] {
   val grid: ObjectProperty[Grid]
-  def setElement(element: Element, selectedPos: Int): Unit
+  def setElement(element: Element, selectedPos: Int): Boolean
   case class GridControllerSnapshot(grid: Grid)
 
   def createSnapshot(): Unit = {
