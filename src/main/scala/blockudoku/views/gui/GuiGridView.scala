@@ -1,8 +1,9 @@
 package blockudoku.views.gui
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ElementController, GridController}
-import blockudoku.models.{Tile, TileState}
-import blockudoku.observer.Observer
+import blockudoku.models.{Grid, Tile, TileState}
+import blockudoku.observer.{Observable, Observer}
+import blockudoku.services.GridPreviewBuilder
 import blockudoku.windows.{FocusManager, FocusState}
 import scalafx.geometry.Pos
 import scalafx.scene.Node
@@ -12,6 +13,9 @@ import scalafx.scene.paint.Color
 import scalafx.scene.shape.Rectangle
 
 class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager) extends GuiView {
+  private val previewBuilder = GridPreviewBuilder(gridController, elementController)
+  private val previewObservable = new Observable {}
+  private var previewGrid: Option[Grid] = None
 
   override def element: Node = {
     new VBox {
@@ -47,21 +51,36 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
       minHeight = 30
       minWidth = 30
 
-      gridController.addObserver(new Observer {
-        override def update(): Unit = {
-          stateRectangle.fill = computeColor(gridController.grid.value.tile(column, row).get)
-          //text = buttonContent(column, row)
-        }
-      })
       onAction = _ => {
         val tile = gridController.grid.value.tile(column, row).get
         val command = commandFactory.createSetElementCommand(elementController.selectedElement.value.get, tile.index)
         commandInvoker.execute(command)
       }
-      focusManager.addObserver(new Observer {
-        override def update(): Unit = {
-          disable = focusManager.getFocusState != FocusState.Grid
-        }
+
+      gridController.addObserver(() => {
+        stateRectangle.fill = computeColor(gridController.grid.value.tile(column, row).get)
+      })
+
+      focusManager.addObserver(() => {
+        disable = focusManager.getFocusState != FocusState.Grid
+      })
+
+      onMouseEntered = _ => {
+        val previewIndex = gridController.grid.value.tile(column, row).get.index
+
+        previewGrid = Some(previewBuilder.buildGrid(previewIndex))
+
+        previewObservable.notifyObservers()
+      }
+      onMouseExited = _ => {
+        previewGrid = None
+        previewObservable.notifyObservers()
+      }
+
+      previewObservable.addObserver(() => {
+        previewGrid match
+          case Some(grid) => stateRectangle.fill = computeColor(grid.tile(column, row).get)
+          case None => stateRectangle.fill = computeColor(gridController.grid.value.tile(column, row).get)
       })
     }
   }
