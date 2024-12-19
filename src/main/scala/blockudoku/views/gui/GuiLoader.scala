@@ -3,13 +3,14 @@ package blockudoku.views.gui
 import blockudoku.App
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ElementController, GridController}
+import blockudoku.services.GridPreviewBuilder
 import blockudoku.windows.FocusManager
 import scalafx.application.JFXApp3
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.layout.VBox
 
-class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager) extends JFXApp3 {
+class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager, previewBuilder: GridPreviewBuilder) extends JFXApp3 {
 
   private val viewList = initializeViews()
 
@@ -28,7 +29,7 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
   }
 
   private def initializeGridView(): GuiView = {
-    new GuiGridView(commandFactory, commandInvoker, gridController, elementController, focusManager)
+    new GuiGridView(commandFactory, commandInvoker, gridController, elementController, focusManager, previewBuilder)
   }
 
   private def initializeElementView(): GuiView = {

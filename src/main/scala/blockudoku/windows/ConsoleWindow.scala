@@ -1,14 +1,19 @@
 package blockudoku.windows
 
+import blockudoku.App
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ControllerMediator, ElementController, GridController}
 import blockudoku.input.ConsoleInputHandler
 import blockudoku.models.{ElementCollector, GridCollector}
-import blockudoku.services.{ApplicationThread, CancelableTask}
+import blockudoku.services.{ApplicationThread, CancelableTask, GridPreviewBuilder}
+import blockudoku.views.console.composed.Direction.{Down, Left, Right, Up}
 import blockudoku.views.console.composed.{ComposedConsoleFormatter, Direction, VerticalFrame}
 import blockudoku.views.console.{ConsoleElementView, ConsoleGridView, ConsoleHeadlineView, ConsoleView}
 
-class ConsoleWindow(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector, focusManager: FocusManager, inputHandler: ConsoleInputHandler) extends Window {
+class ConsoleWindow(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector, focusManager: FocusManager, handler: ConsoleInputHandler, previewBuilder: GridPreviewBuilder) extends Window {
+
+  initializeEvents()
+  
   private val views = initializeViews()
 
   private var formatter = createFormatter(0, 0)
@@ -28,7 +33,7 @@ class ConsoleWindow(commandFactory: CommandFactory, commandInvoker: CommandInvok
     ConsoleHeadlineView(width, focusManager, this)
   }
   private def initializeGridView(): ConsoleView = {
-    ConsoleGridView(commandFactory, commandInvoker, gridCollector, elementCollector, focusManager, this)
+    ConsoleGridView(commandFactory, commandInvoker, gridCollector, elementCollector, focusManager, this, previewBuilder)
   }
   private def initializeElementView(): ConsoleView = {
     ConsoleElementView(commandFactory, commandInvoker, elementCollector, gridCollector, focusManager, this)
@@ -78,7 +83,7 @@ class ConsoleWindow(commandFactory: CommandFactory, commandInvoker: CommandInvok
   }
   
   private def handleInput(): Unit = {
-    inputHandler.run()
+    handler.run()
   }
   
   def undo(): Unit = {
@@ -97,5 +102,20 @@ class ConsoleWindow(commandFactory: CommandFactory, commandInvoker: CommandInvok
         inputTask = None
       case None => ()
     }
+  }
+
+  private def initializeEvents(): Unit = {
+    
+    handler.arrowUpKey.addListener(() => navigate(Up))
+    handler.arrowDownKey.addListener(() => navigate(Down))
+    handler.arrowLeftKey.addListener(() => navigate(Left))
+    handler.arrowRightKey.addListener(() => navigate(Right))
+
+    handler.zKey.addListener(() => undo())
+    handler.rKey.addListener(() => redo())
+
+    handler.enterKey.addListener(() => select())
+
+    handler.qKey.addListener(() => App.exit())
   }
 }

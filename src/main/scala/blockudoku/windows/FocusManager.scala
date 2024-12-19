@@ -3,8 +3,9 @@ package blockudoku.windows
 import blockudoku.commands.Snapshotable
 import blockudoku.observer.Observable
 
-class FocusManager(private var focusState: FocusState) extends Observable, Snapshotable[FocusManager#FocusManagerSnapshot]{
-  
+class FocusManager() extends Observable, Snapshotable[FocusManager#FocusManagerSnapshot]{
+  private var focusState: FocusState = FocusState.Elements
+
   def setFocusState(focusState: FocusState): Unit = {
     this.focusState = focusState
     notifyObservers()

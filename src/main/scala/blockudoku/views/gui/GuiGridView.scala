@@ -12,8 +12,7 @@ import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.Rectangle
 
-class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector, focusManager: FocusManager) extends GuiView {
-  private val previewBuilder = GridPreviewBuilder(gridCollector, elementCollector)
+class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector, focusManager: FocusManager, previewBuilder: GridPreviewBuilder) extends GuiView {
   private val previewObservable = new Observable {}
   private var previewGrid: Option[Grid] = None
 

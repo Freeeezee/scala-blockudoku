@@ -10,10 +10,8 @@ import blockudoku.views.console.composed.{ConsoleElement, HorizontalFrame, Regul
 import blockudoku.windows.{FocusManager, FocusState, Window}
 
 case class ConsoleGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector,
-                           focusManager: FocusManager, window: Window) extends ConsoleView(focusManager, window), Observer {
+                           focusManager: FocusManager, window: Window, previewBuilder: GridPreviewBuilder) extends ConsoleView(focusManager, window), Observer {
   override val interactableFocusStates: Set[FocusState] = Set(FocusState.Grid)
-
-  private val previewBuilder = GridPreviewBuilder(gridCollector, elementCollector)
 
   private var highlightedIndex = -1
   
