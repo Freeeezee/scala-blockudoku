@@ -5,8 +5,8 @@ import blockudoku.observer.Observable
 import blockudoku.windows.{FocusManager, FocusState}
 import scalafx.beans.property.ObjectProperty
 
-class GridControllerImpl(focusManager: FocusManager) extends GridController {
-  var grid: Grid = generateGrid(9, 9)
+class GridControllerImpl(focusManager: FocusManager, gridConfig: GridConfig) extends GridController {
+  var grid: Grid = generateGrid(gridConfig.xLength, gridConfig.yLength)
   
   private def generateGrid(xLength: Int, yLength: Int): Grid = {
     var list = List[Tile]()

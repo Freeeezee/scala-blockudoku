@@ -1,18 +1,37 @@
 package test.views
-import blockudoku.controllers.{ElementController, GridController}
+import blockudoku.controllers.{ControllerMediator, ElementController, ElementControllerImpl, GridConfig, GridController, GridControllerImpl}
+import blockudoku.models.{ElementCollector, GridCollector}
+import blockudoku.services.Random
 import blockudoku.views.console.ConsoleGridView
 import blockudoku.views.console.composed.ComposedConsoleFormatter
 import blockudoku.windows.FocusManager
 import blockudoku.windows.FocusState.Grid
+import io.gitlab.freeeezee.yadis.{ComponentContainer, ComponentProvider}
+import io.gitlab.freeeezee.yadis.Lifetime.Singleton
 import test.{RandomMock, UnitSpec}
 // replace("\r\n", "\n") is used to make the tests pass on Windows
-class ConsoleGridViewSpec extends UnitSpec {
+class ConsoleGridViewSpec extends ViewSpec {
+  
+  def buildProviderWithGridSize(size: Int) : ComponentProvider = {
+    val compContainer = ComponentContainer()
+    compContainer.register[Random, RandomMock](Singleton)
+    compContainer.register[GridController, GridControllerImpl](Singleton)
+    compContainer.register[GridCollector, GridControllerImpl](Singleton)
+    compContainer.register[ElementCollector, ElementControllerImpl](Singleton)
+    compContainer.register[ElementController, ElementControllerImpl](Singleton)
+    compContainer.register[ControllerMediator](Singleton)
+    compContainer.register[FocusManager](Singleton)
+    compContainer.register[ConsoleGridView](Singleton)
+    compContainer.register[GridConfig](()=> GridConfig(size, size), Singleton)
+    
+    compContainer.buildProvider()
+  }
+  
   "GridView" when {
     "size 9x9" should {
       "display a 9x9 grid" in {
-        val newGridController = GridController(9, 9, elementController, new FocusManager(Grid))
-        val focusManager = new FocusManager(Grid)
-        val gridView = ConsoleGridView(newGridController, ElementController(RandomMock(), focusManager), focusManager)
+        
+        val gridView = buildProviderWithGridSize(9).get[ConsoleGridView]
         viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x----x----x----x----x----x
             ||    |    |    |    |    |    |    |    |    |
@@ -38,9 +57,7 @@ class ConsoleGridViewSpec extends UnitSpec {
     }
     "size 4x4" should {
       "display a 4x4 grid" in {
-        val newGridController = GridController(4, 4, elementController, new FocusManager(Grid))
-        val focusManager = new FocusManager(Grid)
-        val gridView = ConsoleGridView(newGridController, ElementController(RandomMock(), focusManager), focusManager)
+        val gridView = buildProviderWithGridSize(4).get[ConsoleGridView]
         viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x
             ||    |    |    |    |
@@ -56,9 +73,7 @@ class ConsoleGridViewSpec extends UnitSpec {
     }
     "size 6x6" should {
       "display a 6x6 grid" in {
-        val newGridController = GridController(6, 6, elementController, new FocusManager(Grid))
-        val focusManager = new FocusManager(Grid)
-        val gridView = ConsoleGridView(newGridController, ElementController(RandomMock(), focusManager), focusManager)
+        val gridView = buildProviderWithGridSize(6).get[ConsoleGridView]
         viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x----x----x
             ||    |    |    |    |    |    |
@@ -79,12 +94,13 @@ class ConsoleGridViewSpec extends UnitSpec {
 
     "an element is added" should {
       "display the element at the correct position" in {
-        val newElementController = ElementController(RandomMock(), new FocusManager(Grid))
-        val newGridController = GridController(6, 6, newElementController, new FocusManager(Grid))
-        val focusManager = new FocusManager(Grid)
-        val elementController = ElementController(RandomMock(), focusManager)
-        val gridView = ConsoleGridView(newGridController, newElementController, focusManager)
-        newGridController.setElement(newElementController.elements(0), 0)
+        
+        val newProvider = buildProviderWithGridSize(6)
+        val gridView = newProvider.get[ConsoleGridView]
+        val elementController = newProvider.get[ElementController]
+        val mediator = newProvider.get[ControllerMediator]
+        
+        mediator.setElement(elementController.elements(0), 0)
 
         viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x----x----x
@@ -106,10 +122,11 @@ class ConsoleGridViewSpec extends UnitSpec {
     
     "formatted" should {
       "select the correct tile" in {
-        val focusManager = new FocusManager(Grid)
-        val elementController = ElementController(RandomMock(), focusManager)
-        elementController.selectElement(elementController.elements(0))
-        val gridView = ConsoleGridView(gridController, elementController, focusManager)
+        
+        val newProvider = buildProviderWithGridSize(9)
+        val gridView = newProvider.get[ConsoleGridView]
+        val gridController = newProvider.get[GridController]
+        
         val formatter = ComposedConsoleFormatter.create(gridView.consoleElement)
 
         formatter.select()
@@ -120,13 +137,11 @@ class ConsoleGridViewSpec extends UnitSpec {
 
     "previewing" should {
       "display a green preview when the element can be placed" in {
-        val focusManager = new FocusManager(Grid)
-        val elementController = ElementController(RandomMock(), focusManager)
-        elementController.selectElement(elementController.elements(0))
-        val newGridController = GridController(6, 6, elementController, focusManager)
-        val gridView = ConsoleGridView(newGridController, elementController, focusManager)
+        val newProvider = buildProviderWithGridSize(6)
+        val gridView = newProvider.get[ConsoleGridView]
+        val gridController = newProvider.get[GridController]
 
-        gridView.onTileHighlighted(newGridController.grid.tile(0, 0).get)
+        gridView.onTileHighlighted(gridController.grid.tile(0, 0).get)
 
         viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x----x----x
@@ -145,15 +160,16 @@ class ConsoleGridViewSpec extends UnitSpec {
             |""".stripMargin.replace("\r\n", "\n"))
       }
       "display a red preview when the element is blocked by another" in {
-        val focusManager = new FocusManager(Grid)
-        val elementController = ElementController(RandomMock(), focusManager)
-        elementController.selectElement(elementController.elements(0))
-        val newGridController = GridController(6, 6, elementController, focusManager)
-        val gridView = ConsoleGridView(newGridController, elementController, focusManager)
+        val newProvider = buildProviderWithGridSize(6)
+        val gridView = newProvider.get[ConsoleGridView]
+        val gridController = newProvider.get[GridController]
+        val mediator = newProvider.get[ControllerMediator]
+        val elementController = newProvider.get[ElementController]
+        
 
-        newGridController.setElement(elementController.elements(0), 0)
+        mediator.setElement(elementController.elements(0), 0)
 
-        gridView.onTileHighlighted(newGridController.grid.tile(0, 0).get)
+        gridView.onTileHighlighted(gridController.grid.tile(0, 0).get)
 
         viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x----x----x
@@ -173,13 +189,13 @@ class ConsoleGridViewSpec extends UnitSpec {
       }
 
       "not display anything when the element is out of bounds" in {
-        val focusManager = new FocusManager(Grid)
-        val elementController = ElementController(RandomMock(), focusManager)
-        elementController.selectElement(elementController.elements(0))
-        val newGridController = GridController(6, 6, elementController, focusManager)
-        val gridView = ConsoleGridView(newGridController, elementController, focusManager)
 
-        gridView.onTileHighlighted(newGridController.grid.tile(5, 0).get)
+        val newProvider = buildProviderWithGridSize(6)
+        val gridView = newProvider.get[ConsoleGridView]
+        val gridController = newProvider.get[GridController]
+        
+
+        gridView.onTileHighlighted(gridController.grid.tile(5, 0).get)
 
         viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x----x----x

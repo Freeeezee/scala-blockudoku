@@ -60,7 +60,7 @@ class ConsoleWindow(commandFactory: CommandFactory, commandInvoker: CommandInvok
     println(content)
   }
   
-  private def content: String = {
+  def content: String = {
     formatter = createFormatter(formatter.selectedX, formatter.selectedY)
     formatter.content()
   }
