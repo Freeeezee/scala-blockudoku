@@ -1,5 +1,6 @@
 package blockudoku.views.gui
 
+import blockudoku.App
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ElementController, GridController}
 import blockudoku.windows.FocusManager
@@ -50,6 +51,9 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
           padding = Insets(20)
           children = viewList.map(_.element)
         }
+      }
+      onCloseRequest = _ => {
+        App.exit()
       }
     }
   }

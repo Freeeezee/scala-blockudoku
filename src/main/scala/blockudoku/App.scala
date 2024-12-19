@@ -5,6 +5,7 @@ import blockudoku.controllers.{ControllerMediator, ElementControllerImpl, GridCo
 import blockudoku.services.{ApplicationThread, RandomImpl}
 import blockudoku.windows.FocusState.Elements
 import blockudoku.windows.*
+import scalafx.application.Platform
 
 object App {
   
