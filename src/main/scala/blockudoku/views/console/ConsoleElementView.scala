@@ -1,18 +1,17 @@
 package blockudoku.views.console
 
 import blockudoku.commands.{CommandFactory, CommandInvoker, SelectElementCommand}
-import blockudoku.controllers.{ControllerMediator, ElementController, GridController}
-import blockudoku.models.Element
+import blockudoku.models.{Element, ElementCollector, GridCollector}
 import blockudoku.observer.Observer
 import blockudoku.services.console.ElementFormatter
 import blockudoku.views.console.composed.{ConsoleElement, HorizontalFrame, RegularConsoleElement, VerticalFrame}
 import blockudoku.windows.{FocusManager, FocusState, Window}
 
-case class ConsoleElementView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController,
+case class ConsoleElementView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, elementCollector: ElementCollector, gridCollector: GridCollector,
                               focusManager: FocusManager, window: Window) extends ConsoleView(focusManager, window), Observer {
   override val interactableFocusStates: Set[FocusState] = Set(FocusState.Elements)
 
-  elementController.addObserver(this)
+  elementCollector.addObserver(this)
   
   private val headline = "Elements_"
   private val spacing = 15
@@ -38,14 +37,14 @@ case class ConsoleElementView(commandFactory: CommandFactory, commandInvoker: Co
     "-" * headlineDividerLineLength
   }
   private def headlineDividerLineLength: Int = {
-    val width = gridController.grid.value.xLength * 5 + 1
+    val width = gridCollector.getGrid.xLength * 5 + 1
 
     if (headline.length > width) 0
     else (width - headline.length - 2) / 2
   }
 
   private def formattedElements: ConsoleElement = {
-    val list = elementController.elements.value
+    val list = elementCollector.getElements
       .map(ElementFormatter.apply)
       .map(formatter => RegularConsoleElement(formatter.content, isInteractable = true, 
         onSelect = () => selectElementCommand(formatter.element)))

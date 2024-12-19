@@ -1,7 +1,7 @@
 package blockudoku.views.gui
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ElementController, GridController}
-import blockudoku.models.{Grid, Tile, TileState}
+import blockudoku.models.{ElementCollector, Grid, GridCollector, Tile, TileState}
 import blockudoku.observer.{Observable, Observer}
 import blockudoku.services.GridPreviewBuilder
 import blockudoku.windows.{FocusManager, FocusState}
@@ -12,8 +12,8 @@ import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.Rectangle
 
-class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager) extends GuiView {
-  private val previewBuilder = GridPreviewBuilder(gridController, elementController)
+class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector, focusManager: FocusManager) extends GuiView {
+  private val previewBuilder = GridPreviewBuilder(gridCollector, elementCollector)
   private val previewObservable = new Observable {}
   private var previewGrid: Option[Grid] = None
 
@@ -21,7 +21,7 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
     new VBox {
       alignment = Pos.Center
       children = List()
-      for row <- 0 until gridController.grid.value.yLength do {
+      for row <- 0 until gridCollector.getGrid.yLength do {
         children.add(gridRow(row))
       }
     }
@@ -30,7 +30,7 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
     new HBox {
       alignment = Pos.Center
       children = List()
-      for column <- 0 until gridController.grid.value.xLength do {
+      for column <- 0 until gridCollector.getGrid.xLength do {
         children.add(gridButton(column, row))
       }
     }
@@ -42,7 +42,7 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
         alignment = Pos.Center
         width = 40
         height = 40
-        fill = computeColor(gridController.grid.value.tile(column, row).get)
+        fill = computeColor(gridCollector.getGrid.tile(column, row).get)
         //stroke = "black"
       }
 
@@ -52,13 +52,13 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
       minWidth = 30
 
       onAction = _ => {
-        val tile = gridController.grid.value.tile(column, row).get
-        val command = commandFactory.createSetElementCommand(elementController.selectedElement.value.get, tile.index)
+        val tile = gridCollector.getGrid.tile(column, row).get
+        val command = commandFactory.createSetElementCommand(elementCollector.getSelectedElement.get, tile.index)
         commandInvoker.execute(command)
       }
 
-      gridController.addObserver(() => {
-        stateRectangle.fill = computeColor(gridController.grid.value.tile(column, row).get)
+      gridCollector.addObserver(() => {
+        stateRectangle.fill = computeColor(gridCollector.getGrid.tile(column, row).get)
       })
 
       focusManager.addObserver(() => {
@@ -66,7 +66,7 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
       })
 
       onMouseEntered = _ => {
-        val previewIndex = gridController.grid.value.tile(column, row).get.index
+        val previewIndex = gridCollector.getGrid.tile(column, row).get.index
 
         previewGrid = Some(previewBuilder.buildGrid(previewIndex))
 
@@ -76,11 +76,11 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
         previewGrid = None
         previewObservable.notifyObservers()
       }
-
+        
       previewObservable.addObserver(() => {
         previewGrid match
           case Some(grid) => stateRectangle.fill = computeColor(grid.tile(column, row).get)
-          case None => stateRectangle.fill = computeColor(gridController.grid.value.tile(column, row).get)
+          case None => stateRectangle.fill = computeColor(gridCollector.getGrid.tile(column, row).get)
       })
     }
   }

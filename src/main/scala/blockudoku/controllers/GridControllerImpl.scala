@@ -5,8 +5,8 @@ import blockudoku.observer.Observable
 import blockudoku.windows.{FocusManager, FocusState}
 import scalafx.beans.property.ObjectProperty
 
-class GridControllerImpl(val xLength: Int, val yLength: Int, elementController: ElementController, focusManager: FocusManager) extends GridController {
-  val grid: ObjectProperty[Grid] = ObjectProperty(generateGrid(xLength, yLength))
+class GridControllerImpl(val xLength: Int, val yLength: Int, focusManager: FocusManager) extends GridController {
+  var grid: Grid = generateGrid(xLength, yLength)
   
   private def generateGrid(xLength: Int, yLength: Int): Grid = {
     var list = List[Tile]()
@@ -21,14 +21,14 @@ class GridControllerImpl(val xLength: Int, val yLength: Int, elementController: 
   }
 
   def setElement(element: Element, selectedPos: Int): Boolean = {
-    val tiles = grid.value.elementTiles(element, selectedPos)
+    val tiles = grid.elementTiles(element, selectedPos)
     
     
     if tiles.isEmpty || isOccupied(tiles.get) then {
       return false
     }
     
-    grid.value = grid.value.copyWithNewState(tiles.get, TileState.blocked, element.colors)
+    grid = grid.copyWithNewState(tiles.get, TileState.blocked, element.colors)
     
     notifyObservers()
     true

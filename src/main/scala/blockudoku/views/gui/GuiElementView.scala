@@ -1,7 +1,7 @@
 package blockudoku.views.gui
 
 import blockudoku.commands.{CommandFactory, CommandInvoker}
-import blockudoku.controllers.{ElementController, GridController}
+import blockudoku.models.{ElementCollector, GridCollector}
 import blockudoku.observer.Observer
 import blockudoku.services.console.ElementFormatter
 import scalafx.application.Platform
@@ -10,7 +10,7 @@ import scalafx.scene.Node
 import scalafx.scene.control.Button
 import scalafx.scene.layout.HBox
 
-class GuiElementView (commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController) extends GuiView {
+class GuiElementView (commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector) extends GuiView {
 
   override def element: Node = {
     new HBox {
@@ -18,7 +18,7 @@ class GuiElementView (commandFactory: CommandFactory, commandInvoker: CommandInv
       spacing = 10
       padding = Insets(10)
       children = List()
-      for index <- elementController.elements.value.indices do {
+      for index <- elementCollector.getElements.indices do {
         children.add(elementButton(index))
       }
     }
@@ -30,7 +30,7 @@ class GuiElementView (commandFactory: CommandFactory, commandInvoker: CommandInv
 
       minHeight = 100
       minWidth = 100
-      elementController.addObserver(new Observer {
+      elementCollector.addObserver(new Observer {
         override def update(): Unit = {
           Platform.runLater( () => {
             graphic = elementContent(index)
@@ -38,14 +38,14 @@ class GuiElementView (commandFactory: CommandFactory, commandInvoker: CommandInv
         }
       })
       onAction = _ => {
-        val command = commandFactory.createSelectElementCommand(elementController.elements.value(index))
+        val command = commandFactory.createSelectElementCommand(elementCollector.getElements(index))
         commandInvoker.execute(command)
       }
     }
   }
 
   private def elementContent(index: Int): Node = {
-    val element = elementController.elements.value(index)
+    val element = elementCollector.getElements(index)
     GuiElementFormatter(element).content
   }
 }

@@ -1,35 +1,43 @@
 package blockudoku.controllers
 
 import blockudoku.commands.Snapshotable
-import blockudoku.models.Element
+import blockudoku.models.{Element, ElementCollector}
 import blockudoku.observer.Observable
-import scalafx.beans.property.ObjectProperty
 
-trait ElementController extends Observable, Snapshotable[ElementController#ElementControllerSnapshot] {
+trait ElementController extends ElementCollector, Snapshotable[ElementController#ElementControllerSnapshot] {
   val maxElementLength: Int
   val elementCount: Int
 
-  var elements: ObjectProperty[List[Element]]
+  var elements: List[Element]
 
-  var selectedElement: ObjectProperty[Option[Element]] = ObjectProperty(None)
+  var selectedElement: Option[Element] = None
   
   def regenerate(slot: Int): Element
   
   def selectElement(element: Element): Unit
   
   def resetSelectedElement(): Unit = {
-    selectedElement.value = None
+    selectedElement = None
   }
   
   case class ElementControllerSnapshot(selectedElement: Option[Element], elements: List[Element])
   
   def createSnapshot(): Unit = {
-    snapshots.push(ElementControllerSnapshot(selectedElement.value, elements.value))
+    snapshots.push(ElementControllerSnapshot(selectedElement, elements))
   }
+  
   def revertSnapshot(): Unit = {
     val snapshot = snapshots.pop()
-    selectedElement.value = snapshot.selectedElement
-    elements.value = snapshot.elements
+    selectedElement = snapshot.selectedElement
+    elements = snapshot.elements
     notifyObservers()
+  }
+
+  override def getElements: List[Element] = {
+    elements
+  }
+
+  override def getSelectedElement: Option[Element] = {
+    selectedElement
   }
 }

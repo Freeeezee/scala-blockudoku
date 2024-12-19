@@ -1,22 +1,25 @@
 package blockudoku.controllers
 
 import blockudoku.commands.Snapshotable
-import blockudoku.models.{Element, Grid}
+import blockudoku.models.{Element, Grid, GridCollector}
 import blockudoku.observer.Observable
-import scalafx.beans.property.ObjectProperty
 
-trait GridController extends Observable, Snapshotable[GridController#GridControllerSnapshot] {
-  val grid: ObjectProperty[Grid]
+trait GridController extends GridCollector, Snapshotable[GridController#GridControllerSnapshot] {
+  var grid: Grid
   def setElement(element: Element, selectedPos: Int): Boolean
   case class GridControllerSnapshot(grid: Grid)
 
   def createSnapshot(): Unit = {
-    snapshots.push(GridControllerSnapshot(grid.value))
+    snapshots.push(GridControllerSnapshot(grid))
   }
 
   def revertSnapshot(): Unit = {
     val snapshot = snapshots.pop()
-    grid.value = snapshot.grid
+    grid = snapshot.grid
     notifyObservers()
+  }
+  
+  override def getGrid: Grid = {
+    grid
   }
 }

@@ -3,11 +3,12 @@ package blockudoku.windows
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ControllerMediator, ElementController, GridController}
 import blockudoku.input.ConsoleInputHandler
+import blockudoku.models.{ElementCollector, GridCollector}
 import blockudoku.services.{ApplicationThread, CancelableTask}
 import blockudoku.views.console.composed.{ComposedConsoleFormatter, Direction, VerticalFrame}
 import blockudoku.views.console.{ConsoleElementView, ConsoleGridView, ConsoleHeadlineView, ConsoleView}
 
-class ConsoleWindow(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager, inputHandler: ConsoleInputHandler) extends Window {
+class ConsoleWindow(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector, focusManager: FocusManager, inputHandler: ConsoleInputHandler) extends Window {
   private val views = initializeViews()
 
   private var formatter = createFormatter(0, 0)
@@ -23,14 +24,14 @@ class ConsoleWindow(commandFactory: CommandFactory, commandInvoker: CommandInvok
     views
   }
   private def initializeHeadlineView(): ConsoleView = {
-    val width = gridController.grid.value.xLength * 5 + 1
+    val width = gridCollector.getGrid.xLength * 5 + 1
     ConsoleHeadlineView(width, focusManager, this)
   }
   private def initializeGridView(): ConsoleView = {
-    ConsoleGridView(commandFactory, commandInvoker, gridController, elementController, focusManager, this)
+    ConsoleGridView(commandFactory, commandInvoker, gridCollector, elementCollector, focusManager, this)
   }
   private def initializeElementView(): ConsoleView = {
-    ConsoleElementView(commandFactory, commandInvoker, gridController, elementController, focusManager, this)
+    ConsoleElementView(commandFactory, commandInvoker, elementCollector, gridCollector, focusManager, this)
   }
 
   override def display(): Unit = {

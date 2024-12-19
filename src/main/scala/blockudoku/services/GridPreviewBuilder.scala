@@ -1,16 +1,16 @@
 package blockudoku.services
 
 import blockudoku.controllers.{ElementController, GridController}
-import blockudoku.models.{Grid, Tile}
+import blockudoku.models.{ElementCollector, Grid, GridCollector, Tile}
 import blockudoku.models.TileState.{blocked, empty, previewInvalid, previewValid}
 
-class GridPreviewBuilder(gridController: GridController, elementController: ElementController) {
+class GridPreviewBuilder(gridCollector: GridCollector, elementCollector: ElementCollector) {
   def buildGrid(selectedPos: Int): Grid = {
-    var grid = gridController.grid.value.copy()
+    var grid = gridCollector.getGrid.copy()
 
-    if selectedPos < 0 || elementController.selectedElement.value.isEmpty then return grid
+    if selectedPos < 0 || elementCollector.getSelectedElement.isEmpty then return grid
     
-    val tiles = grid.elementTiles(elementController.selectedElement.value.get, selectedPos)
+    val tiles = grid.elementTiles(elementCollector.getSelectedElement.get, selectedPos)
 
     if tiles.isEmpty then return grid
 

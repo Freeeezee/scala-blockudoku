@@ -2,18 +2,18 @@ package blockudoku.views.console
 
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ControllerMediator, ElementController, GridController}
-import blockudoku.models.{Grid, Tile, TileState}
+import blockudoku.models.{ElementCollector, Grid, GridCollector, Tile, TileState}
 import blockudoku.observer.Observer
 import blockudoku.services.GridPreviewBuilder
 import blockudoku.services.console.ConsoleStyle
 import blockudoku.views.console.composed.{ConsoleElement, HorizontalFrame, RegularConsoleElement, VerticalFrame}
 import blockudoku.windows.{FocusManager, FocusState, Window}
 
-case class ConsoleGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController,
+case class ConsoleGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector,
                            focusManager: FocusManager, window: Window) extends ConsoleView(focusManager, window), Observer {
   override val interactableFocusStates: Set[FocusState] = Set(FocusState.Grid)
 
-  private val previewBuilder = GridPreviewBuilder(gridController, elementController)
+  private val previewBuilder = GridPreviewBuilder(gridCollector, elementCollector)
 
   private var highlightedIndex = -1
   
@@ -80,7 +80,7 @@ case class ConsoleGridView(commandFactory: CommandFactory, commandInvoker: Comma
   }
   
   private def onTileSelected(tile: Tile): Unit = {
-    val command = commandFactory.createSetElementCommand(elementController.selectedElement.value.get, tile.index)
+    val command = commandFactory.createSetElementCommand(elementCollector.getSelectedElement.get, tile.index)
     commandInvoker.execute(command)
     highlightedIndex = -1
   }
