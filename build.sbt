@@ -17,7 +17,7 @@ lazy val root = (project in file("."))
       "org.scalactic" %% "scalactic" % "3.2.19",
       "org.scalatest" %% "scalatest" % "3.2.19" % Test,
       "org.scalafx" %% "scalafx" % "22.0.0-R33",
-      "io.gitlab.freeeezee" %% "yadis" % "1.0.1"
+      "io.gitlab.freeeezee" %% "yadis" % "1.0.2"
     ),
     scalacOptions ++= Seq(
       "-deprecation",
