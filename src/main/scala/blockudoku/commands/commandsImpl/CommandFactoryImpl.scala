@@ -1,5 +1,6 @@
-package blockudoku.commands
+package blockudoku.commands.commandsImpl
 
+import blockudoku.commands.{Command, CommandFactory}
 import blockudoku.controllers.ControllerMediator
 import blockudoku.models.Element
 

@@ -1,4 +1,4 @@
-package blockudoku.controllers
+package blockudoku.controllers.mediatorImpl
 
 import blockudoku.models.{Colors, Element, Point}
 import blockudoku.services.Random

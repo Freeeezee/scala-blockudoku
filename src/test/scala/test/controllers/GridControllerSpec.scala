@@ -1,6 +1,6 @@
 package test.controllers
 
-import blockudoku.controllers.{ElementController, GridController}
+import blockudoku.controllers.mediatorImpl.{ElementController, GridController}
 import test.UnitSpec
 
 class GridControllerSpec extends UnitSpec {

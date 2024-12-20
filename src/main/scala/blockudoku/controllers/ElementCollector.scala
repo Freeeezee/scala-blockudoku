@@ -1,5 +1,6 @@
-package blockudoku.models
+package blockudoku.controllers
 
+import blockudoku.models.Element
 import blockudoku.observer.Observable
 
 trait ElementCollector extends Observable{

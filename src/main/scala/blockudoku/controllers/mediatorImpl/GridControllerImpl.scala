@@ -1,9 +1,8 @@
-package blockudoku.controllers
+package blockudoku.controllers.mediatorImpl
 
+import blockudoku.controllers.GridConfig
 import blockudoku.models.*
-import blockudoku.observer.Observable
-import blockudoku.windows.{FocusManager, FocusState}
-import scalafx.beans.property.ObjectProperty
+import blockudoku.windows.FocusManager
 
 class GridControllerImpl(focusManager: FocusManager, gridConfig: GridConfig) extends GridController {
   var grid: Grid = generateGrid(gridConfig.xLength, gridConfig.yLength)

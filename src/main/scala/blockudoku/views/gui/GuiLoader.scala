@@ -2,7 +2,7 @@ package blockudoku.views.gui
 
 import blockudoku.App
 import blockudoku.commands.{CommandFactory, CommandInvoker}
-import blockudoku.controllers.{ElementController, GridController}
+import blockudoku.controllers.mediatorImpl.{ElementController, GridController}
 import blockudoku.services.GridPreviewBuilder
 import blockudoku.windows.FocusManager
 import scalafx.application.JFXApp3

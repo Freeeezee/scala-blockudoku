@@ -1,9 +1,9 @@
 package test.controllers
 
-import blockudoku.controllers.ElementController
+import blockudoku.controllers.mediatorImpl.ElementController
 import blockudoku.models.Point
 import blockudoku.windows.FocusManager
-import blockudoku.windows.FocusState.Elements
+import blockudoku.windows.focusManagerImpl.FocusState.Elements
 import test.{RandomMock, UnitSpec}
 class ElementControllerSpec extends UnitSpec {
   "An ElementController" when {

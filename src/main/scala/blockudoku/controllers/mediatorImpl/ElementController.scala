@@ -1,7 +1,8 @@
-package blockudoku.controllers
+package blockudoku.controllers.mediatorImpl
 
 import blockudoku.commands.Snapshotable
-import blockudoku.models.{Element, ElementCollector}
+import blockudoku.controllers.ElementCollector
+import blockudoku.models.Element
 import blockudoku.observer.Observable
 
 trait ElementController extends ElementCollector, Snapshotable[ElementController#ElementControllerSnapshot] {

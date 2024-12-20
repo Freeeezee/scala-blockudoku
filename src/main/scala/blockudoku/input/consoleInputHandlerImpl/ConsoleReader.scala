@@ -1,7 +1,7 @@
-package blockudoku.input
+package blockudoku.input.consoleInputHandlerImpl
 
-import org.jline.terminal.TerminalBuilder
 import org.jline.keymap.{BindingReader, KeyMap}
+import org.jline.terminal.TerminalBuilder
 
 class ConsoleReader(keyMap: KeyMap[() => Unit]) {
   private val terminal = TerminalBuilder.builder().system(true).build()

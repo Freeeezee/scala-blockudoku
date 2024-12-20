@@ -1,7 +1,8 @@
 package blockudoku.views.gui
 import blockudoku.commands.{CommandFactory, CommandInvoker}
-import blockudoku.controllers.{ElementController, GridController}
-import blockudoku.models.{ElementCollector, Grid, GridCollector, Tile, TileState}
+import blockudoku.controllers.mediatorImpl.{ElementController, GridController}
+import blockudoku.controllers.{ElementCollector, GridCollector}
+import blockudoku.models.{Grid, Tile, TileState}
 import blockudoku.observer.{Observable, Observer}
 import blockudoku.services.GridPreviewBuilder
 import blockudoku.windows.{FocusManager, FocusState}

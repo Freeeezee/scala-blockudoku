@@ -2,9 +2,9 @@ package blockudoku.windows
 
 import blockudoku.App
 import blockudoku.commands.{CommandFactory, CommandInvoker}
-import blockudoku.controllers.{ControllerMediator, ElementController, GridController}
+import blockudoku.controllers.mediatorImpl.{ElementController, GridController}
+import blockudoku.controllers.{ControllerMediator, ElementCollector, GridCollector}
 import blockudoku.input.ConsoleInputHandler
-import blockudoku.models.{ElementCollector, GridCollector}
 import blockudoku.services.{ApplicationThread, CancelableTask, GridPreviewBuilder}
 import blockudoku.views.console.composed.Direction.{Down, Left, Right, Up}
 import blockudoku.views.console.composed.{ComposedConsoleFormatter, Direction, VerticalFrame}

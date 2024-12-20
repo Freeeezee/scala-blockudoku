@@ -1,11 +1,12 @@
 package test.views
-import blockudoku.controllers.{ControllerMediator, ElementController, ElementControllerImpl, GridConfig, GridController, GridControllerImpl}
-import blockudoku.models.{ElementCollector, GridCollector}
+
+import blockudoku.controllers.mediatorImpl.{ElementController, ElementControllerImpl, GridController, GridControllerImpl}
+import blockudoku.controllers.{ControllerMediator, ElementCollector, GridCollector, GridConfig}
 import blockudoku.services.Random
 import blockudoku.views.console.ConsoleGridView
 import blockudoku.views.console.composed.ComposedConsoleFormatter
 import blockudoku.windows.FocusManager
-import blockudoku.windows.FocusState.Grid
+import blockudoku.windows.focusManagerImpl.FocusState.Grid
 import io.gitlab.freeeezee.yadis.{ComponentContainer, ComponentProvider}
 import io.gitlab.freeeezee.yadis.Lifetime.Singleton
 import test.{RandomMock, UnitSpec}

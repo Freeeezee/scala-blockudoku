@@ -1,11 +1,14 @@
 package blockudoku
 
-import blockudoku.commands.{CommandFactory, CommandFactoryImpl, CommandInvoker}
-import blockudoku.controllers.{ControllerMediator, ElementController, ElementControllerImpl, GridConfig, GridController, GridControllerImpl}
+import blockudoku.commands.commandsImpl.CommandFactoryImpl
+import blockudoku.commands.{CommandFactory, CommandInvoker}
+import blockudoku.controllers.mediatorImpl.{ControllerMediatorImpl, ElementController, ElementControllerImpl, GridController, GridControllerImpl}
+import blockudoku.controllers.{ControllerMediator, ElementCollector, GridCollector, GridConfig}
 import blockudoku.input.ConsoleInputHandler
-import blockudoku.models.{ElementCollector, GridCollector}
+import blockudoku.services.gridPreviewBuilderImpl.GridPreviewBuilderImpl
 import blockudoku.services.{GridPreviewBuilder, Random, RandomImpl}
 import blockudoku.views.gui.GuiLoader
+import blockudoku.windows.focusManagerImpl.FocusManagerImpl
 import blockudoku.windows.{ConsoleWindow, FocusManager, GuiWindow}
 import io.gitlab.freeeezee.yadis.ComponentContainer
 import io.gitlab.freeeezee.yadis.Lifetime.Singleton
@@ -27,9 +30,9 @@ extension (componentContainer: ComponentContainer) {
     componentContainer.register[ElementCollector, ElementControllerImpl](Singleton)
     componentContainer.register[GridCollector, GridControllerImpl](Singleton)
     componentContainer.register[GridController, GridControllerImpl](Singleton)
-    componentContainer.register[ControllerMediator](Singleton)
-    componentContainer.register[FocusManager](Singleton)
-    componentContainer.register[GridPreviewBuilder](Singleton)
+    componentContainer.register[ControllerMediator, ControllerMediatorImpl](Singleton)
+    componentContainer.register[FocusManager, FocusManagerImpl](Singleton)
+    componentContainer.register[GridPreviewBuilder, GridPreviewBuilderImpl](Singleton)
     componentContainer.register[GridConfig](()=> GridConfig(), Singleton)
     componentContainer
   }

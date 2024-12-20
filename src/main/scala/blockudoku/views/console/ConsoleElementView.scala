@@ -1,7 +1,9 @@
 package blockudoku.views.console
 
-import blockudoku.commands.{CommandFactory, CommandInvoker, SelectElementCommand}
-import blockudoku.models.{Element, ElementCollector, GridCollector}
+import blockudoku.commands.commandsImpl.SelectElementCommand
+import blockudoku.commands.{CommandFactory, CommandInvoker}
+import blockudoku.controllers.{ElementCollector, GridCollector}
+import blockudoku.models.Element
 import blockudoku.observer.Observer
 import blockudoku.services.console.ElementFormatter
 import blockudoku.views.console.composed.{ConsoleElement, HorizontalFrame, RegularConsoleElement, VerticalFrame}

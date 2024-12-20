@@ -4,7 +4,7 @@ import test.UnitSpec
 import blockudoku.views.console.{ConsoleHeadlineView, ConsoleView}
 import blockudoku.views.console.composed.RegularConsoleElement
 import blockudoku.windows.FocusManager
-import blockudoku.windows.FocusState.Grid
+import blockudoku.windows.focusManagerImpl.FocusState.Grid
 
 class ConsoleHeadlineViewSpec extends ViewSpec {
   "HeadlineView" when {

@@ -1,15 +1,16 @@
 package blockudoku
 
-import blockudoku.commands.{CommandFactoryImpl, CommandInvoker}
-import blockudoku.controllers.{ControllerMediator, ElementControllerImpl, GridControllerImpl}
+import blockudoku.commands.CommandInvoker
+import blockudoku.commands.commandsImpl.CommandFactoryImpl
+import blockudoku.controllers.mediatorImpl.{ElementControllerImpl, GridControllerImpl}
+import blockudoku.controllers.ControllerMediator
 import blockudoku.services.{ApplicationThread, RandomImpl}
-import blockudoku.windows.FocusState.Elements
 import blockudoku.windows.*
 import io.gitlab.freeeezee.yadis.ComponentContainer
 
 object App {
   
-  val container = ComponentContainer().registerComponents().buildProvider()
+  private val container = ComponentContainer().registerComponents().buildProvider()
 
   def run(): Unit = {
     

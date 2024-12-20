@@ -1,9 +1,9 @@
 package test
 
-import blockudoku.controllers.{ElementController, GridController}
+import blockudoku.controllers.mediatorImpl.{ElementController, GridController}
 import blockudoku.views.console.ConsoleView
 import blockudoku.windows.FocusManager
-import blockudoku.windows.FocusState.Elements
+import blockudoku.windows.focusManagerImpl.FocusState.Elements
 import io.gitlab.freeeezee.yadis.{ComponentContainer, ComponentProvider}
 import org.scalatest.{BeforeAndAfterEach, GivenWhenThen}
 import org.scalatest.matchers.should.Matchers

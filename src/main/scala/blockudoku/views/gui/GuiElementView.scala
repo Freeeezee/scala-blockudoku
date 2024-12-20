@@ -1,7 +1,7 @@
 package blockudoku.views.gui
 
 import blockudoku.commands.{CommandFactory, CommandInvoker}
-import blockudoku.models.{ElementCollector, GridCollector}
+import blockudoku.controllers.{ElementCollector, GridCollector}
 import blockudoku.observer.Observer
 import blockudoku.services.console.ElementFormatter
 import scalafx.application.Platform

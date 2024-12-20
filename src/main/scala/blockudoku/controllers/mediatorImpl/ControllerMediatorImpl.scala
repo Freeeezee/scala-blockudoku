@@ -1,6 +1,7 @@
-package blockudoku.controllers
+package blockudoku.controllers.mediatorImpl
 
 import blockudoku.commands.Snapshotable
+import blockudoku.controllers.ControllerMediator
 import blockudoku.models.Element
 import blockudoku.windows.{FocusManager, FocusState}
 
