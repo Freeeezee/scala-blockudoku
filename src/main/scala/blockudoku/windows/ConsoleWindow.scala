@@ -9,8 +9,9 @@ import blockudoku.services.{ApplicationThread, CancelableTask, GridPreviewBuilde
 import blockudoku.views.console.composed.Direction.{Down, Left, Right, Up}
 import blockudoku.views.console.composed.{ComposedConsoleFormatter, Direction, VerticalFrame}
 import blockudoku.views.console.{ConsoleElementView, ConsoleGridView, ConsoleHeadlineView, ConsoleView}
+import com.google.inject.Inject
 
-class ConsoleWindow(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector, focusManager: FocusManager, handler: ConsoleInputHandler, previewBuilder: GridPreviewBuilder) extends Window {
+class ConsoleWindow @Inject (commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector, focusManager: FocusManager, handler: ConsoleInputHandler, previewBuilder: GridPreviewBuilder) extends Window {
 
   initializeEvents()
   

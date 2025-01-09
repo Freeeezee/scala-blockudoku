@@ -3,10 +3,12 @@ package blockudoku.controllers.mediatorImpl
 import blockudoku.controllers.GridConfig
 import blockudoku.models.*
 import blockudoku.windows.FocusManager
+import com.google.inject.Inject
 
-class GridControllerImpl(focusManager: FocusManager, gridConfig: GridConfig) extends GridController {
+class GridControllerImpl @Inject (focusManager: FocusManager, gridConfig: GridConfig) extends GridController {
   var grid: Grid = generateGrid(gridConfig.xLength, gridConfig.yLength)
-  
+
+  print(Thread.currentThread().getStackTrace().mkString("Array(", ", ", ")"))
   private def generateGrid(xLength: Int, yLength: Int): Grid = {
     var list = List[Tile]()
     

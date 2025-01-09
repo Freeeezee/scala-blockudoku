@@ -5,8 +5,9 @@ import blockudoku.controllers.{ElementCollector, GridCollector}
 import blockudoku.models.TileState.{blocked, empty, previewInvalid, previewValid}
 import blockudoku.models.{Grid, Tile}
 import blockudoku.services.GridPreviewBuilder
+import com.google.inject.Inject
 
-class GridPreviewBuilderImpl(gridCollector: GridCollector, elementCollector: ElementCollector) extends GridPreviewBuilder {
+class GridPreviewBuilderImpl @Inject (gridCollector: GridCollector, elementCollector: ElementCollector) extends GridPreviewBuilder {
   def buildGrid(selectedPos: Int): Grid = {
     var grid = gridCollector.getGrid.copy()
 

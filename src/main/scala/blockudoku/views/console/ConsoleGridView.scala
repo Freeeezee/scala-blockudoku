@@ -9,8 +9,9 @@ import blockudoku.services.GridPreviewBuilder
 import blockudoku.services.console.ConsoleStyle
 import blockudoku.views.console.composed.{ConsoleElement, HorizontalFrame, RegularConsoleElement, VerticalFrame}
 import blockudoku.windows.{FocusManager, FocusState, Window}
+import com.google.inject.Inject
 
-case class ConsoleGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector,
+case class ConsoleGridView @Inject (commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector,
                            focusManager: FocusManager, window: Window, previewBuilder: GridPreviewBuilder) extends ConsoleView(focusManager, window), Observer {
   override val interactableFocusStates: Set[FocusState] = Set(FocusState.Grid)
 

@@ -8,8 +8,9 @@ import blockudoku.observer.Observer
 import blockudoku.services.console.ElementFormatter
 import blockudoku.views.console.composed.{ConsoleElement, HorizontalFrame, RegularConsoleElement, VerticalFrame}
 import blockudoku.windows.{FocusManager, FocusState, Window}
+import com.google.inject.Inject
 
-case class ConsoleElementView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, elementCollector: ElementCollector, gridCollector: GridCollector,
+case class ConsoleElementView @Inject(commandFactory: CommandFactory, commandInvoker: CommandInvoker, elementCollector: ElementCollector, gridCollector: GridCollector,
                               focusManager: FocusManager, window: Window) extends ConsoleView(focusManager, window), Observer {
   override val interactableFocusStates: Set[FocusState] = Set(FocusState.Elements)
 

@@ -6,6 +6,7 @@ import blockudoku.models.{Grid, Tile, TileState}
 import blockudoku.observer.{Observable, Observer}
 import blockudoku.services.GridPreviewBuilder
 import blockudoku.windows.{FocusManager, FocusState}
+import com.google.inject.Inject
 import scalafx.geometry.Pos
 import scalafx.scene.Node
 import scalafx.scene.control.Button
@@ -13,7 +14,7 @@ import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.Rectangle
 
-class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector, focusManager: FocusManager, previewBuilder: GridPreviewBuilder) extends GuiView {
+class GuiGridView @Inject (commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector, focusManager: FocusManager, previewBuilder: GridPreviewBuilder) extends GuiView {
   private val previewObservable = new Observable {}
   private var previewGrid: Option[Grid] = None
 
@@ -53,7 +54,7 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
 
       onAction = _ => {
         val tile = gridCollector.getGrid.tile(column, row).get
-        val command = commandFactory.createSetElementCommand(elementCollector.getSelectedElement.get, tile.index)
+        val command = commandFactory.createSetElementCommand(elementCollector.getSelectedElement.get, tile.index) // elementCollector.getSelectedElement.get
         commandInvoker.execute(command)
       }
 

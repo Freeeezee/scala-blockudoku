@@ -2,6 +2,7 @@ package blockudoku.input.consoleInputHandlerImpl
 
 import blockudoku.input.ConsoleInputHandler
 import blockudoku.services.Event
+import com.google.inject.Inject
 import org.jline.keymap.KeyMap
 
 class ConsoleInputHandlerImpl extends ConsoleInputHandler {

@@ -5,12 +5,13 @@ import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.mediatorImpl.{ElementController, GridController}
 import blockudoku.services.GridPreviewBuilder
 import blockudoku.windows.FocusManager
+import com.google.inject.Inject
 import scalafx.application.JFXApp3
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.layout.VBox
 
-class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager, previewBuilder: GridPreviewBuilder) extends JFXApp3 {
+class GuiLoader @Inject (commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager, previewBuilder: GridPreviewBuilder) extends JFXApp3 {
 
   private val viewList = initializeViews()
 

@@ -1,13 +1,14 @@
 package blockudoku.views.gui
 
 import blockudoku.commands.CommandInvoker
+import com.google.inject.Inject
 import scalafx.geometry.Pos
 import scalafx.scene.Node
 import scalafx.scene.control.Button
 import scalafx.scene.layout.HBox
 import scalafx.scene.text.Font
 
-class GuiUndoRedoView(commandInvoker: CommandInvoker) extends GuiView {
+class GuiUndoRedoView @Inject (commandInvoker: CommandInvoker) extends GuiView {
 
   override def element: Node = {
     new HBox {
