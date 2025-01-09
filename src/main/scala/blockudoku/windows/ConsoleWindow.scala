@@ -11,7 +11,7 @@ import blockudoku.views.console.composed.{ComposedConsoleFormatter, Direction, V
 import blockudoku.views.console.{ConsoleElementView, ConsoleGridView, ConsoleHeadlineView, ConsoleView}
 import com.google.inject.Inject
 
-class ConsoleWindow @Inject (commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector, focusManager: FocusManager, handler: ConsoleInputHandler, previewBuilder: GridPreviewBuilder) extends Window {
+class ConsoleWindow (using commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector, focusManager: FocusManager, handler: ConsoleInputHandler, previewBuilder: GridPreviewBuilder) extends Window {
 
   initializeEvents()
   
@@ -31,13 +31,13 @@ class ConsoleWindow @Inject (commandFactory: CommandFactory, commandInvoker: Com
   }
   private def initializeHeadlineView(): ConsoleView = {
     val width = gridCollector.getGrid.xLength * 5 + 1
-    ConsoleHeadlineView(width, focusManager, this)
+    ConsoleHeadlineView(width, this)
   }
   private def initializeGridView(): ConsoleView = {
-    ConsoleGridView(commandFactory, commandInvoker, gridCollector, elementCollector, focusManager, this, previewBuilder)
+    ConsoleGridView(this)
   }
   private def initializeElementView(): ConsoleView = {
-    ConsoleElementView(commandFactory, commandInvoker, elementCollector, gridCollector, focusManager, this)
+    ConsoleElementView(this)
   }
 
   override def display(): Unit = {

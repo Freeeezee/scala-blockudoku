@@ -11,7 +11,7 @@ import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.layout.VBox
 
-class GuiLoader @Inject (commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager, previewBuilder: GridPreviewBuilder) extends JFXApp3 {
+class GuiLoader (using commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager, previewBuilder: GridPreviewBuilder) extends JFXApp3 {
 
   private val viewList = initializeViews()
 
@@ -30,15 +30,15 @@ class GuiLoader @Inject (commandFactory: CommandFactory, commandInvoker: Command
   }
 
   private def initializeGridView(): GuiView = {
-    new GuiGridView(commandFactory, commandInvoker, gridController, elementController, focusManager, previewBuilder)
+    new GuiGridView()
   }
 
   private def initializeElementView(): GuiView = {
-    new GuiElementView(commandFactory, commandInvoker, gridController, elementController)
+    new GuiElementView()
   }
 
   private def initialzeUndoRedoView(): GuiView = {
-    new GuiUndoRedoView(commandInvoker)
+    new GuiUndoRedoView()
   }
 
 

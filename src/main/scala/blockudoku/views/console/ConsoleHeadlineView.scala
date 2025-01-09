@@ -4,7 +4,7 @@ import blockudoku.views.console.composed.{ConsoleElement, RegularConsoleElement}
 import blockudoku.windows.{FocusManager, FocusState, Window}
 import com.google.inject.Inject
 
-case class ConsoleHeadlineView @Inject (width: Int, focusManager: FocusManager, window: Window) extends ConsoleView(focusManager, window) {
+case class ConsoleHeadlineView (width: Int, window: Window) (using focusManager: FocusManager) extends ConsoleView(focusManager, window) {
   override val interactableFocusStates: Set[FocusState] = Set()
   
   private val headline = "Blockudoku_"

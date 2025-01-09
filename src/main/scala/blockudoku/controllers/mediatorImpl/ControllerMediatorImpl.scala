@@ -6,7 +6,7 @@ import blockudoku.models.Element
 import blockudoku.windows.{FocusManager, FocusState}
 import com.google.inject.Inject
 
-class ControllerMediatorImpl @Inject (gridController: GridController, elementController: ElementController, focusManager: FocusManager) extends ControllerMediator, Snapshotable[?] {
+class ControllerMediatorImpl (using gridController: GridController, elementController: ElementController, focusManager: FocusManager) extends ControllerMediator, Snapshotable[?] {
   override def setElement(element: Element, pos: Int) : Unit = {
     if !gridController.setElement(element, pos) then return
     elementController.regenerate(element.slot)

@@ -3,9 +3,8 @@ package blockudoku.controllers.mediatorImpl
 import blockudoku.models.{Colors, Element, Point}
 import blockudoku.services.Random
 import blockudoku.windows.FocusManager
-import com.google.inject.Inject
 
-class ElementControllerImpl @Inject (random: Random, focusManager: FocusManager) extends ElementController {
+class ElementControllerImpl (using random: Random, focusManager: FocusManager) extends ElementController {
   
   val maxElementLength: Int = 3
   val elementCount: Int = 3

@@ -1,31 +1,42 @@
 package blockudoku
 
-import blockudoku.commands.CommandInvoker
-import blockudoku.commands.commandsImpl.CommandFactoryImpl
-import blockudoku.controllers.mediatorImpl.{ElementControllerImpl, GridControllerImpl}
-import blockudoku.controllers.ControllerMediator
-import blockudoku.services.{ApplicationThread, RandomImpl}
+import blockudoku.commands.{CommandFactory, CommandInvoker}
+import blockudoku.commands.commandsImpl.{CommandFactoryImpl, CommandInvokerImpl}
+import blockudoku.controllers.mediatorImpl.{ControllerMediatorImpl, ElementController, ElementControllerImpl, GridController, GridControllerImpl}
+import blockudoku.controllers.{ControllerMediator, GridCollector, GridConfig}
+import blockudoku.input.ConsoleInputHandler
+import blockudoku.input.consoleInputHandlerImpl.ConsoleInputHandlerImpl
+import blockudoku.services.gridPreviewBuilderImpl.GridPreviewBuilderImpl
+import blockudoku.services.{ApplicationThread, GridPreviewBuilder, Random, RandomImpl}
+import blockudoku.views.gui.GuiLoader
 import blockudoku.windows.*
-import com.google.inject.{Guice, Injector}
-import io.gitlab.freeeezee.yadis.ComponentContainer
+import blockudoku.windows.focusManagerImpl.FocusManagerImpl
 
 object App {
-  
-  private val injector = Guice.createInjector(new BlockudokuModule) // Injector for dependency injection
-  
-  //private val container = ComponentContainer().registerComponents().buildProvider()
+
+
+  given Random = RandomImpl()
+  given GridConfig = GridConfig()
+  given FocusManager = FocusManagerImpl()
+  given GridController = GridControllerImpl()
+  given ElementController = ElementControllerImpl()
+  given ControllerMediator = ControllerMediatorImpl()
+  given CommandInvoker = CommandInvokerImpl()
+  given CommandFactory = CommandFactoryImpl()
+  given GridPreviewBuilder = GridPreviewBuilderImpl()
+  given ConsoleWindow()
+  given ConsoleInputHandler = ConsoleInputHandlerImpl()
+
 
   def run(): Unit = {
 
-    val guiWindow = injector.getInstance(classOf[GuiWindow])
-    val consoleWindow = injector.getInstance(classOf[ConsoleWindow])
-    //val guiWindow = container.get[GuiWindow]
-    //val consoleWindow = container.get[ConsoleWindow]
+    val consoleWindow = ConsoleWindow()
 
     ApplicationThread().run {
+      given GuiLoader()
+      val guiWindow = GuiWindow()
       guiWindow.display()
     }
-    
     consoleWindow.display()
   }
   

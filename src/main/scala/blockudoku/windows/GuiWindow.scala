@@ -5,7 +5,7 @@ import blockudoku.controllers.mediatorImpl.{ElementController, GridController}
 import blockudoku.views.gui.GuiLoader
 import com.google.inject.Inject
 
-class GuiWindow @Inject (guiLoader: GuiLoader) extends Window {
+class GuiWindow (using guiLoader: GuiLoader) extends Window {
   
   override def display(): Unit = {
     guiLoader.main(Array())

@@ -8,7 +8,7 @@ import scalafx.scene.control.Button
 import scalafx.scene.layout.HBox
 import scalafx.scene.text.Font
 
-class GuiUndoRedoView @Inject (commandInvoker: CommandInvoker) extends GuiView {
+class GuiUndoRedoView (using commandInvoker: CommandInvoker) extends GuiView {
 
   override def element: Node = {
     new HBox {

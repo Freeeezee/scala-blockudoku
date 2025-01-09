@@ -11,7 +11,7 @@ import scalafx.scene.Node
 import scalafx.scene.control.Button
 import scalafx.scene.layout.HBox
 
-class GuiElementView @Inject (commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector) extends GuiView {
+class GuiElementView (using commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector) extends GuiView {
 
   override def element: Node = {
     new HBox {
