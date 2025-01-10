@@ -60,6 +60,20 @@ class GuiLoader (using commandFactory: CommandFactory, commandInvoker: CommandIn
   override def start(): Unit = {
     val mainScene = createMainScene()
 
+    val settingsScene = new Scene {
+      root = new VBox() {
+        children = Seq(
+          new Button {
+            text = "Back"
+            style = "-fx-background-color: #8499B1"
+            font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 20)
+            onAction = _ => {
+              stage.scene = mainScene
+            }
+          }
+        )
+      }
+    }
     val startScene = new Scene {
       //stylesheets.add(getClass.getResource("/styles.css").toExternalForm)
       root = new VBox {
@@ -73,7 +87,15 @@ class GuiLoader (using commandFactory: CommandFactory, commandInvoker: CommandIn
             onAction = _ => {
               stage.scene = mainScene
             }
+          },
+        new Button {
+          text = "settings"
+          style = "-fx-background-color: #8499B1"
+          font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 20)
+          onAction = _ => {
+            stage.scene = settingsScene
           }
+        },
         )
       }
     }
@@ -85,20 +107,6 @@ class GuiLoader (using commandFactory: CommandFactory, commandInvoker: CommandIn
       scene = startScene
       onCloseRequest = _ => {
         App.exit()
-      }
-    }
-    val settingsScene = new Scene {
-      root = new VBox() {
-        children = Seq(
-          new Button {
-            text = "Back"
-            style = "-fx-background-color: #8499B1"
-            font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 20)
-            onAction = _ => {
-              stage.scene = mainScene
-            }
-          }
-        )
       }
     }
   }
