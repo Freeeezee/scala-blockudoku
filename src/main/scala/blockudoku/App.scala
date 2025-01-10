@@ -1,10 +1,6 @@
 package blockudoku
 
-import blockudoku.commands.CommandInvoker
-import blockudoku.commands.commandsImpl.CommandFactoryImpl
-import blockudoku.controllers.mediatorImpl.{ElementControllerImpl, GridControllerImpl}
-import blockudoku.controllers.ControllerMediator
-import blockudoku.services.{ApplicationThread, RandomImpl}
+import blockudoku.services.ApplicationThread
 import blockudoku.windows.*
 import io.gitlab.freeeezee.yadis.ComponentContainer
 

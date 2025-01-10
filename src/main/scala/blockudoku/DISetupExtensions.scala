@@ -1,10 +1,11 @@
 package blockudoku
 
-import blockudoku.commands.commandsImpl.CommandFactoryImpl
+import blockudoku.commands.commandsImpl.{CommandFactoryImpl, CommandInvokerImpl}
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.mediatorImpl.{ControllerMediatorImpl, ElementController, ElementControllerImpl, GridController, GridControllerImpl}
 import blockudoku.controllers.{ControllerMediator, ElementCollector, GridCollector, GridConfig}
 import blockudoku.input.ConsoleInputHandler
+import blockudoku.input.consoleInputHandlerImpl.ConsoleInputHandlerImpl
 import blockudoku.services.gridPreviewBuilderImpl.GridPreviewBuilderImpl
 import blockudoku.services.{GridPreviewBuilder, Random, RandomImpl}
 import blockudoku.views.gui.GuiLoader
@@ -38,7 +39,7 @@ extension (componentContainer: ComponentContainer) {
   }
   def registerTUI(): ComponentContainer = {
     componentContainer.register[ConsoleWindow](Singleton)
-    componentContainer.register[ConsoleInputHandler](Singleton)
+    componentContainer.register[ConsoleInputHandler, ConsoleInputHandlerImpl](Singleton)
     componentContainer
   }
   def registerGUI(): ComponentContainer = {
@@ -51,7 +52,7 @@ extension (componentContainer: ComponentContainer) {
     componentContainer
   }
   def registerCommands(): ComponentContainer = {
-    componentContainer.register[CommandInvoker](Singleton)
+    componentContainer.register[CommandInvoker, CommandInvokerImpl](Singleton)
     componentContainer.register[CommandFactory, CommandFactoryImpl](Singleton)
     componentContainer
   }
