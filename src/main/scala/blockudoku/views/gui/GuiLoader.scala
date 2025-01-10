@@ -10,7 +10,7 @@ import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.control.Button
 import scalafx.scene.layout.VBox
-import scalafx.scene.text.Font
+import scalafx.scene.text.{Font, Text}
 
 class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager, previewBuilder: GridPreviewBuilder) extends JFXApp3 {
 
@@ -56,7 +56,13 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
   private def createSettingsScene(mainScene: Scene): Scene = {
     new Scene {
       root = new VBox() {
+        alignment = Pos.Center
+        padding = Insets(20)
         children = Seq(
+          new Text {
+            text = "Settings"
+            font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 50)
+          },
           new Button {
             text = "Back"
             style = "-fx-background-color: #8499B1"
@@ -81,6 +87,10 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
         alignment = Pos.Center
         padding = Insets(20)
         children = Seq(
+          new Text {
+            text = "Welcome to Blockudoku!"
+            font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 50)
+          },
           new Button {
             text = "Start"
             font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 20)
