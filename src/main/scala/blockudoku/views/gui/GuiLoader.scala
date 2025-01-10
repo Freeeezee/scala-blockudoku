@@ -8,7 +8,9 @@ import blockudoku.windows.FocusManager
 import scalafx.application.JFXApp3
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
+import scalafx.scene.control.Button
 import scalafx.scene.layout.VBox
+import scalafx.scene.text.Font
 
 class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager, previewBuilder: GridPreviewBuilder) extends JFXApp3 {
 
@@ -40,19 +42,70 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
     new GuiUndoRedoView(commandInvoker)
   }
 
+  private def createMainScene(): Scene = {
+    val viewList = initializeViews()
+    new Scene {
+      //stylesheets.add(getClass.getResource("/styles.css").toExternalForm) // CSS global laden
+      root = new VBox {
+        alignment = Pos.Center
+        padding = Insets(20)
+        children = viewList.map(_.element)
+      }
+    }
+  }
+  private def createSettingsScene(mainScene: Scene): Scene = {
+    new Scene {
+      root = new VBox() {
+        children = Seq(
+          new Button {
+            text = "Back"
+            style = "-fx-background-color: #8499B1"
+            font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 20)
+            onAction = _ => {
+              stage.scene = mainScene
+            }
+          }
+        )
+      }
+    }
+  }
+
 
   override def start(): Unit = {
+    val mainScene = createMainScene()
+
+    val settingsScene = createSettingsScene(mainScene)
+    val startScene = new Scene {
+      //stylesheets.add(getClass.getResource("/styles.css").toExternalForm)
+      root = new VBox {
+        alignment = Pos.Center
+        padding = Insets(20)
+        children = Seq(
+          new Button {
+            text = "Start"
+            font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 20)
+            style = "-fx-background-color: #8499B1"
+            onAction = _ => {
+              stage.scene = mainScene
+            }
+          },
+          new Button {
+            text = "settings"
+            style = "-fx-background-color: #8499B1"
+            font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 20)
+            onAction = _ => {
+              stage.scene = settingsScene
+            }
+          },
+        )
+      }
+    }
+
     stage = new JFXApp3.PrimaryStage {
       title.value = "Blockudoku"
       height = 800
       width = 600
-      scene = new Scene {
-        root = new VBox {
-          alignment = Pos.Center
-          padding = Insets(20)
-          children = viewList.map(_.element)
-        }
-      }
+      scene = startScene
       onCloseRequest = _ => {
         App.exit()
       }
