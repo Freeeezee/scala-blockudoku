@@ -7,7 +7,7 @@ import blockudoku.observer.{Observable, Observer}
 import blockudoku.services.GridPreviewBuilder
 import blockudoku.views.gui.GuiColorTranslator.createImageView
 import blockudoku.windows.{FocusManager, FocusState}
-import scalafx.geometry.Pos
+import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Node
 import scalafx.scene.control.Button
 import scalafx.scene.image.ImageView
@@ -51,6 +51,8 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
         //stroke = "black"
         //graphic = stateRectangleView
       }
+
+      padding = Insets(0)
 
       graphic = stateImage
 
