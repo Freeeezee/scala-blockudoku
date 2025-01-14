@@ -5,10 +5,12 @@ import blockudoku.controllers.{ElementCollector, GridCollector}
 import blockudoku.models.{Grid, Tile, TileState}
 import blockudoku.observer.{Observable, Observer}
 import blockudoku.services.GridPreviewBuilder
+import blockudoku.views.gui.GuiColorTranslator.createImageView
 import blockudoku.windows.{FocusManager, FocusState}
 import scalafx.geometry.Pos
 import scalafx.scene.Node
 import scalafx.scene.control.Button
+import scalafx.scene.image.ImageView
 import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.Rectangle
@@ -36,17 +38,21 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
     }
   }
   private def gridButton(column: Int, row: Int): Node = {
+
+    var stateImage = computeColor(gridCollector.getGrid.tile(column, row).get)
+
     new Button {
       alignment = Pos.Center
-      val stateRectangle = new Rectangle {
+      var stateRectangle = new Rectangle {
         alignment = Pos.Center
         width = 40
         height = 40
-        fill = computeColor(gridCollector.getGrid.tile(column, row).get)
+        // graphic = stateImage
         //stroke = "black"
+        //graphic = stateRectangleView
       }
 
-      graphic = stateRectangle
+      graphic = stateImage
 
       minHeight = 30
       minWidth = 30
@@ -58,7 +64,7 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
       }
 
       gridCollector.addObserver(() => {
-        stateRectangle.fill = computeColor(gridCollector.getGrid.tile(column, row).get)
+        computeColor(gridCollector.getGrid.tile(column, row).get)
       })
 
       focusManager.addObserver(() => {
@@ -79,18 +85,18 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
         
       previewObservable.addObserver(() => {
         previewGrid match
-          case Some(grid) => stateRectangle.fill = computeColor(grid.tile(column, row).get)
-          case None => stateRectangle.fill = computeColor(gridCollector.getGrid.tile(column, row).get)
+          case Some(grid) => graphic = computeColor(grid.tile(column, row).get)
+          case None => graphic = computeColor(gridCollector.getGrid.tile(column, row).get)
       })
     }
   }
 
-  private def computeColor(tile: Tile): Color = {
+  private def computeColor(tile: Tile): ImageView = {
     tile.state match {
-      case TileState.empty => Color.Transparent
+      case TileState.empty => GuiColorTranslator.createImageView("file:src/main/resources/block_transparent.png") // Transparent
       case TileState.blocked => GuiColorTranslator.convertColor(tile.colors)
-      case TileState.previewInvalid => Color.Red
-      case TileState.previewValid => Color.Green
+      case TileState.previewInvalid => GuiColorTranslator.createImageView("file:src/main/resources/block_red.png") // Red
+      case TileState.previewValid => GuiColorTranslator.createImageView("file:src/main/resources/block_green.png") // Green
     }
   }
 }

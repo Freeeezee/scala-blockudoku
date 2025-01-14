@@ -1,18 +1,26 @@
 package blockudoku.views.gui
 
-object GuiColorTranslator {
-  
-  def convertColor (color: blockudoku.models.Colors): scalafx.scene.paint.Color = {
-    color match {
-      
-      case blockudoku.models.Colors.Byzantium => scalafx.scene.paint.Color.web("#6B2D5C")
-      case blockudoku.models.Colors.Blue => scalafx.scene.paint.Color.web("#348AA7")
-      case blockudoku.models.Colors.RaspberryRose => scalafx.scene.paint.Color.web("AE3364")
-      case blockudoku.models.Colors.Cerise => scalafx.scene.paint.Color.web("#F0386B")
-      case blockudoku.models.Colors.Eminence => scalafx.scene.paint.Color.web("#783F8E")
-      case blockudoku.models.Colors.BrightPink => scalafx.scene.paint.Color.web("#FF5376")
-      case blockudoku.models.Colors.CoralPink => scalafx.scene.paint.Color.web("F18B83")
+import scalafx.scene.image.{Image, ImageView}
 
+object GuiColorTranslator {
+
+  def createImageView(imagePath: String): ImageView = {
+    new ImageView {
+      image = new Image(imagePath)
+      fitWidth = 30
+      fitHeight = 30
+      preserveRatio = true
+    }
+  }
+
+  def convertColor(color: blockudoku.models.Colors): ImageView = {
+    color match {
+      case blockudoku.models.Colors.Byzantium      => createImageView("file:src/main/resources/block_purple1.png")
+      case blockudoku.models.Colors.Blue           => createImageView("file:src/main/resources/block_purple2.png")
+      case blockudoku.models.Colors.RaspberryRose  => createImageView("file:src/main/resources/block_purple3.png")
+      case blockudoku.models.Colors.Cerise         => createImageView("file:src/main/resources/block_purple4.png")
+      case blockudoku.models.Colors.Eminence       => createImageView("file:src/main/resources/block_purple5.png")
+      // Weitere Farben hier hinzufügen
     }
   }
 }

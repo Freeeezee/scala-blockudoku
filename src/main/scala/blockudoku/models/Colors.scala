@@ -7,7 +7,7 @@ enum Colors {
   case RaspberryRose
   case Cerise
   case Eminence
-  case BrightPink
-  case CoralPink
-  
+  //case BrightPink
+  //case CoralPink
+
 }
