@@ -3,6 +3,7 @@ package blockudoku.views.gui
 import blockudoku.App
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.mediatorImpl.{ElementController, GridController}
+import blockudoku.saving.SaveManager
 import blockudoku.services.GridPreviewBuilder
 import blockudoku.windows.FocusManager
 import scalafx.application.JFXApp3
@@ -14,7 +15,7 @@ import scalafx.scene.text.{Font, Text, TextAlignment}
 import scalafx.Includes.*
 import scalafx.scene.image.{Image, ImageView}
 
-class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager, previewBuilder: GridPreviewBuilder) extends JFXApp3 {
+class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager, previewBuilder: GridPreviewBuilder, saveManager: SaveManager) extends JFXApp3 {
 
   private val viewList = initializeViews()
 
@@ -25,6 +26,7 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
     views = views :+ initializeGridView()
     views = views :+ initializeElementView()
     views = views :+ initialzeUndoRedoView()
+    views = views :+ initializeLoadStoreView()
     views
   }
 
@@ -42,6 +44,10 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
 
   private def initialzeUndoRedoView(): GuiView = {
     new GuiUndoRedoView(commandInvoker)
+  }
+
+  private def initializeLoadStoreView(): GuiView = {
+    new GuiLoadStoreView(saveManager)
   }
 
   private def createMainScene(): Scene = {
@@ -71,8 +77,7 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
             font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 20)
             onAction = _ => {
               val sceneTransition = new GuiAnimation()
-              sceneTransition.switchScene(this.scene().getRoot, mainScene, stage) // Parameter sind müll: this, stage, mainScene
-              //stage.scene = mainScene
+              sceneTransition.switchScene(this.scene().getRoot, mainScene, stage)
             }
           }
         )
@@ -117,6 +122,16 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
               //stage.scene = settingsScene
             }
           },
+          new Button {
+            text = "Load"
+            style = "-fx-background-color: #8499B1"
+            font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 20)
+            onAction = _ => {
+              saveManager.load()
+              val sceneTransition = new GuiAnimation()
+              sceneTransition.switchScene(this.scene().getRoot, mainScene, stage)
+            }
+          }
         )
         background = new Background(Array(new BackgroundImage(
           new Image("file:src/main/resources/background_test.png"),
@@ -133,6 +148,7 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
       height = 800
       width = 600
       scene = startScene
+
       onCloseRequest = _ => {
         App.exit()
       }

@@ -6,6 +6,10 @@ import blockudoku.controllers.mediatorImpl.{ControllerMediatorImpl, ElementContr
 import blockudoku.controllers.{ControllerMediator, ElementCollector, GridCollector, GridConfig}
 import blockudoku.input.ConsoleInputHandler
 import blockudoku.input.consoleInputHandlerImpl.ConsoleInputHandlerImpl
+import blockudoku.saving.diskPersistentStoreImpl.PersistentStoreImpl
+import blockudoku.saving.{PersistentStore, SaveManager, Serializer}
+import blockudoku.saving.saveManagerImpl.SaveManagerImpl
+import blockudoku.saving.serializerXMLImpl.SerializerImpl
 import blockudoku.services.gridPreviewBuilderImpl.GridPreviewBuilderImpl
 import blockudoku.services.{GridPreviewBuilder, Random, RandomImpl}
 import blockudoku.views.gui.GuiLoader
@@ -23,6 +27,7 @@ extension (componentContainer: ComponentContainer) {
       .registerGUI()
       .registerRandom()
       .registerCommands()
+      .registerSaveManager()
 
     componentContainer
   }
@@ -54,6 +59,12 @@ extension (componentContainer: ComponentContainer) {
   def registerCommands(): ComponentContainer = {
     componentContainer.register[CommandInvoker, CommandInvokerImpl](Singleton)
     componentContainer.register[CommandFactory, CommandFactoryImpl](Singleton)
+    componentContainer
+  }
+  def registerSaveManager(): ComponentContainer = {
+    componentContainer.register[SaveManager, SaveManagerImpl](Singleton)
+    componentContainer.register[PersistentStore, PersistentStoreImpl](Singleton)
+    componentContainer.register[Serializer, SerializerImpl](Singleton)
     componentContainer
   }
 }
