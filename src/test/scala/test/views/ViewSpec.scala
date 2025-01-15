@@ -1,17 +1,23 @@
 package test.views
 
-import blockudoku.views.console.{ConsoleElementView, ConsoleGridView, ConsoleHeadlineView}
+import blockudoku.views.console.{ConsoleElementView, ConsoleGridView, ConsoleView}
 import blockudoku.windows.Window
 import io.gitlab.freeeezee.yadis.Lifetime.Singleton
 import test.UnitSpec
 
 class ViewSpec extends UnitSpec {
-  
-  override def beforeEach(): Unit = {
-    super.beforeEach()
+
+  override def onConfigureContainers(): Unit = {
+    includeDefaultConfig()
+    includeCommands()
+    includeControllers()
+
     container.register[ConsoleElementView](Singleton)
     container.register[ConsoleGridView](Singleton)
     container.register[Window, WindowMock](Singleton)
-    provider = container.buildProvider()
+  }
+
+  def viewContent(view: ConsoleView): String = {
+    view.consoleElement.content(-1)
   }
 }

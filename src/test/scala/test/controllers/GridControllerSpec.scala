@@ -1,16 +1,17 @@
 package test.controllers
 
+import blockudoku.controllers.GridConfig
 import blockudoku.controllers.mediatorImpl.{ElementController, GridController}
-import test.UnitSpec
 
-class GridControllerSpec extends UnitSpec {
+class GridControllerSpec extends ControllerSpec {
   "A GridController" when {
     "new" should {
-      "have a 9x9 grid" in {
+      "have a grid as defined in GridConfig" in {
         val gridController = provider.get[GridController]
-        gridController.grid should not be null
-        gridController.grid.xLength should be(9)
-        gridController.grid.yLength should be(9)
+        val gridConfig = provider.get[GridConfig]
+        
+        gridController.grid.xLength should be(gridConfig.xLength)
+        gridController.grid.yLength should be(gridConfig.yLength)
       }
     }
     
@@ -18,7 +19,7 @@ class GridControllerSpec extends UnitSpec {
       "contain the element at the correct position" in {
         val gridController = provider.get[GridController]
         val elementController = provider.get[ElementController]
-        val element = elementController.elements(0)
+        val element = elementController.elements.head
 
         gridController.setElement(element, 0)
 

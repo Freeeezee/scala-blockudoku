@@ -7,7 +7,4 @@ trait Snapshotable[TSnapshot] {
   
   def createSnapshot(): Unit
   def revertSnapshot(): Unit
-  def removeLastSnapshot(): Unit = {
-    snapshots.pop()
-  }
 }

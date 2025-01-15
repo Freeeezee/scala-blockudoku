@@ -23,6 +23,7 @@ extension (componentContainer: ComponentContainer) {
 
   def registerComponents(): ComponentContainer = {
     componentContainer
+      .registerConfig()
       .registerControllers()
       .registerTUI()
       .registerGUI()
@@ -32,6 +33,12 @@ extension (componentContainer: ComponentContainer) {
 
     componentContainer
   }
+  
+  def registerConfig(): ComponentContainer = {
+    componentContainer.register[GridConfig](() => GridConfig(), Singleton)
+    componentContainer
+  }
+  
   def registerControllers(): ComponentContainer = {
     componentContainer.register[ElementController, ElementControllerImpl](Singleton)
     componentContainer.register[ElementCollector, ElementControllerImpl](Singleton)
@@ -42,7 +49,6 @@ extension (componentContainer: ComponentContainer) {
     componentContainer.register[ScoreCollector, ScoreControllerImpl](Singleton)
     componentContainer.register[FocusManager, FocusManagerImpl](Singleton)
     componentContainer.register[GridPreviewBuilder, GridPreviewBuilderImpl](Singleton)
-    componentContainer.register[GridConfig](()=> GridConfig(), Singleton)
     componentContainer
   }
   def registerTUI(): ComponentContainer = {

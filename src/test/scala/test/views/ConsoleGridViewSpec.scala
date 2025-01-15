@@ -1,38 +1,20 @@
 package test.views
 
-import blockudoku.controllers.mediatorImpl.{ElementController, ElementControllerImpl, GridController, GridControllerImpl}
-import blockudoku.controllers.{ControllerMediator, ElementCollector, GridCollector, GridConfig}
-import blockudoku.services.Random
+import blockudoku.controllers.ControllerMediator
+import blockudoku.controllers.mediatorImpl.{ElementController, GridController}
 import blockudoku.views.console.ConsoleGridView
 import blockudoku.views.console.composed.ComposedConsoleFormatter
 import blockudoku.windows.FocusManager
-import blockudoku.windows.focusManagerImpl.FocusState.Grid
-import io.gitlab.freeeezee.yadis.{ComponentContainer, ComponentProvider}
-import io.gitlab.freeeezee.yadis.Lifetime.Singleton
-import test.{RandomMock, UnitSpec}
-// replace("\r\n", "\n") is used to make the tests pass on Windows
+import blockudoku.windows.FocusState.Grid
+import test.GridProvider
+
 class ConsoleGridViewSpec extends ViewSpec {
-  
-  def buildProviderWithGridSize(size: Int) : ComponentProvider = {
-    val compContainer = ComponentContainer()
-    compContainer.register[Random, RandomMock](Singleton)
-    compContainer.register[GridController, GridControllerImpl](Singleton)
-    compContainer.register[GridCollector, GridControllerImpl](Singleton)
-    compContainer.register[ElementCollector, ElementControllerImpl](Singleton)
-    compContainer.register[ElementController, ElementControllerImpl](Singleton)
-    compContainer.register[ControllerMediator](Singleton)
-    compContainer.register[FocusManager](Singleton)
-    compContainer.register[ConsoleGridView](Singleton)
-    compContainer.register[GridConfig](()=> GridConfig(size, size), Singleton)
-    
-    compContainer.buildProvider()
-  }
   
   "GridView" when {
     "size 9x9" should {
       "display a 9x9 grid" in {
-        
-        val gridView = buildProviderWithGridSize(9).get[ConsoleGridView]
+        use(GridProvider.emptyGrid(9))
+        val gridView = provider.get[ConsoleGridView]
         viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x----x----x----x----x----x
             ||    |    |    |    |    |    |    |    |    |
@@ -58,7 +40,8 @@ class ConsoleGridViewSpec extends ViewSpec {
     }
     "size 4x4" should {
       "display a 4x4 grid" in {
-        val gridView = buildProviderWithGridSize(4).get[ConsoleGridView]
+        use(GridProvider.emptyGrid(4))
+        val gridView = provider.get[ConsoleGridView]
         viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x
             ||    |    |    |    |
@@ -74,7 +57,8 @@ class ConsoleGridViewSpec extends ViewSpec {
     }
     "size 6x6" should {
       "display a 6x6 grid" in {
-        val gridView = buildProviderWithGridSize(6).get[ConsoleGridView]
+        use(GridProvider.emptyGrid(6))
+        val gridView = provider.get[ConsoleGridView]
         viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x----x----x
             ||    |    |    |    |    |    |
@@ -95,13 +79,13 @@ class ConsoleGridViewSpec extends ViewSpec {
 
     "an element is added" should {
       "display the element at the correct position" in {
-        
-        val newProvider = buildProviderWithGridSize(6)
-        val gridView = newProvider.get[ConsoleGridView]
-        val elementController = newProvider.get[ElementController]
-        val mediator = newProvider.get[ControllerMediator]
-        
-        mediator.setElement(elementController.elements(0), 0)
+        use(GridProvider.emptyGrid(6))
+
+        val gridView = provider.get[ConsoleGridView]
+        val elementController = provider.get[ElementController]
+        val mediator = provider.get[ControllerMediator]
+
+        mediator.setElement(elementController.elements.head, 0)
 
         viewContent(gridView).replace("\r\n", "\n") should be(
           """x----x----x----x----x----x----x
@@ -123,10 +107,13 @@ class ConsoleGridViewSpec extends ViewSpec {
     
     "formatted" should {
       "select the correct tile" in {
-        
-        val newProvider = buildProviderWithGridSize(9)
-        val gridView = newProvider.get[ConsoleGridView]
-        val gridController = newProvider.get[GridController]
+        val gridView = provider.get[ConsoleGridView]
+        val gridController = provider.get[GridController]
+        val focusManager = provider.get[FocusManager]
+        val elementController = provider.get[ElementController]
+
+        elementController.selectElement(elementController.elements.head)
+        focusManager.setFocusState(Grid)
         
         val formatter = ComposedConsoleFormatter.create(gridView.consoleElement)
 
@@ -138,9 +125,13 @@ class ConsoleGridViewSpec extends ViewSpec {
 
     "previewing" should {
       "display a green preview when the element can be placed" in {
-        val newProvider = buildProviderWithGridSize(6)
-        val gridView = newProvider.get[ConsoleGridView]
-        val gridController = newProvider.get[GridController]
+        use(GridProvider.emptyGrid(6))
+
+        val gridView = provider.get[ConsoleGridView]
+        val gridController = provider.get[GridController]
+        val elementController = provider.get[ElementController]
+
+        elementController.selectElement(elementController.elements.head)
 
         gridView.onTileHighlighted(gridController.grid.tile(0, 0).get)
 
@@ -161,14 +152,15 @@ class ConsoleGridViewSpec extends ViewSpec {
             |""".stripMargin.replace("\r\n", "\n"))
       }
       "display a red preview when the element is blocked by another" in {
-        val newProvider = buildProviderWithGridSize(6)
-        val gridView = newProvider.get[ConsoleGridView]
-        val gridController = newProvider.get[GridController]
-        val mediator = newProvider.get[ControllerMediator]
-        val elementController = newProvider.get[ElementController]
-        
+        use(GridProvider.emptyGrid(6))
+        val gridView = provider.get[ConsoleGridView]
+        val gridController = provider.get[GridController]
+        val mediator = provider.get[ControllerMediator]
+        val elementController = provider.get[ElementController]
 
-        mediator.setElement(elementController.elements(0), 0)
+        mediator.setElement(elementController.elements.head, 0)
+
+        elementController.selectElement(elementController.elements.head)
 
         gridView.onTileHighlighted(gridController.grid.tile(0, 0).get)
 
@@ -190,10 +182,10 @@ class ConsoleGridViewSpec extends ViewSpec {
       }
 
       "not display anything when the element is out of bounds" in {
+        use(GridProvider.emptyGrid(6))
 
-        val newProvider = buildProviderWithGridSize(6)
-        val gridView = newProvider.get[ConsoleGridView]
-        val gridController = newProvider.get[GridController]
+        val gridView = provider.get[ConsoleGridView]
+        val gridController = provider.get[GridController]
         
 
         gridView.onTileHighlighted(gridController.grid.tile(5, 0).get)

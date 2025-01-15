@@ -1,11 +1,8 @@
 package test.views
 
-import test.{RandomMock, UnitSpec}
-import blockudoku.controllers.mediatorImpl.{ElementController, GridController}
+import blockudoku.controllers.mediatorImpl.ElementController
 import blockudoku.views.console.ConsoleElementView
 import blockudoku.views.console.composed.ComposedConsoleFormatter
-import blockudoku.windows.FocusManager
-import blockudoku.windows.focusManagerImpl.FocusState.Elements
 
 class ConsoleElementViewSpec extends ViewSpec {
   "ElementView" should {

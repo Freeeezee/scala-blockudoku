@@ -7,5 +7,4 @@ class WindowMock extends Window {
   override def display(): Unit = {}
 
   override def setUpdated(): Unit = {}
-
 }

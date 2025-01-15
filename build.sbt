@@ -17,7 +17,7 @@ lazy val root = (project in file("."))
       "org.scalactic" %% "scalactic" % "3.2.19",
       "org.scalatest" %% "scalatest" % "3.2.19" % Test,
       "org.scalafx" %% "scalafx" % "22.0.0-R33",
-      "io.gitlab.freeeezee" %% "yadis" % "1.0.2",
+      "io.gitlab.freeeezee" %% "yadis" % "1.0.3",
       "org.scala-lang.modules" %% "scala-xml" % "2.3.0",
       "net.harawata" % "appdirs" % "1.3.0",
       "org.playframework" %% "play-json" % "3.0.4",

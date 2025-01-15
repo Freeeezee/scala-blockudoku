@@ -30,11 +30,4 @@ class ControllerMediatorImpl(gridController: GridController, elementController: 
     focusManager.revertSnapshot()
     scoreController.revertSnapshot()
   }
-
-  override def removeLastSnapshot(): Unit = {
-    gridController.removeLastSnapshot()
-    elementController.removeLastSnapshot()
-    focusManager.removeLastSnapshot()
-    scoreController.removeLastSnapshot()
-  }
 }
