@@ -1,6 +1,6 @@
 package blockudoku.saving.serializerXMLImpl
 
-import blockudoku.models.{Colors, Tile, TileState}
+import blockudoku.models.{Tile, TileState}
 
 import scala.xml.{Elem, Node}
 
@@ -20,8 +20,7 @@ object TileSerializer {
   def deserialize(data: Node): Tile = {
     val index = (data \ "Index").text.toInt
     val position = PointSerializer.deserialize(((data \ "Position") \ "Point").head)
-    val colorsText = (data \ "Colors").text
-    val colors = Colors.valueOf(colorsText)
+    val colors = (data \ "Colors").text.toInt
     val stateText = (data \ "State").text
     val state = TileState.valueOf(stateText)
     Tile(index, position, colors, state)

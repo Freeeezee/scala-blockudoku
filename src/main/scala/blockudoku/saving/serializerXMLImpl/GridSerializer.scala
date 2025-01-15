@@ -21,6 +21,6 @@ object GridSerializer {
     val xLen = (gridData \ "xLen").text.toInt
     val yLen = (gridData \ "yLen").text.toInt
     val tiles = ((gridData \ "Tiles") \ "Tile").map(node => TileSerializer.deserialize(node))
-    Grid(xLen, yLen)(tiles.toList)
+    Grid(xLen, yLen, tiles.toList)
   }
 }

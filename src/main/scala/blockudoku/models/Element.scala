@@ -1,6 +1,6 @@
 package blockudoku.models
 
-case class Element(structure: List[Point], slot: Int, colors: Colors) {
+case class Element(structure: List[Point], slot: Int, colors: Int) {
   def dimensions: (Int, Int, Int, Int) = {
     val xMin = structure.map(_.xPos).min
     val xMax = structure.map(_.xPos).max

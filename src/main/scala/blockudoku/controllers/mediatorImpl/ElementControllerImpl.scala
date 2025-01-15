@@ -1,7 +1,7 @@
 package blockudoku.controllers.mediatorImpl
 
-import blockudoku.models.{Colors, Element, Point}
-import blockudoku.services.Random
+import blockudoku.models.{Element, Point}
+import blockudoku.services.{ColorScheme, Random}
 import blockudoku.windows.FocusManager
 
 class ElementControllerImpl(random: Random, focusManager: FocusManager) extends ElementController {
@@ -33,7 +33,7 @@ class ElementControllerImpl(random: Random, focusManager: FocusManager) extends 
   private def generateElement(slot: Int): Element = {
     var points = List[Point](Point(0, 0))
     val length = random.between(1, maxElementLength)
-    val randomColor = Colors.values(random.nextInt(Colors.values.length))
+    val randomColor = ColorScheme.getRandomColor
 
     for i <- 0 until length do
       points = generateNextPoint(points) :: points

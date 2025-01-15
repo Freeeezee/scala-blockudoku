@@ -16,7 +16,7 @@ class GridControllerImpl(focusManager: FocusManager, gridConfig: GridConfig) ext
         val index = y * xLength + x
         list = list :+ Tile(index, Point(x, y))
 
-    Grid(xLength, yLength)(list)
+    Grid(xLength, yLength, list)
   }
 
   def setElement(element: Element, selectedPos: Int): Boolean = {

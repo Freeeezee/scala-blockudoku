@@ -1,7 +1,6 @@
 package blockudoku.saving.serializerXMLImpl
 
 import blockudoku.models.Element
-import blockudoku.models.Colors
 
 import scala.xml.{Elem, Node}
 
@@ -19,8 +18,7 @@ object ElementSerializer {
   
   def deserialize(data: Node): Element = {
     val slot = (data \ "Slot").text.toInt
-    val colorsText = (data \ "Colors").text
-    val colors = Colors.valueOf(colorsText)
+    val colors = (data \ "Colors").text.toInt
     val structure = ((data \ "Structure") \ "Point").map(node => PointSerializer.deserialize(node))
     Element(structure.toList, slot, colors)
   }
