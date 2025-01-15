@@ -8,9 +8,11 @@ import blockudoku.windows.FocusManager
 import scalafx.application.JFXApp3
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
-import scalafx.scene.control.Button
-import scalafx.scene.layout.VBox
-import scalafx.scene.text.{Font, Text}
+import scalafx.scene.control.{Button, Label}
+import scalafx.scene.layout.{Background, BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize, VBox}
+import scalafx.scene.text.{Font, Text, TextAlignment}
+import scalafx.Includes.*
+import scalafx.scene.image.{Image, ImageView}
 
 class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager, previewBuilder: GridPreviewBuilder) extends JFXApp3 {
 
@@ -68,7 +70,9 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
             style = "-fx-background-color: #8499B1"
             font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 20)
             onAction = _ => {
-              stage.scene = mainScene
+              val sceneTransition = new GuiAnimation()
+              sceneTransition.switchScene(this.scene().getRoot, mainScene, stage) // Parameter sind müll: this, stage, mainScene
+              //stage.scene = mainScene
             }
           }
         )
@@ -90,24 +94,37 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
           new Text {
             text = "Welcome to Blockudoku!"
             font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 50)
+            textAlignment = TextAlignment.Center
+            wrappingWidth <== width
           },
           new Button {
             text = "Start"
             font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 20)
             style = "-fx-background-color: #8499B1"
             onAction = _ => {
-              stage.scene = mainScene
+              val sceneTransition = new GuiAnimation()
+              sceneTransition.switchScene(this.scene().getRoot, mainScene, stage) // Parameter sind müll: this, stage, mainScene
+              //stage.scene = mainScene
             }
           },
           new Button {
-            text = "settings"
+            text = "Settings"
             style = "-fx-background-color: #8499B1"
             font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 20)
             onAction = _ => {
-              stage.scene = settingsScene
+              val sceneTransition = new GuiAnimation()
+              sceneTransition.switchScene(this.scene().getRoot, settingsScene, stage)
+              //stage.scene = settingsScene
             }
           },
         )
+        background = new Background(Array(new BackgroundImage(
+          new Image("file:src/main/resources/background_test.png"),
+          BackgroundRepeat.NoRepeat,
+          BackgroundRepeat.NoRepeat,
+          BackgroundPosition.Center,
+          new BackgroundSize(BackgroundSize.Auto, BackgroundSize.Auto, true, false, false, false)
+        ))) // BackgroundSize(width, height, widthAsPercentage, heightAsPercentage, contain, cover)
       }
     }
 
@@ -121,4 +138,5 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
       }
     }
   }
-}
+} // todo: Start screen auch als Methode nicht innerhalb von start!
+// -> simpler background der hervorgehoben wird beim hovern?

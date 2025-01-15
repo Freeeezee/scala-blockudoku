@@ -5,7 +5,6 @@ import blockudoku.controllers.{ElementCollector, GridCollector}
 import blockudoku.models.{Grid, Tile, TileState}
 import blockudoku.observer.{Observable, Observer}
 import blockudoku.services.GridPreviewBuilder
-import blockudoku.views.gui.GuiColorTranslator.createImageView
 import blockudoku.windows.{FocusManager, FocusState}
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Node
@@ -26,6 +25,7 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
       for row <- 0 until gridCollector.getGrid.yLength do {
         children.add(gridRow(row))
       }
+
     }
   }
   private def gridRow(row: Int): Node = {
