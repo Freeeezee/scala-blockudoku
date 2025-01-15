@@ -3,7 +3,8 @@ package blockudoku
 import blockudoku.commands.commandsImpl.{CommandFactoryImpl, CommandInvokerImpl}
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.mediatorImpl.{ControllerMediatorImpl, ElementController, ElementControllerImpl, GridController, GridControllerImpl}
-import blockudoku.controllers.{ControllerMediator, ElementCollector, GridCollector, GridConfig}
+import blockudoku.controllers.scoreImpl.ScoreControllerImpl
+import blockudoku.controllers.{ControllerMediator, ElementCollector, GridCollector, GridConfig, ScoreCollector, ScoreController}
 import blockudoku.input.ConsoleInputHandler
 import blockudoku.input.consoleInputHandlerImpl.ConsoleInputHandlerImpl
 import blockudoku.saving.diskPersistentStoreImpl.PersistentStoreImpl
@@ -37,6 +38,8 @@ extension (componentContainer: ComponentContainer) {
     componentContainer.register[GridCollector, GridControllerImpl](Singleton)
     componentContainer.register[GridController, GridControllerImpl](Singleton)
     componentContainer.register[ControllerMediator, ControllerMediatorImpl](Singleton)
+    componentContainer.register[ScoreController, ScoreControllerImpl](Singleton)
+    componentContainer.register[ScoreCollector, ScoreControllerImpl](Singleton)
     componentContainer.register[FocusManager, FocusManagerImpl](Singleton)
     componentContainer.register[GridPreviewBuilder, GridPreviewBuilderImpl](Singleton)
     componentContainer.register[GridConfig](()=> GridConfig(), Singleton)

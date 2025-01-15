@@ -2,7 +2,7 @@ package blockudoku.controllers.mediatorImpl
 
 import blockudoku.commands.Snapshotable
 import blockudoku.controllers.GridCollector
-import blockudoku.models.{Element, Grid}
+import blockudoku.models.{Element, Grid, Tile, TileState}
 import blockudoku.observer.Observable
 
 
@@ -28,6 +28,11 @@ trait GridController extends GridCollector, Snapshotable[GridController#GridCont
   def loadGrid(newGrid : Grid) : Unit = {
     grid = newGrid
     createSnapshot()
+    notifyObservers()
+  }
+
+  def removeTiles(set: Set[Tile]): Unit = {
+    grid = grid.copyWithNewState(set.toList, TileState.empty)
     notifyObservers()
   }
 }

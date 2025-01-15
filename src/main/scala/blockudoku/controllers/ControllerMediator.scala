@@ -1,7 +1,7 @@
 package blockudoku.controllers
 
 import blockudoku.commands.Snapshotable
-import blockudoku.models.Element
+import blockudoku.models.{Element, Tile}
 
 trait ControllerMediator extends Snapshotable[?] {
   def setElement(element: Element, pos: Int) : Unit

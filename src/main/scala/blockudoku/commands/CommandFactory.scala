@@ -1,6 +1,6 @@
 package blockudoku.commands
 
-import blockudoku.models.Element
+import blockudoku.models.{Element, Tile}
 
 trait CommandFactory {
   def createSelectElementCommand(element: Element): Command
