@@ -19,7 +19,7 @@ object TileSerializer {
         {tile.state}
       </State>
     </Tile>.toString()
-  } // = Eminence for Color?
+  }
 
   def deserialize(data: String): Tile = {
     val xml = scala.xml.XML.loadString(data)

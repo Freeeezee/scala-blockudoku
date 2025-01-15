@@ -13,6 +13,7 @@ object GridSerializer {
       </Tiles>
     </Grid>.toString()
   }
+  
   def deserialize(data: String): Grid = {
     val xml = scala.xml.XML.loadString(data)
     val xLen = (xml \ "xLen").text.toInt
