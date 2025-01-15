@@ -19,7 +19,8 @@ lazy val root = (project in file("."))
       "org.scalafx" %% "scalafx" % "22.0.0-R33",
       "io.gitlab.freeeezee" %% "yadis" % "1.0.2",
       "org.scala-lang.modules" %% "scala-xml" % "2.3.0",
-      "net.harawata" % "appdirs" % "1.3.0"
+      "net.harawata" % "appdirs" % "1.3.0",
+      "org.playframework" %% "play-json" % "3.0.4",
     ),
     scalacOptions ++= Seq(
       "-deprecation",
