@@ -16,8 +16,6 @@ class GuiAnimation {
       toValue = 0.0
       onFinished = _ => {
         newScene.root().setOpacity(0)
-        //val newRoot = newScene.root.value
-        //newRoot.setOpacity(0)
         oldStage.scene = newScene
         val fadeIn = new FadeTransition(Duration(500), newScene.root()) {
           fromValue = 0.0

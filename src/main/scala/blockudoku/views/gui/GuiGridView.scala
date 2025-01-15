@@ -66,7 +66,7 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
       }
 
       gridCollector.addObserver(() => {
-        computeColor(gridCollector.getGrid.tile(column, row).get)
+        graphic = computeColor(gridCollector.getGrid.tile(column, row).get)
       })
 
       focusManager.addObserver(() => {
