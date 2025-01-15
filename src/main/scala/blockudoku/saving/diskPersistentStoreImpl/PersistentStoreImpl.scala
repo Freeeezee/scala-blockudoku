@@ -11,9 +11,10 @@ import scala.io.Source
 class PersistentStoreImpl extends PersistentStore {
 
   private val appDirs = AppDirsFactory.getInstance()
-  private val path = appDirs.getUserDataDir("Blockudoku", null, "Blockudoku") + "/save.block"
+  private val basePath = appDirs.getUserDataDir("Blockudoku", null, "Blockudoku")
+  private val path = Paths.get(basePath, "save.block").toString
 
-  val dirPath = Paths.get(path)
+  val dirPath = Paths.get(basePath)
   if (!Files.exists(dirPath)) {
     Files.createDirectories(dirPath)
   }
