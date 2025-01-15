@@ -5,6 +5,7 @@ import blockudoku.controllers.GridCollector
 import blockudoku.models.{Element, Grid}
 import blockudoku.observer.Observable
 
+
 trait GridController extends GridCollector, Snapshotable[GridController#GridControllerSnapshot] {
   var grid: Grid
   def setElement(element: Element, selectedPos: Int): Boolean
@@ -22,5 +23,11 @@ trait GridController extends GridCollector, Snapshotable[GridController#GridCont
   
   override def getGrid: Grid = {
     grid
+  }
+  
+  def loadGrid(newGrid : Grid) : Unit = {
+    grid = newGrid
+    createSnapshot()
+    notifyObservers()
   }
 }

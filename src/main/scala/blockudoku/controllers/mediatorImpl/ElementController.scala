@@ -41,4 +41,10 @@ trait ElementController extends ElementCollector, Snapshotable[ElementController
   override def getSelectedElement: Option[Element] = {
     selectedElement
   }
+  
+  def loadElements(newElements: List[Element]): Unit = {
+    elements = newElements
+    createSnapshot()
+    notifyObservers()
+  }
 }

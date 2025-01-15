@@ -24,10 +24,7 @@ class SerializerImpl(gridCollector: GridCollector, elementCollector: ElementColl
         val elements = ((xml \ "Elements") \ "Element").map(node => ElementSerializer.deserialize(node))
         val grid = GridSerializer.deserialize((xml \ "Grid").head)
         
-        elementController.elements = elements.toList
-        gridController.grid = grid
-        
-        gridController.createSnapshot()
-        elementController.createSnapshot()
+        elementController.loadElements(elements.toList)
+        gridController.loadGrid(grid)
     }
 }
