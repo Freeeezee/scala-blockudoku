@@ -2,6 +2,9 @@ package test
 
 import blockudoku.*
 import blockudoku.controllers.GridConfig
+import blockudoku.saving.diskPersistentStoreImpl.PersistentStoreImpl
+import blockudoku.saving.{PersistentStore, SaveManager, Serializer}
+import blockudoku.saving.saveManagerImpl.SaveManagerImpl
 import blockudoku.services.Random
 import io.gitlab.freeeezee.yadis.Lifetime.Singleton
 import io.gitlab.freeeezee.yadis.{ComponentContainer, ComponentProvider}
@@ -24,10 +27,6 @@ trait ContainerConfig {
     provider = container.buildProvider()
   }
   
-  def includeGridConfig(gridConfig: GridConfig): Unit = {
-    container.register[GridConfig](() => gridConfig, Singleton)
-  }
-  
   def includeDefaultConfig(): Unit = {
     container.registerConfig()
   }
@@ -42,5 +41,18 @@ trait ContainerConfig {
   
   def includeSaveManager(): Unit = {
     container.registerSaveManager()
+  }
+  
+  def includeSaveManagerWithoutSerializer(): Unit = {
+    container.register[SaveManager, SaveManagerImpl](Singleton)
+    container.register[PersistentStore, PersistentStoreImpl](Singleton)
+  }
+  
+  def includeXmlSerializer(): Unit = {
+    container.register[Serializer, blockudoku.saving.serializerXMLImpl.SerializerImpl](Singleton)
+  }
+  
+  def includeJsonSerializer(): Unit = {
+    container.register[Serializer, blockudoku.saving.serializerJSONImpl.SerializerImpl](Singleton)
   }
 }

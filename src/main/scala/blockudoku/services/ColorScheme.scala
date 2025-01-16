@@ -2,7 +2,7 @@ package blockudoku.services
 
 object ColorScheme {
   
-  val colorSchemes : List[List[String]] = List(
+  private val colorSchemes : List[List[String]] = List(
     List(
       "file:src/main/resources/block_purple1.png",
       "file:src/main/resources/block_purple2.png",
@@ -36,8 +36,5 @@ object ColorScheme {
   }
   def getColor(index: Int): String = {
     current(index)
-  }
-  def getRandomColor: Int = {
-    scala.util.Random.nextInt(current.length)
   }
 }

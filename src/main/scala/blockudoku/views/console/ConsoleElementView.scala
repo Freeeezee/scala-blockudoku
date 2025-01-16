@@ -1,6 +1,5 @@
 package blockudoku.views.console
 
-import blockudoku.commands.commandsImpl.SelectElementCommand
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ElementCollector, GridCollector}
 import blockudoku.models.Element

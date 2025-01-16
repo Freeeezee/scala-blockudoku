@@ -1,8 +1,8 @@
 package test.commands
 
-import test.UnitSpec
+import test.{StateMatcherSpec, UnitSpec}
 
-class CommandsSpec extends UnitSpec {
+class CommandsSpec extends StateMatcherSpec {
   override def onConfigureContainers(): Unit = {
     super.onConfigureContainers()
     includeDefaultConfig()

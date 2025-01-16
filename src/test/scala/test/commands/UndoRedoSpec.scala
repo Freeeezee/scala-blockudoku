@@ -1,8 +1,7 @@
 package test.commands
 
 import blockudoku.commands.{CommandFactory, CommandInvoker}
-import blockudoku.controllers.{ElementCollector, GridCollector, ScoreCollector}
-import blockudoku.models.{Element, Grid}
+import blockudoku.controllers.ElementCollector
 
 import scala.compiletime.uninitialized
 
@@ -17,7 +16,7 @@ class UndoRedoSpec extends CommandsSpec {
       val invoker = provider.get[CommandInvoker]
       invoker.undo()
 
-      ensureStateMatches(getCurrentState, stateAfterOneCommand)
+      ensureStatesMatch(getCurrentState, stateAfterOneCommand)
     }
 
     "be undoable multiple times" in {
@@ -27,7 +26,7 @@ class UndoRedoSpec extends CommandsSpec {
       invoker.undo()
       invoker.undo()
 
-      ensureStateMatches(getCurrentState, initialState)
+      ensureStatesMatch(getCurrentState, initialState)
     }
 
     "be redoable" in {
@@ -39,7 +38,7 @@ class UndoRedoSpec extends CommandsSpec {
       invoker.undo()
       invoker.redo()
 
-      ensureStateMatches(getCurrentState, state)
+      ensureStatesMatch(getCurrentState, state)
     }
   }
 
@@ -59,18 +58,4 @@ class UndoRedoSpec extends CommandsSpec {
 
     invoker.execute(setCommand)
   }
-
-  private def getCurrentState: State = {
-    val scoreCollector = provider.get[ScoreCollector]
-    val gridCollector = provider.get[GridCollector]
-    val elementCollector = provider.get[ElementCollector]
-
-    State(gridCollector.getGrid, scoreCollector.getScore, elementCollector.getElements, elementCollector.getSelectedElement)
-  }
-
-  private def ensureStateMatches(a: State, b: State): Unit = {
-    a shouldEqual b
-  }
-
-  private case class State(grid: Grid, score: Int, list: List[Element], selectedElement: Option[Element])
 }

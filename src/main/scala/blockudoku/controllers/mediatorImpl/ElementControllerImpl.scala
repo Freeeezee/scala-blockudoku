@@ -33,7 +33,7 @@ class ElementControllerImpl(random: Random, focusManager: FocusManager) extends 
   private def generateElement(slot: Int): Element = {
     var points = List[Point](Point(0, 0))
     val length = random.between(1, maxElementLength)
-    val randomColor = ColorScheme.getRandomColor
+    val randomColor = random.nextInt(ColorScheme.current.length)
 
     for i <- 0 until length do
       points = generateNextPoint(points) :: points
