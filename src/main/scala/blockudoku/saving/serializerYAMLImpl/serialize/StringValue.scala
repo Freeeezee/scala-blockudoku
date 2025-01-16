@@ -1,14 +1,10 @@
 package blockudoku.saving.serializerYAMLImpl.serialize
 
-import blockudoku.saving.serializerYAMLImpl.Value
+import blockudoku.saving.serializerYAMLImpl.serialize.Value
 
 case class StringValue(string: String) extends Value {
   
-  def serialize(): String = {
+  def serialize(indentValue: Int): String = {
     string
-  }
-
-  def deserialize(data: String): StringValue = {
-    
   }
 }

@@ -1,15 +1,10 @@
 package blockudoku.saving.serializerYAMLImpl.deserialize
 
-import java.io.{BufferedReader, StringReader}
-
 class Reader(string: String) {
-  
-  private var nextLine: Option[String] = None
+  private val lines = string.split("\n")
+  private var index = 0
+  private var nextLine: Option[String] = Some(lines(index))
 
-  val reader = new BufferedReader(new StringReader(string))
-  
-  readLine
-  
   def hasNext: Boolean = {
     nextLine.isDefined
   }
@@ -20,9 +15,14 @@ class Reader(string: String) {
   
   def readLine: Option[String] = {
     val line = nextLine
-    if (reader.ready) {
-      nextLine = Some(reader.readLine())
+
+    if (index < lines.length) {
+      nextLine = Some(lines(index))
+      index += 1
+    } else {
+      nextLine = None
     }
+
     line
   }
 }

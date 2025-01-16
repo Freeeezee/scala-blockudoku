@@ -1,6 +1,6 @@
 package blockudoku.saving.serializerYAMLImpl.serialize
 
-import blockudoku.saving.serializerYAMLImpl.Value
+import blockudoku.saving.serializerYAMLImpl.serialize.Value
 
 case class ObjectValue(keyValue : Seq[KeyValuePair]) extends Value {
   
@@ -16,9 +16,4 @@ case class ObjectValue(keyValue : Seq[KeyValuePair]) extends Value {
     
     str.toString
   }
-
-  def deserialize(data: String): ObjectValue = {
-    
-  }
-  
 }

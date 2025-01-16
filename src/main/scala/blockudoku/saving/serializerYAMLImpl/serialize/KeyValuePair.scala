@@ -1,6 +1,6 @@
 package blockudoku.saving.serializerYAMLImpl.serialize
 
-import blockudoku.saving.serializerYAMLImpl.Value
+import blockudoku.saving.serializerYAMLImpl.serialize.Value
 
 case class KeyValuePair(key: String, value: Value) {
     
@@ -11,9 +11,4 @@ case class KeyValuePair(key: String, value: Value) {
       str.append(value.serialize(indentLevel))
       str.toString
     }
-    
-    def deserialize(data: String): KeyValuePair = {
-      
-    }
-    
 }

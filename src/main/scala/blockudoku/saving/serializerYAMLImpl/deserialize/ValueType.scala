@@ -1,5 +1,7 @@
 package blockudoku.saving.serializerYAMLImpl.deserialize
 
-trait YamlValue {
-
+enum ValueType {
+  case single
+  case obj
+  case array
 }
