@@ -8,6 +8,7 @@ import scalafx.application.Platform
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Node
 import scalafx.scene.control.Button
+import scalafx.scene.effect.Glow
 import scalafx.scene.layout.HBox
 
 class GuiElementView (commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector) extends GuiView {
@@ -40,6 +41,13 @@ class GuiElementView (commandFactory: CommandFactory, commandInvoker: CommandInv
       onAction = _ => {
         val command = commandFactory.createSelectElementCommand(elementCollector.getElements(index))
         commandInvoker.execute(command)
+      }
+      hover.onChange { (_, _, newValue) =>
+        if (newValue) {
+          effect = new Glow(0.4)
+        } else {
+          effect = null
+        }
       }
     }
   }

@@ -17,9 +17,17 @@ import scalafx.scene.image.{Image, ImageView}
 
 class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager, previewBuilder: GridPreviewBuilder, saveManager: SaveManager) extends JFXApp3 {
 
-  private val viewList = initializeViews()
+  private val viewList = initializeViewsMain() // verwendet?
 
-  private def initializeViews(): List[GuiView] = {
+  //private val startScene = initializeViewsStartScreen()
+
+  var currentScene: Scene = _
+  var mainScene: Scene = _
+  var settingsScene: Scene = _
+  var startScene: Scene = _
+
+
+  private def initializeViewsMain(): List[GuiView] = {
     var views: List[GuiView] = List()
 
     views = views :+ initializeHeadlineView()
@@ -30,8 +38,18 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
     views
   }
 
+  private def initializeViewsStartScreen(): List[GuiView] = {
+    var views: List[GuiView] = List()
+
+    views = views :+ initializeStartView()
+    //views = views :+ initializeLoadStoreView()
+    views
+    // hier noch patternView hinzufügen???
+  }
+
+
   private def initializeHeadlineView(): GuiView = {
-    new GuiHeadlineView()
+    new GuiHeadlineView(this)
   }
 
   private def initializeGridView(): GuiView = {
@@ -50,109 +68,76 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
     new GuiLoadStoreView(saveManager)
   }
 
+  private def initializeStartView(): GuiView = {
+    new GuiStartView(this)
+  } 
+  
+  private def intializeSettingView(): GuiView = {
+    new GuiSettingView(this)
+  }
+
   private def createMainScene(): Scene = {
-    val viewList = initializeViews()
-    new Scene {
-      //stylesheets.add(getClass.getResource("/styles.css").toExternalForm) // CSS global laden
+    val viewList = initializeViewsMain()
+    new Scene(800, 600) {
       root = new VBox {
         alignment = Pos.Center
-        padding = Insets(20)
+        prefWidth <== width
+        prefHeight <== height
         children = viewList.map(_.element)
       }
     }
   }
-  private def createSettingsScene(mainScene: Scene): Scene = {
-    new Scene {
-      root = new VBox() {
+  private def createSettingsScene(): Scene = {
+    val view = intializeSettingView()
+    new Scene(800, 600) {
+      root = new VBox {
         alignment = Pos.Center
-        padding = Insets(20)
-        children = Seq(
-          new Text {
-            text = "Settings"
-            font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 50)
-          },
-          new Button {
-            text = "Back"
-            style = "-fx-background-color: #8499B1"
-            font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 20)
-            onAction = _ => {
-              val sceneTransition = new GuiAnimation()
-              sceneTransition.switchScene(this.scene().getRoot, mainScene, stage)
-            }
-          }
-        )
+        prefWidth <== width
+        prefHeight <== height
+        children = Seq(view.element)
+      }
+    }
+  }
+  private def createStartScene(): Scene = {
+    val view = initializeViewsStartScreen()
+    new Scene(800, 600) {
+      root = new VBox {
+        alignment = Pos.Center
+        prefWidth <== width
+        prefHeight <== height
+        children = view.map(_.element)
       }
     }
   }
 
+  def switchToScene(newScene: Scene): Unit = {
+    val animation = new GuiAnimation()
+    animation.switchScene(stage, currentScene, newScene)
+    currentScene = newScene
+
+  }
 
   override def start(): Unit = {
-    val mainScene = createMainScene()
-
-    val settingsScene = createSettingsScene(mainScene)
-    val startScene = new Scene {
-      //stylesheets.add(getClass.getResource("/styles.css").toExternalForm)
-      root = new VBox {
-        alignment = Pos.Center
-        padding = Insets(20)
-        children = Seq(
-          new Text {
-            text = "Welcome to Blockudoku!"
-            font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 50)
-            textAlignment = TextAlignment.Center
-            wrappingWidth <== width
-          },
-          new Button {
-            text = "Start"
-            font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 20)
-            style = "-fx-background-color: #8499B1"
-            onAction = _ => {
-              val sceneTransition = new GuiAnimation()
-              sceneTransition.switchScene(this.scene().getRoot, mainScene, stage) // Parameter sind müll: this, stage, mainScene
-              //stage.scene = mainScene
-            }
-          },
-          new Button {
-            text = "Settings"
-            style = "-fx-background-color: #8499B1"
-            font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 20)
-            onAction = _ => {
-              val sceneTransition = new GuiAnimation()
-              sceneTransition.switchScene(this.scene().getRoot, settingsScene, stage)
-              //stage.scene = settingsScene
-            }
-          },
-          new Button {
-            text = "Load"
-            style = "-fx-background-color: #8499B1"
-            font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 20)
-            onAction = _ => {
-              saveManager.load()
-              val sceneTransition = new GuiAnimation()
-              sceneTransition.switchScene(this.scene().getRoot, mainScene, stage)
-            }
-          }
-        )
-        background = new Background(Array(new BackgroundImage(
-          new Image("file:src/main/resources/background_test.png"),
-          BackgroundRepeat.NoRepeat,
-          BackgroundRepeat.NoRepeat,
-          BackgroundPosition.Center,
-          new BackgroundSize(BackgroundSize.Auto, BackgroundSize.Auto, true, false, false, false)
-        ))) // BackgroundSize(width, height, widthAsPercentage, heightAsPercentage, contain, cover)
-      }
-    }
 
     stage = new JFXApp3.PrimaryStage {
+
       title.value = "Blockudoku"
       height = 800
       width = 600
-      scene = startScene
+      resizable = false
+
 
       onCloseRequest = _ => {
         App.exit()
       }
     }
+    mainScene = createMainScene()
+    settingsScene = createSettingsScene()
+    startScene = createStartScene()
+    currentScene = startScene
+
+    stage.scene = currentScene
+
   }
 } // todo: Start screen auch als Methode nicht innerhalb von start!
 // -> simpler background der hervorgehoben wird beim hovern?
