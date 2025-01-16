@@ -25,7 +25,6 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
       for row <- 0 until gridCollector.getGrid.yLength do {
         children.add(gridRow(row))
       }
-
     }
   }
   private def gridRow(row: Int): Node = {
