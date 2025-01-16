@@ -16,9 +16,9 @@ class Reader(string: String) {
   def readLine: Option[String] = {
     val line = nextLine
 
+    index += 1
     if (index < lines.length) {
       nextLine = Some(lines(index))
-      index += 1
     } else {
       nextLine = None
     }

@@ -1,8 +1,6 @@
 package blockudoku.saving.serializerYAMLImpl.serialize
 
-import blockudoku.saving.serializerYAMLImpl.serialize.Value
-
-case class KeyValuePair(key: String, value: Value) {
+case class KeyValuePair(key: String, value: Value) extends Value {
     
     def serialize(indentLevel: Int): String = {
       val str = new StringBuilder

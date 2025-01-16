@@ -1,17 +1,14 @@
 package blockudoku.saving.serializerYAMLImpl.serialize
 
-import blockudoku.saving.serializerYAMLImpl.serialize.Value
-
 case class ArrayValue(array : Seq[Value]) extends Value {
   
   def serialize(indentLevel: Int): String = {
     val str = new StringBuilder
-    str.append("\n")
     array.foreach(value => {
+      str.append("\n")
       str.append("  " * (indentLevel + 1))
       str.append("- ")
-      str.append(value.serialize(indentLevel + 1))
-      str.append("\n")
+      str.append(value.serialize(indentLevel + 2))
     })
     str.toString
   }

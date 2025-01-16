@@ -12,7 +12,7 @@ object YamlParser {
     parseReader(reader)
   }
 
-  private def parseReader(reader: Reader, indent: Int = 0): Map[String, YamlValue] = {
+  private def parseReader(reader: Reader, indent: Int = 0, array: Boolean = false): Map[String, YamlValue] = {
     val map = mutable.HashMap[String, YamlValue]()
 
     boundary:
@@ -35,8 +35,8 @@ object YamlParser {
         if (keyValuePair.length > 1 && keyValuePair(1).trim.nonEmpty) {
           map.put(key, parseSingleLine(keyValuePair(1).trim))
         } else if (line.get.contains(":")) {
-          map.put(key, parseMultiLine(key, reader))
-        } else {
+          map.put(key, parseMultiLine(key, reader)) // dangerous because array keys are double
+        } else if (line.get.contains("-")) {
           map.put(key, parseSingleLine(line.get.split("-")(1).trim))
         }
       }
@@ -45,6 +45,12 @@ object YamlParser {
   }
 
   private def parseSingleLine(string: String): YamlValue = {
+    val intOption = string.toIntOption
+    if intOption.isDefined then return IntYamlValue(intOption.get)
+
+    val doubleOption = string.toDoubleOption
+    if doubleOption.isDefined then return DoubleYamlValue(doubleOption.get)
+
     StringYamlValue(string)
   }
   
@@ -76,7 +82,9 @@ object YamlParser {
           break()
         }
 
-        parseReader(reader, indent).foreach(kv => list = list :+ kv._2)
+        val parsed = parseReader(reader, indent, true)
+        val sortedByIndex = parsed.toSeq.sortBy(key => key._1.split("-")(1).trim.toInt)
+        sortedByIndex.foreach(kv => list = list :+ kv._2)
       }
 
     ArrayYamlValue(list)
