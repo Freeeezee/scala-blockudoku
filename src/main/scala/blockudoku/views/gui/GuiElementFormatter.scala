@@ -32,7 +32,7 @@ class GuiElementFormatter (element: Element) {
                 height = 30
                 fill = Color.Transparent
               },
-              GuiColorTranslator.convertColor(element.colors) // Gibt ImageView zurück
+              GuiColorTranslator.convertColor(element.colors, 30) // Gibt ImageView zurück
             )
           } else {
             Seq(

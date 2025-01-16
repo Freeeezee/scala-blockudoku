@@ -2,6 +2,7 @@ package blockudoku.views.gui
 
 import blockudoku.App
 import blockudoku.commands.{CommandFactory, CommandInvoker}
+import blockudoku.controllers.ScoreController
 import blockudoku.controllers.mediatorImpl.{ElementController, GridController}
 import blockudoku.saving.SaveManager
 import blockudoku.services.GridPreviewBuilder
@@ -15,16 +16,18 @@ import scalafx.scene.text.{Font, Text, TextAlignment}
 import scalafx.Includes.*
 import scalafx.scene.image.{Image, ImageView}
 
-class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager, previewBuilder: GridPreviewBuilder, saveManager: SaveManager) extends JFXApp3 {
+import scala.compiletime.uninitialized
+
+class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager, previewBuilder: GridPreviewBuilder, saveManager: SaveManager, scoreController: ScoreController) extends JFXApp3 {
 
   private val viewList = initializeViewsMain() // verwendet?
 
   //private val startScene = initializeViewsStartScreen()
 
-  var currentScene: Scene = _
-  var mainScene: Scene = _
-  var settingsScene: Scene = _
-  var startScene: Scene = _
+  var currentScene: Scene = uninitialized
+  var mainScene: Scene = uninitialized
+  var settingsScene: Scene = uninitialized
+  var startScene: Scene = uninitialized
 
 
   private def initializeViewsMain(): List[GuiView] = {
@@ -49,7 +52,7 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
 
 
   private def initializeHeadlineView(): GuiView = {
-    new GuiHeadlineView(this)
+    new GuiHeadlineView(this, scoreController)
   }
 
   private def initializeGridView(): GuiView = {

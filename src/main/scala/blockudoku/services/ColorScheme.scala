@@ -1,6 +1,8 @@
 package blockudoku.services
 
-object ColorScheme {
+import blockudoku.observer.Observable
+
+object ColorScheme extends Observable {
   
   val colorSchemes : List[List[String]] = List(
     List(
@@ -33,6 +35,7 @@ object ColorScheme {
   
   def setColorScheme(index: Int): Unit = {
     current = colorSchemes(index)
+    notifyObservers()
   }
   def getColor(index: Int): String = {
     current(index)

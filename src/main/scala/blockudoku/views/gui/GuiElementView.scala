@@ -3,6 +3,7 @@ package blockudoku.views.gui
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ElementCollector, GridCollector}
 import blockudoku.observer.Observer
+import blockudoku.services.ColorScheme
 import blockudoku.services.console.ElementFormatter
 import scalafx.application.Platform
 import scalafx.geometry.{Insets, Pos}
@@ -26,29 +27,22 @@ class GuiElementView (commandFactory: CommandFactory, commandInvoker: CommandInv
   }
 
   private def elementButton(index: Int): Node = {
-    new Button { // hier weiter
+    new GuiElementButton("", _ => {
+      val command = commandFactory.createSelectElementCommand(elementCollector.getElements(index))
+      commandInvoker.execute(command)
+    }) { // hier weiter
       graphic = elementContent(index)
 
       minHeight = 100
       minWidth = 100
-      elementCollector.addObserver(new Observer {
-        override def update(): Unit = {
-          Platform.runLater( () => {
-            graphic = elementContent(index)
-          })
-        }
+      elementCollector.addObserver(() => {
+        Platform.runLater(() => {
+          graphic = elementContent(index)
+        })
       })
-      onAction = _ => {
-        val command = commandFactory.createSelectElementCommand(elementCollector.getElements(index))
-        commandInvoker.execute(command)
-      }
-      hover.onChange { (_, _, newValue) =>
-        if (newValue) {
-          effect = new Glow(0.4)
-        } else {
-          effect = null
-        }
-      }
+      ColorScheme.addObserver(() => {
+        graphic = elementContent(index)
+      })
     }
   }
 

@@ -5,17 +5,17 @@ import scalafx.scene.image.{Image, ImageView}
 
 object GuiColorTranslator {
 
-  def createImageView(imagePath: String): ImageView = {
+  def createImageView(imagePath: String, size: Int): ImageView = {
     new ImageView {
       image = new Image(imagePath)
-      fitWidth = 30
-      fitHeight = 30
+      fitWidth = size //30
+      fitHeight = size
       preserveRatio = true
     }
   }
 
-  def convertColor(index: Int): ImageView = {
-    createImageView(ColorScheme.getColor(index))
+  def convertColor(index: Int, size: Int): ImageView = {
+    createImageView(ColorScheme.getColor(index), size)
   }
 }
 

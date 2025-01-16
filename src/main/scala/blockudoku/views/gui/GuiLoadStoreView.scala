@@ -1,6 +1,6 @@
 package blockudoku.views.gui
 import blockudoku.saving.SaveManager
-import scalafx.geometry.Pos
+import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Node
 import scalafx.scene.layout.HBox
 
