@@ -1,4 +1,4 @@
-package blockudoku.services
+package blockudoku.views.gui
 
 object ColorScheme {
   

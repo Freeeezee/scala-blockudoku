@@ -1,6 +1,5 @@
 package blockudoku.views.gui
 
-import blockudoku.services.ColorScheme
 import scalafx.scene.image.{Image, ImageView}
 
 object GuiColorTranslator {

@@ -1,7 +1,8 @@
 package blockudoku.controllers.mediatorImpl
 
 import blockudoku.models.{Element, Point}
-import blockudoku.services.{ColorScheme, Random}
+import blockudoku.services.Random
+import blockudoku.views.gui.ColorScheme
 import blockudoku.windows.FocusManager
 
 class ElementControllerImpl(random: Random, focusManager: FocusManager) extends ElementController {
@@ -45,9 +46,6 @@ class ElementControllerImpl(random: Random, focusManager: FocusManager) extends 
     val possiblePoints = (0 to 7).toList
       .map(num => pointFromDirection(points.last, num))
       .filter(point => !points.contains(point))
-
-    // This is probably impossible
-    if (possiblePoints.isEmpty) throw new Exception("Point generation failed to find a possible next point.")
 
     possiblePoints(random.nextInt(possiblePoints.length))
   }

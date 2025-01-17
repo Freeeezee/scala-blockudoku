@@ -23,6 +23,14 @@ class ElementControllerSpec extends ControllerSpec {
         elementShouldHaveExpectedStructure(element)
       }
     }
+    "regenerate is called on a slot higher than the number of elements" should {
+      "throw an exception" in {
+        val elementController = provider.get[ElementController]
+        assertThrows[IndexOutOfBoundsException] {
+          elementController.regenerate(10)
+        }
+      }
+    }
   }
   
   private def elementShouldHaveExpectedStructure(element: Element): Unit = {
