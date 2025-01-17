@@ -20,4 +20,10 @@ trait ScoreController extends ScoreCollector, Snapshotable[ScoreController#Score
   }
 
   def testGridState(): Set[Tile]
+  
+  def loadScore(newScore: Int): Unit = {
+    score = Score(newScore)
+    createSnapshot()
+    notifyObservers()
+  }
 }

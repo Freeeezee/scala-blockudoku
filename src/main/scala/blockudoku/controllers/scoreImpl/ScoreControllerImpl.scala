@@ -64,11 +64,8 @@ class ScoreControllerImpl(gridCollector: GridCollector) extends ScoreController 
     }
     foundSets
   }
-  //private def testSquare(): Int = {
-  //}
 
   private def testSet(set: Set[Tile]): Boolean = {
     set.forall(tile => tile.state == TileState.blocked)
-
   }
 }

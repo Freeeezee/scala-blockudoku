@@ -1,18 +1,17 @@
 package blockudoku.views.gui
 import blockudoku.commands.{CommandFactory, CommandInvoker}
-import blockudoku.controllers.mediatorImpl.{ElementController, GridController}
 import blockudoku.controllers.{ElementCollector, GridCollector}
 import blockudoku.models.{Grid, Tile, TileState}
 import blockudoku.observer.{Observable, Observer}
 import blockudoku.services.GridPreviewBuilder
 import blockudoku.windows.{FocusManager, FocusState}
+import scalafx.application.Platform
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Node
 import scalafx.scene.control.Button
 import scalafx.scene.image.ImageView
 import scalafx.scene.layout.{HBox, VBox}
-import scalafx.scene.paint.Color
-import scalafx.scene.shape.Rectangle
+import scalafx.scene.layout.StackPane
 
 class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector, focusManager: FocusManager, previewBuilder: GridPreviewBuilder) extends GuiView {
   private val previewObservable = new Observable {}
@@ -38,25 +37,18 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
   }
   private def gridButton(column: Int, row: Int): Node = {
 
-    var stateImage = computeColor(gridCollector.getGrid.tile(column, row).get)
+    val stateImage = computeColor(gridCollector.getGrid.tile(column, row).get)
 
     new Button {
-      alignment = Pos.Center
-      var stateRectangle = new Rectangle {
-        alignment = Pos.Center
-        width = 40
-        height = 40
-        // graphic = stateImage
-        //stroke = "black"
-        //graphic = stateRectangleView
-      }
 
+      alignment = Pos.Center
       padding = Insets(0)
 
       graphic = stateImage
 
-      minHeight = 30
-      minWidth = 30
+
+      minHeight = 40
+      minWidth = 40
 
       onAction = _ => {
         val tile = gridCollector.getGrid.tile(column, row).get
@@ -65,11 +57,17 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
       }
 
       gridCollector.addObserver(() => {
-        graphic = computeColor(gridCollector.getGrid.tile(column, row).get)
+        Platform.runLater(() => {
+          graphic = computeColor(gridCollector.getGrid.tile(column, row).get)
+        })
       })
 
       focusManager.addObserver(() => {
         disable = focusManager.getFocusState != FocusState.Grid
+      })
+
+      ColorScheme.addObserver(() => {
+        graphic = computeColor(gridCollector.getGrid.tile(column, row).get)
       })
 
       onMouseEntered = _ => {
@@ -83,21 +81,43 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
         previewGrid = None
         previewObservable.notifyObservers()
       }
-        
+
       previewObservable.addObserver(() => {
-        previewGrid match
-          case Some(grid) => graphic = computeColor(grid.tile(column, row).get)
-          case None => graphic = computeColor(gridCollector.getGrid.tile(column, row).get)
+        Platform.runLater(() => {
+          previewGrid match
+            case Some(grid) => graphic = computeColor(grid.tile(column, row).get)
+            case None => graphic = computeColor(gridCollector.getGrid.tile(column, row).get)
+        })
       })
     }
   }
 
-  private def computeColor(tile: Tile): ImageView = {
-    tile.state match {
-      case TileState.empty => GuiColorTranslator.createImageView("file:src/main/resources/block_transparent.png") // Transparent
-      case TileState.blocked => GuiColorTranslator.convertColor(tile.colors)
-      case TileState.previewInvalid => GuiColorTranslator.createImageView("file:src/main/resources/block_red.png") // Red
-      case TileState.previewValid => GuiColorTranslator.createImageView("file:src/main/resources/block_green.png") // Green
+  private def computeColor(tile: Tile): StackPane = {
+
+    val stackPane = new StackPane {
+      alignment = Pos.Center
+      children = List()
     }
+
+    tile.state match {
+      case TileState.previewInvalid =>
+        val previewInvalidImage = GuiColorTranslator.createImageView("file:src/main/resources/block_red.png", 40)
+        val baseImage = GuiColorTranslator.convertColor(tile.colors, 40)
+        stackPane.children.add(baseImage)
+        stackPane.children.add(previewInvalidImage)
+      case TileState.previewValid =>
+        val previewValidImage = GuiColorTranslator.createImageView("file:src/main/resources/block_green.png", 40)
+        val emptyImage = GuiColorTranslator.createImageView("file:src/main/resources/background_block_final.png", 40)
+        stackPane.children.add(emptyImage)
+        stackPane.children.add(previewValidImage)
+      case TileState.empty =>
+        val emptyImage = GuiColorTranslator.createImageView("file:src/main/resources/background_block_final.png", 40)
+        stackPane.children.add(emptyImage)
+      case TileState.blocked =>
+        val baseImage = GuiColorTranslator.convertColor(tile.colors, 40)
+        stackPane.children.add(baseImage)
+    }
+
+    stackPane
   }
 }

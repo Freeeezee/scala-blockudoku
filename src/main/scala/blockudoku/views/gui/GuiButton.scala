@@ -12,9 +12,9 @@ class GuiButton(buttonText: String, action: EventHandler[ActionEvent]) extends B
 
   private val buttonFont: Font = Font.loadFont(getClass.getResourceAsStream("/Audiowide-Regular.ttf"), 20)
 
-  private val defaultStyle = "-fx-font-family: 'Audiowide'; -fx-font-size: 16; -fx-background-color: #8499B1; -fx-text-fill: white;"
-  private val hoverStyle = "-fx-font-family: 'Audiowide'; -fx-font-size: 16; -fx-background-color: #666; -fx-text-fill: white;"
-  private val pressedStyle = "-fx-font-family: 'Audiowide'; -fx-font-size: 16; -fx-background-color: #222; -fx-text-fill: white;"
+  protected val defaultStyle = "-fx-font-family: 'Audiowide'; -fx-font-size: 16; -fx-background-color: #8499B1; -fx-text-fill: white;"
+  protected val hoverStyle = "-fx-font-family: 'Audiowide'; -fx-font-size: 16; -fx-background-color: #666; -fx-text-fill: white;"
+  protected val pressedStyle = "-fx-font-family: 'Audiowide'; -fx-font-size: 16; -fx-background-color: #222; -fx-text-fill: white;"
 
   font = buttonFont
   style = defaultStyle

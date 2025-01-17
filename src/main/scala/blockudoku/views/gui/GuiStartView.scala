@@ -1,5 +1,6 @@
 package blockudoku.views.gui
 
+import blockudoku.saving.SaveManager
 import scalafx.animation.AnimationTimer
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.image.Image
@@ -7,9 +8,9 @@ import scalafx.scene.layout.{Background, BackgroundImage, BackgroundPosition, Ba
 import scalafx.scene.text.{Font, Text, TextAlignment}
 import scalafx.scene.{Node, Scene}
 
-class GuiStartView(guiLoader: GuiLoader) extends GuiView {
+class GuiStartView(guiLoader: GuiLoader, saveManager: SaveManager) extends GuiView {
   private var currentBackgroundIndex = 0
-  private val frameDelay = 1000000000L // 1 Sekunde in Nanosekunden
+  private val frameDelay = 500000000L // 1 Sekunde in Nanosekunden
   private var lastUpdate = 0L
 
   override def element: Node = {
@@ -39,6 +40,10 @@ class GuiStartView(guiLoader: GuiLoader) extends GuiView {
             }),
             new GuiButton("Settings", _ => {
               guiLoader.switchToScene(guiLoader.settingsScene)
+            }),
+            new GuiButton("Load", _ => {
+              guiLoader.switchToScene(guiLoader.mainScene)
+              saveManager.load()
             })
           )
         }
