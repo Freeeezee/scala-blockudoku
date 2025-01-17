@@ -10,7 +10,7 @@ import blockudoku.input.consoleInputHandlerImpl.ConsoleInputHandlerImpl
 import blockudoku.saving.diskPersistentStoreImpl.PersistentStoreImpl
 import blockudoku.saving.{PersistentStore, SaveManager, Serializer}
 import blockudoku.saving.saveManagerImpl.SaveManagerImpl
-import blockudoku.saving.serializerJSONImpl.SerializerImpl
+import blockudoku.saving.serializerXMLImpl.SerializerImpl
 import blockudoku.services.gridPreviewBuilderImpl.GridPreviewBuilderImpl
 import blockudoku.services.{GridPreviewBuilder, Random, RandomImpl}
 import blockudoku.views.gui.GuiLoader
