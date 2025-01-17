@@ -1,17 +1,19 @@
 package blockudoku.views.gui
-import scalafx.geometry.Pos
+import blockudoku.controllers.ScoreCollector
+import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Node
-import scalafx.scene.layout.{BorderPane, HBox, Priority, Region, VBox}
+import scalafx.scene.layout.*
 import scalafx.scene.text.{Font, FontWeight, Text}
-import scalafx.Includes._
 
-class GuiHeadlineView(guiLoader: GuiLoader) extends GuiView {
+class GuiHeadlineView(guiLoader: GuiLoader, scoreCollector: ScoreCollector) extends GuiView {
+
 
   override def element: Node = {
     new BorderPane {
       top = new HBox {
       alignment = Pos.Center
       spacing = 10
+      padding = Insets(10)
       children = Seq(
         new GuiButton("Back", _ => {
           guiLoader.switchToScene(guiLoader.startScene)
@@ -32,13 +34,23 @@ class GuiHeadlineView(guiLoader: GuiLoader) extends GuiView {
             font = Font.font("Audiowide", FontWeight.Bold, 50)
           },
           new Text {
-            text = "Score:"
+            text = "Score: " + scoreCollector.getScore
+
             font = Font.font("Audiowide", FontWeight.Bold, 40)
+
+            var lastScore = scoreCollector.getScore
+
+            scoreCollector.addObserver(() => {
+              text = "Score: " + scoreCollector.getScore
+              if (lastScore != scoreCollector.getScore) {
+                lastScore = scoreCollector.getScore
+                val animation = new GuiAnimation().scoreAnimation(this)
+                animation.play()
+              }
+            })
           }
         )
       }
-      //BorderPane.setAlignment(top.value, Pos.TopLeft)
-      //BorderPane.setAlignment(center.value, Pos.Center)
     }
   }
 }

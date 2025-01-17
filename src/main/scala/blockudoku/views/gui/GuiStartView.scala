@@ -9,7 +9,7 @@ import scalafx.scene.{Node, Scene}
 
 class GuiStartView(guiLoader: GuiLoader) extends GuiView {
   private var currentBackgroundIndex = 0
-  private val frameDelay = 1000000000L // 1 Sekunde in Nanosekunden
+  private val frameDelay = 500000000L // 1 Sekunde in Nanosekunden
   private var lastUpdate = 0L
 
   override def element: Node = {
