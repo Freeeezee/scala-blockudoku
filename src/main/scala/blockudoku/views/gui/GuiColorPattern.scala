@@ -1,6 +1,6 @@
 package blockudoku.views.gui
 
-import blockudoku.services.ColorScheme
+
 import scalafx.collections.ObservableBuffer
 import scalafx.scene.control.ToggleGroup
 import javafx.scene.control.RadioButton

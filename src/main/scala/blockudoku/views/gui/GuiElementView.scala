@@ -3,13 +3,9 @@ package blockudoku.views.gui
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ElementCollector, GridCollector}
 import blockudoku.observer.Observer
-import blockudoku.services.ColorScheme
-import blockudoku.services.console.ElementFormatter
 import scalafx.application.Platform
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Node
-import scalafx.scene.control.Button
-import scalafx.scene.effect.Glow
 import scalafx.scene.layout.HBox
 
 class GuiElementView (commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector) extends GuiView {

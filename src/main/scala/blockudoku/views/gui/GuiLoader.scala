@@ -56,7 +56,7 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
   }
 
   private def initializeStartView(): GuiView = {
-    new GuiStartView(this)
+    new GuiStartView(this, saveManager)
   } 
   
   private def intializeSettingView(): GuiView = {
