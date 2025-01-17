@@ -17,7 +17,7 @@ jobs:
       - name: Java setup
         uses: coursier/setup-action@v1.3.8
         with: 
-          jvm: corretto:11
+          jvm: corretto:17
           apps: sbt sbtn
       - name: Run tests
         run: sbt -v -java-home $JAVA_HOME test
