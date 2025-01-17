@@ -8,21 +8,15 @@ import blockudoku.saving.SaveManager
 import blockudoku.services.GridPreviewBuilder
 import blockudoku.windows.FocusManager
 import scalafx.application.JFXApp3
-import scalafx.geometry.{Insets, Pos}
+import scalafx.geometry.Pos
 import scalafx.scene.Scene
-import scalafx.scene.control.{Button, Label}
-import scalafx.scene.layout.{Background, BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize, VBox}
-import scalafx.scene.text.{Font, Text, TextAlignment}
-import scalafx.Includes.*
-import scalafx.scene.image.{Image, ImageView}
+import scalafx.scene.layout.VBox
 
 import scala.compiletime.uninitialized
 
 class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridController: GridController, elementController: ElementController, focusManager: FocusManager, previewBuilder: GridPreviewBuilder, saveManager: SaveManager, scoreController: ScoreController) extends JFXApp3 {
 
-  private val viewList = initializeViewsMain() // verwendet?
-
-  //private val startScene = initializeViewsStartScreen()
+  private val viewList = initializeViewsMain()
 
   var currentScene: Scene = uninitialized
   var mainScene: Scene = uninitialized
@@ -40,16 +34,6 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
     views = views :+ initializeLoadStoreView()
     views
   }
-
-  private def initializeViewsStartScreen(): List[GuiView] = {
-    var views: List[GuiView] = List()
-
-    views = views :+ initializeStartView()
-    //views = views :+ initializeLoadStoreView()
-    views
-    // hier noch patternView hinzufügen???
-  }
-
 
   private def initializeHeadlineView(): GuiView = {
     new GuiHeadlineView(this, scoreController)
@@ -102,13 +86,13 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
     }
   }
   private def createStartScene(): Scene = {
-    val view = initializeViewsStartScreen()
+    val view = initializeStartView()
     new Scene(800, 600) {
       root = new VBox {
         alignment = Pos.Center
         prefWidth <== width
         prefHeight <== height
-        children = view.map(_.element)
+        children =  Seq(view.element)
       }
     }
   }
@@ -117,7 +101,6 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
     val animation = new GuiAnimation()
     animation.switchScene(stage, currentScene, newScene)
     currentScene = newScene
-
   }
 
   override def start(): Unit = {
@@ -138,9 +121,7 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
     settingsScene = createSettingsScene()
     startScene = createStartScene()
     currentScene = startScene
-
     stage.scene = currentScene
 
   }
-} // todo: Start screen auch als Methode nicht innerhalb von start!
-// -> simpler background der hervorgehoben wird beim hovern?
+}

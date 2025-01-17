@@ -1,12 +1,11 @@
 package blockudoku.views.gui
 
-import scalafx.animation.FadeTransition
-import scalafx.application.JFXApp3
-import scalafx.application.JFXApp3.PrimaryStage
+import scalafx.animation.{FadeTransition, ParallelTransition, ScaleTransition, SequentialTransition}
 import scalafx.util.Duration
 import scalafx.scene.{Node, Scene}
 import scalafx.stage
 import scalafx.Includes.*
+import scalafx.scene.text.Text
 import scalafx.stage.Stage
 
 class GuiAnimation {
@@ -36,14 +35,31 @@ class GuiAnimation {
     }
   }
 
-  def fadeOutBlocks(blocks: Seq[Node]): Unit = {
-    blocks.foreach { block =>
-      val fadeOut = new FadeTransition(Duration(300), block) {
-        fromValue = 1.0
-        toValue = 0.0
-      }
-      fadeOut.play()
+  def scoreAnimation(text: Text): SequentialTransition  = {
+
+
+    val scaleTransitionOut = new ScaleTransition {
+      node = text
+      duration = Duration(300)
+      fromX = 1
+      fromY = 1
+      toX = 1.5
+      toY = 1.5
+      cycleCount = 1
+    }
+
+    val scaleTransitionIn = new ScaleTransition {
+      node = text
+      duration = Duration(300)
+      fromX = 1.5
+      fromY = 1.5
+      toX = 1
+      toY = 1
+      cycleCount = 1
+    }
+
+    new SequentialTransition {
+      children = Seq(scaleTransitionOut, scaleTransitionIn) // insert transitions
     }
   }
 }
-  // def fadeOutBlocks oder so wenn block reihe gesetzt wurde oder partikel

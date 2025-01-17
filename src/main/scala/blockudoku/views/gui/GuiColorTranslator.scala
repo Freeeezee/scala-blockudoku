@@ -8,7 +8,7 @@ object GuiColorTranslator {
   def createImageView(imagePath: String, size: Int): ImageView = {
     new ImageView {
       image = new Image(imagePath)
-      fitWidth = size //30
+      fitWidth = size
       fitHeight = size
       preserveRatio = true
     }
@@ -18,10 +18,3 @@ object GuiColorTranslator {
     createImageView(ColorScheme.getColor(index), size)
   }
 }
-
-// case klasse für farben mit liste für strings: statt enum
-// -> in element statt color dann index
-// Instanz nutzen zur Übergabe der pattern
-// stackpane nutzen für previews -> über blocked (&empty)
-// Rahmen um grid
-// margin / padding für elemente gucken

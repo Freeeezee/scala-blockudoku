@@ -1,6 +1,5 @@
 package blockudoku.views.gui
 import blockudoku.commands.{CommandFactory, CommandInvoker}
-import blockudoku.controllers.mediatorImpl.{ElementController, GridController}
 import blockudoku.controllers.{ElementCollector, GridCollector}
 import blockudoku.models.{Grid, Tile, TileState}
 import blockudoku.observer.{Observable, Observer}
@@ -41,7 +40,6 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
     val stateImage = computeColor(gridCollector.getGrid.tile(column, row).get)
 
     new Button {
-      style = "-fx-background-color: #E3E3E3; -fx-border-color: #B5B4B4; -fx-border-width: 1px;"
 
       alignment = Pos.Center
       padding = Insets(0)
@@ -109,11 +107,11 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
         stackPane.children.add(previewInvalidImage)
       case TileState.previewValid =>
         val previewValidImage = GuiColorTranslator.createImageView("file:src/main/resources/block_green.png", 40)
-        val emptyImage = GuiColorTranslator.createImageView("file:src/main/resources/block_transparent.png", 40)
+        val emptyImage = GuiColorTranslator.createImageView("file:src/main/resources/background_block_final.png", 40)
         stackPane.children.add(emptyImage)
         stackPane.children.add(previewValidImage)
       case TileState.empty =>
-        val emptyImage = GuiColorTranslator.createImageView("file:src/main/resources/block_transparent.png", 40)
+        val emptyImage = GuiColorTranslator.createImageView("file:src/main/resources/background_block_final.png", 40)
         stackPane.children.add(emptyImage)
       case TileState.blocked =>
         val baseImage = GuiColorTranslator.convertColor(tile.colors, 40)

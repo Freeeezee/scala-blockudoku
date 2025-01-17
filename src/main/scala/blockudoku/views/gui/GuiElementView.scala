@@ -30,7 +30,7 @@ class GuiElementView (commandFactory: CommandFactory, commandInvoker: CommandInv
     new GuiElementButton("", _ => {
       val command = commandFactory.createSelectElementCommand(elementCollector.getElements(index))
       commandInvoker.execute(command)
-    }) { // hier weiter
+    }) {
       graphic = elementContent(index)
 
       minHeight = 100
