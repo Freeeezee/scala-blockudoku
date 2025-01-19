@@ -27,10 +27,10 @@ jobs:
         id: build_project
         run: |
           echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
-          echo $VERSION
           sbt clean assembly
         env:
           CI_RELEASE: true
+          VERSION: ${{ env.VERSION }}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -49,8 +49,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with: 
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./target/scala-3.5.0/blockudoku-${{ github.ref_name }}.jar
-          asset_name: blockudoku-${{ github.ref }}.jar
+          asset_path: ./target/scala-3.5.0/blockudoku-${{ env.VERSION }}.jar
+          asset_name: blockudoku-${{ env.VERSION }}.jar
           asset_content_type: application/java-archive
           
           
