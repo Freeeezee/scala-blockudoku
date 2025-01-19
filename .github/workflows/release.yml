@@ -27,10 +27,10 @@ jobs:
         id: build_project
         run: |
           echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+          export VERSION=${GITHUB_REF#refs/tags/v}
           sbt clean assembly
         env:
           CI_RELEASE: true
-          VERSION: ${{ env.VERSION }}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
