@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Java setup
         uses: coursier/setup-action@v1.3.8
         with: 
@@ -24,6 +26,7 @@ jobs:
       - name: Build project
         id: build_project
         run: |
+          echo "CURRENT_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
           sbt clean assembly
         env:
           CI_RELEASE: true

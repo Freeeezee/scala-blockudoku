@@ -2,15 +2,15 @@ package blockudoku.views.gui
 
 import blockudoku.saving.SaveManager
 import scalafx.animation.AnimationTimer
-import scalafx.geometry.{Insets, Pos}
+import scalafx.geometry.Pos
+import scalafx.scene.Node
 import scalafx.scene.image.Image
-import scalafx.scene.layout.{Background, BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize, HBox, VBox}
+import scalafx.scene.layout.*
 import scalafx.scene.text.{Font, Text, TextAlignment}
-import scalafx.scene.{Node, Scene}
 
 class GuiStartView(guiLoader: GuiLoader, saveManager: SaveManager) extends GuiView {
   private var currentBackgroundIndex = 0
-  private val frameDelay = 500000000L // 1 Sekunde in Nanosekunden
+  private val frameDelay = 500000000L // 1 sec in nanoseconds
   private var lastUpdate = 0L
 
   override def element: Node = {
@@ -50,7 +50,6 @@ class GuiStartView(guiLoader: GuiLoader, saveManager: SaveManager) extends GuiVi
       )
     }
 
-    // Animation Timer für den Hintergrundwechsel
     val timer = AnimationTimer { now =>
       if (now - lastUpdate >= frameDelay) {
         currentBackgroundIndex = (currentBackgroundIndex + 1) % backgroundImages.length
