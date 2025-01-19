@@ -26,11 +26,10 @@ jobs:
       - name: Build project
         id: build_project
         run: |
-          echo "CURRENT_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+          echo "CURRENT_TAG=${{ github.ref_name }}" >> VERSION
           sbt clean assembly
         env:
           CI_RELEASE: true
-          VERSION: ${{ github.ref }}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
