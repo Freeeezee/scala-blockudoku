@@ -10,11 +10,11 @@ import scalafx.scene.{Node, Scene}
 
 class GuiStartView(guiLoader: GuiLoader, saveManager: SaveManager) extends GuiView {
   private var currentBackgroundIndex = 0
-  private val frameDelay = 500000000L // 1 Sekunde in Nanosekunden
+  private val frameDelay = 250000000L
   private var lastUpdate = 0L
 
   override def element: Node = {
-    val backgroundImages = (1 to 11).map { i =>
+    val backgroundImages = (1 to 21).map { i =>
       new Image(getClass.getResourceAsStream(s"/background_$i.png"))
     }
 
