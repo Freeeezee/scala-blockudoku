@@ -10,8 +10,7 @@ import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Node
 import scalafx.scene.control.Button
 import scalafx.scene.image.ImageView
-import scalafx.scene.layout.{HBox, VBox}
-import scalafx.scene.layout.StackPane
+import scalafx.scene.layout.{HBox, StackPane, VBox}
 
 class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector, focusManager: FocusManager, previewBuilder: GridPreviewBuilder) extends GuiView {
   private val previewObservable = new Observable {}
@@ -101,17 +100,17 @@ class GuiGridView(commandFactory: CommandFactory, commandInvoker: CommandInvoker
 
     tile.state match {
       case TileState.previewInvalid =>
-        val previewInvalidImage = GuiColorTranslator.createImageView("file:src/main/resources/block_red.png", 40)
+        val previewInvalidImage = GuiColorTranslator.createImageView("/block_red.png", 40)
         val baseImage = GuiColorTranslator.convertColor(tile.colors, 40)
         stackPane.children.add(baseImage)
         stackPane.children.add(previewInvalidImage)
       case TileState.previewValid =>
-        val previewValidImage = GuiColorTranslator.createImageView("file:src/main/resources/block_green.png", 40)
-        val emptyImage = GuiColorTranslator.createImageView("file:src/main/resources/background_block_final.png", 40)
+        val previewValidImage = GuiColorTranslator.createImageView("/block_green.png", 40)
+        val emptyImage = GuiColorTranslator.createImageView("/background_block_final.png", 40)
         stackPane.children.add(emptyImage)
         stackPane.children.add(previewValidImage)
       case TileState.empty =>
-        val emptyImage = GuiColorTranslator.createImageView("file:src/main/resources/background_block_final.png", 40)
+        val emptyImage = GuiColorTranslator.createImageView("/background_block_final.png", 40)
         stackPane.children.add(emptyImage)
       case TileState.blocked =>
         val baseImage = GuiColorTranslator.convertColor(tile.colors, 40)

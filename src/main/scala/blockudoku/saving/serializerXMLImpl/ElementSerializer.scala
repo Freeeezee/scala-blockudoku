@@ -17,7 +17,6 @@ object ElementSerializer {
   }
   
   def deserialize(data: Node): Element = {
-    print(data.text)
     val slot = (data \ "Slot").text.toInt
     val colors = (data \ "Colors").text.toInt
     val structure = ((data \ "Structure") \ "Point").map(node => PointSerializer.deserialize(node))

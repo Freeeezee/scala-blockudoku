@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Java setup
         uses: coursier/setup-action@v1.3.8
         with: 
@@ -24,10 +26,11 @@ jobs:
       - name: Build project
         id: build_project
         run: |
+          echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+          export VERSION=${GITHUB_REF#refs/tags/v}
           sbt clean assembly
         env:
           CI_RELEASE: true
-          VERSION: ${{ github.ref }}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -46,8 +49,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with: 
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./target/scala-3.5.0/blockudoku-${{ github.ref_name }}.jar
-          asset_name: blockudoku-${{ github.ref }}.jar
+          asset_path: ./target/scala-3.5.0/blockudoku-${{ env.VERSION }}.jar
+          asset_name: blockudoku-${{ env.VERSION }}.jar
           asset_content_type: application/java-archive
           
           

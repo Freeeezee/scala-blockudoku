@@ -9,6 +9,10 @@ lazy val root = (project in file("."))
   .enablePlugins(JacocoPlugin, AssemblyPlugin)
   .settings(
     assembly / assemblyJarName := s"blockudoku-$ver.jar",
+    assembly / assemblyMergeStrategy := {
+      case PathList("META-INF", _*) => MergeStrategy.discard
+      case _                        => MergeStrategy.first
+    },
     coverageEnabled := !ci_release,
     coverageReport := !ci_release,
     name := "blockudoku",
