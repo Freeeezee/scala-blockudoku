@@ -1,0 +1,24 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Java setup
+        uses: coursier/setup-action@v1.3.8
+        with:
+          jvm: corretto:17
+          apps: sbt sbtn
+
+      - name: Generate Scaladoc
+        run: sbt doc
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./target/scala-3.5.0/api
