@@ -1,0 +1,366 @@
+<!DOCTYPE html><html data-pathToRoot="../" data-rawLocation="blockudoku/commands" data-dynamicSideMenu="false"><head><meta charset="utf-8"></meta><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></meta><title>blockudoku.commands</title><link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"></link><script type="text/javascript" src="../scripts/theme.js"></script><script type="text/javascript" src="../scripts/searchData.js" defer="true"></script><script type="text/javascript" src="../scripts/scastieConfiguration.js" defer="true"></script><link rel="stylesheet" href="../styles/theme/bundle.css"></link><link rel="stylesheet" href="../styles/theme/components/bundle.css"></link><link rel="stylesheet" href="../styles/theme/components/button/bundle.css"></link><link rel="stylesheet" href="../styles/theme/layout/bundle.css"></link><link rel="stylesheet" href="../styles/nord-light.css"></link><link rel="stylesheet" href="../styles/dotty-icons.css"></link><link rel="stylesheet" href="../styles/filter-bar.css"></link><link rel="stylesheet" href="../styles/code-snippets.css"></link><link rel="stylesheet" href="../styles/searchbar.css"></link><link rel="stylesheet" href="../styles/social-links.css"></link><link rel="stylesheet" href="../styles/versions-dropdown.css"></link><link rel="stylesheet" href="../styles/content-contributors.css"></link><link rel="stylesheet" href="../styles/fontawesome.css"></link><script type="text/javascript" src="../hljs/highlight.pack.js" defer="true"></script><script type="text/javascript" src="../scripts/hljs-scala3.js" defer="true"></script><script type="text/javascript" src="../scripts/ux.js" defer="true"></script><script type="text/javascript" src="../scripts/common/component.js" defer="true"></script><script type="text/javascript" src="../scripts/common/utils.js" defer="true"></script><script type="text/javascript" src="../scripts/components/FilterBar.js" defer="true"></script><script type="text/javascript" src="../scripts/components/DocumentableList.js" defer="true"></script><script type="text/javascript" src="../scripts/components/Input.js" defer="true"></script><script type="text/javascript" src="../scripts/components/FilterGroup.js" defer="true"></script><script type="text/javascript" src="../scripts/components/Filter.js" defer="true"></script><script type="text/javascript" src="../scripts/scaladoc-scalajs.js" defer="true"></script><script type="text/javascript" src="../scripts/contributors.js" defer="true"></script><script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js" defer="true"></script><script type="text/javascript" src="https://d3js.org/d3.v6.min.js" defer="true"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/graphlib-dot@0.6.2/dist/graphlib-dot.min.js" defer="true"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dagre-d3/0.6.1/dagre-d3.min.js" defer="true"></script><script type="text/javascript" src="https://scastie.scala-lang.org/embedded.js" defer="true"></script><script type="text/javascript" src="../scripts/data.js" defer="true"></script><link rel="stylesheet" href="../styles/apistyles.css"></link><script>var pathToRoot = "../";</script></head><body><div id=""><div id="header" class="body-small"><div class="header-container-left"><a href="../" class="logo-container"><span class="project-name h300">blockudoku</span></a><span onclick="dropdownHandler(event)" class="text-button with-arrow" id="dropdown-trigger"><a></a></span><div id="version-dropdown" class="dropdown-menu"></div></div><div class="header-container-right"><button id="search-toggle" class="icon-button"></button><span id="theme-toggle" class="icon-button"></span><span id="mobile-menu-toggle" class="icon-button hamburger"></span></div></div><div id="mobile-menu"><div class="mobile-menu-header body-small"><span class="mobile-menu-logo"><span class="project-name h300">blockudoku</span></span><button id="mobile-menu-close" class="icon-button close"></button></div><div class="mobile-menu-container body-medium"><input id="mobile-scaladoc-searchbar-input" class="scaladoc-searchbar-input" type="search" placeholder="Find anything"></input><span id="mobile-theme-toggle" class="mobile-menu-item mode"></span></div></div><span id="mobile-sidebar-toggle" class="floating-button"></span><div id="leftColumn" class="body-small"><div class="switcher-container"><a id="api-nav-button" class="switcher h100 selected" href="../index.html">API</a></div><nav id="api-nav" class="side-menu"><div class="ni n0 expanded"><span class="nh h100 expanded cs"><button class="ar icon-button expanded"></button><a href="../blockudoku.html"><span class="micon pa"></span><span>blockudoku</span></a></span><div class="ni n1 expanded"><span class="nh h100 selected"><button class="ar icon-button expanded"></button><a href="#"><span class="micon pa"></span><span>commands</span></a></span><div class="ni n2"><span class="nh "><button class="ar icon-button "></button><a href="commands/commandsImpl.html"><span class="micon pa"></span><span>commandsImpl</span></a></span><div class="ni n3 "><span class="nh "><a href="commands/commandsImpl/CommandFactoryImpl.html"><span class="micon cl"></span><span>CommandFactoryImpl</span></a></span></div><div class="ni n3 "><span class="nh "><a href="commands/commandsImpl/CommandInvokerImpl.html"><span class="micon cl"></span><span>CommandInvokerImpl</span></a></span></div><div class="ni n3 "><span class="nh "><a href="commands/commandsImpl/SelectElementCommand.html"><span class="micon cl"></span><span>SelectElementCommand</span></a></span></div><div class="ni n3 "><span class="nh "><a href="commands/commandsImpl/SetElementCommand.html"><span class="micon cl"></span><span>SetElementCommand</span></a></span></div></div><div class="ni n2 "><span class="nh "><a href="commands/Command.html"><span class="micon tr"></span><span>Command</span></a></span></div><div class="ni n2 "><span class="nh "><a href="commands/CommandFactory.html"><span class="micon tr"></span><span>CommandFactory</span></a></span></div><div class="ni n2 "><span class="nh "><a href="commands/CommandInvoker.html"><span class="micon tr"></span><span>CommandInvoker</span></a></span></div><div class="ni n2 "><span class="nh "><a href="commands/Snapshotable.html"><span class="micon tr"></span><span>Snapshotable</span></a></span></div></div><div class="ni n1"><span class="nh "><button class="ar icon-button "></button><a href="controllers.html"><span class="micon pa"></span><span>controllers</span></a></span><div class="ni n2"><span class="nh "><button class="ar icon-button "></button><a href="controllers/mediatorImpl.html"><span class="micon pa"></span><span>mediatorImpl</span></a></span><div class="ni n3 "><span class="nh "><a href="controllers/mediatorImpl/ControllerMediatorImpl.html"><span class="micon cl"></span><span>ControllerMediatorImpl</span></a></span></div><div class="ni n3"><span class="nh "><button class="ar icon-button "></button><a href="controllers/mediatorImpl/ElementController.html"><span class="micon tr"></span><span>ElementController</span></a></span><div class="ni n4 "><span class="nh "><a href="controllers/mediatorImpl/ElementController$ElementControllerSnapshot.html"><span class="micon cl"></span><span>ElementControllerSnapshot</span></a></span></div></div><div class="ni n3 "><span class="nh "><a href="controllers/mediatorImpl/ElementControllerImpl.html"><span class="micon cl"></span><span>ElementControllerImpl</span></a></span></div><div class="ni n3"><span class="nh "><button class="ar icon-button "></button><a href="controllers/mediatorImpl/GridController.html"><span class="micon tr"></span><span>GridController</span></a></span><div class="ni n4 "><span class="nh "><a href="controllers/mediatorImpl/GridController$GridControllerSnapshot.html"><span class="micon cl"></span><span>GridControllerSnapshot</span></a></span></div></div><div class="ni n3 "><span class="nh "><a href="controllers/mediatorImpl/GridControllerImpl.html"><span class="micon cl"></span><span>GridControllerImpl</span></a></span></div><div class="ni n3"><span class="nh "><button class="ar icon-button "></button><a href="controllers/mediatorImpl/ScoreController.html"><span class="micon tr"></span><span>ScoreController</span></a></span><div class="ni n4 "><span class="nh "><a href="controllers/mediatorImpl/ScoreController$ScoreControllerSnapshot.html"><span class="micon cl"></span><span>ScoreControllerSnapshot</span></a></span></div></div><div class="ni n3 "><span class="nh "><a href="controllers/mediatorImpl/ScoreControllerImpl.html"><span class="micon cl"></span><span>ScoreControllerImpl</span></a></span></div></div><div class="ni n2 "><span class="nh "><a href="controllers/ControllerMediator.html"><span class="micon tr"></span><span>ControllerMediator</span></a></span></div><div class="ni n2 "><span class="nh "><a href="controllers/ElementCollector.html"><span class="micon tr"></span><span>ElementCollector</span></a></span></div><div class="ni n2 "><span class="nh "><a href="controllers/GridCollector.html"><span class="micon tr"></span><span>GridCollector</span></a></span></div><div class="ni n2 "><span class="nh "><a href="controllers/GridConfig.html"><span class="micon cl"></span><span>GridConfig</span></a></span></div><div class="ni n2 "><span class="nh "><a href="controllers/ScoreCollector.html"><span class="micon tr"></span><span>ScoreCollector</span></a></span></div></div><div class="ni n1"><span class="nh "><button class="ar icon-button "></button><a href="models.html"><span class="micon pa"></span><span>models</span></a></span><div class="ni n2 "><span class="nh "><a href="models/Element.html"><span class="micon cl"></span><span>Element</span></a></span></div><div class="ni n2 "><span class="nh "><a href="models/Grid.html"><span class="micon cl"></span><span>Grid</span></a></span></div><div class="ni n2 "><span class="nh "><a href="models/Point.html"><span class="micon cl"></span><span>Point</span></a></span></div><div class="ni n2 "><span class="nh "><a href="models/Score.html"><span class="micon cl"></span><span>Score</span></a></span></div><div class="ni n2 "><span class="nh "><a href="models/Tile.html"><span class="micon cl"></span><span>Tile</span></a></span></div><div class="ni n2 "><span class="nh "><a href="models/TileState.html"><span class="micon en"></span><span>TileState</span></a></span></div></div><div class="ni n1"><span class="nh "><button class="ar icon-button "></button><a href="saving.html"><span class="micon pa"></span><span>saving</span></a></span><div class="ni n2"><span class="nh "><button class="ar icon-button "></button><a href="saving/diskPersistentStoreImpl.html"><span class="micon pa"></span><span>diskPersistentStoreImpl</span></a></span><div class="ni n3 "><span class="nh "><a href="saving/diskPersistentStoreImpl/PersistentStoreImpl.html"><span class="micon cl"></span><span>PersistentStoreImpl</span></a></span></div></div><div class="ni n2"><span class="nh "><button class="ar icon-button "></button><a href="saving/saveManagerImpl.html"><span class="micon pa"></span><span>saveManagerImpl</span></a></span><div class="ni n3 "><span class="nh "><a href="saving/saveManagerImpl/SaveManagerImpl.html"><span class="micon cl"></span><span>SaveManagerImpl</span></a></span></div></div><div class="ni n2"><span class="nh "><button class="ar icon-button "></button><a href="saving/serializerJSONImpl.html"><span class="micon pa"></span><span>serializerJSONImpl</span></a></span><div class="ni n3 "><span class="nh "><a href="saving/serializerJSONImpl/ModelSerializer$.html"><span class="micon ob"></span><span>ModelSerializer</span></a></span></div><div class="ni n3 "><span class="nh "><a href="saving/serializerJSONImpl/SerializerImpl.html"><span class="micon cl"></span><span>SerializerImpl</span></a></span></div></div><div class="ni n2"><span class="nh "><button class="ar icon-button "></button><a href="saving/serializerXMLImpl.html"><span class="micon pa"></span><span>serializerXMLImpl</span></a></span><div class="ni n3 "><span class="nh "><a href="saving/serializerXMLImpl/ElementSerializer$.html"><span class="micon ob"></span><span>ElementSerializer</span></a></span></div><div class="ni n3 "><span class="nh "><a href="saving/serializerXMLImpl/GridSerializer$.html"><span class="micon ob"></span><span>GridSerializer</span></a></span></div><div class="ni n3 "><span class="nh "><a href="saving/serializerXMLImpl/PointSerializer$.html"><span class="micon ob"></span><span>PointSerializer</span></a></span></div><div class="ni n3 "><span class="nh "><a href="saving/serializerXMLImpl/ScoreSerializer$.html"><span class="micon ob"></span><span>ScoreSerializer</span></a></span></div><div class="ni n3 "><span class="nh "><a href="saving/serializerXMLImpl/SerializerImpl.html"><span class="micon cl"></span><span>SerializerImpl</span></a></span></div><div class="ni n3 "><span class="nh "><a href="saving/serializerXMLImpl/TileSerializer$.html"><span class="micon ob"></span><span>TileSerializer</span></a></span></div></div><div class="ni n2 "><span class="nh "><a href="saving/PersistentStore.html"><span class="micon tr"></span><span>PersistentStore</span></a></span></div><div class="ni n2 "><span class="nh "><a href="saving/SaveManager.html"><span class="micon tr"></span><span>SaveManager</span></a></span></div><div class="ni n2 "><span class="nh "><a href="saving/Serializer.html"><span class="micon tr"></span><span>Serializer</span></a></span></div></div><div class="ni n1"><span class="nh "><button class="ar icon-button "></button><a href="services.html"><span class="micon pa"></span><span>services</span></a></span><div class="ni n2"><span class="nh "><button class="ar icon-button "></button><a href="services/console.html"><span class="micon pa"></span><span>console</span></a></span><div class="ni n3 "><span class="nh "><a href="services/console/ConsoleStyle.html"><span class="micon cl"></span><span>ConsoleStyle</span></a></span></div><div class="ni n3 "><span class="nh "><a href="services/console/ConsoleStyle$.html"><span class="micon ob"></span><span>ConsoleStyle</span></a></span></div><div class="ni n3 "><span class="nh "><a href="services/console/ElementFormatter.html"><span class="micon cl"></span><span>ElementFormatter</span></a></span></div></div><div class="ni n2"><span class="nh "><button class="ar icon-button "></button><a href="services/gridPreviewBuilderImpl.html"><span class="micon pa"></span><span>gridPreviewBuilderImpl</span></a></span><div class="ni n3 "><span class="nh "><a href="services/gridPreviewBuilderImpl/GridPreviewBuilderImpl.html"><span class="micon cl"></span><span>GridPreviewBuilderImpl</span></a></span></div></div><div class="ni n2 "><span class="nh "><a href="services/ApplicationThread.html"><span class="micon cl"></span><span>ApplicationThread</span></a></span></div><div class="ni n2 "><span class="nh "><a href="services/CancelableTask.html"><span class="micon cl"></span><span>CancelableTask</span></a></span></div><div class="ni n2 "><span class="nh "><a href="services/Event.html"><span class="micon cl"></span><span>Event</span></a></span></div><div class="ni n2 "><span class="nh "><a href="services/GridPreviewBuilder.html"><span class="micon tr"></span><span>GridPreviewBuilder</span></a></span></div><div class="ni n2 "><span class="nh "><a href="services/MathExt$.html"><span class="micon ob"></span><span>MathExt</span></a></span></div><div class="ni n2 "><span class="nh "><a href="services/Random.html"><span class="micon tr"></span><span>Random</span></a></span></div><div class="ni n2 "><span class="nh "><a href="services/RandomImpl.html"><span class="micon cl"></span><span>RandomImpl</span></a></span></div></div><div class="ni n1"><span class="nh "><button class="ar icon-button "></button><a href="views.html"><span class="micon pa"></span><span>views</span></a></span><div class="ni n2"><span class="nh "><button class="ar icon-button "></button><a href="views/console.html"><span class="micon pa"></span><span>console</span></a></span><div class="ni n3"><span class="nh "><button class="ar icon-button "></button><a href="views/console/composed.html"><span class="micon pa"></span><span>composed</span></a></span><div class="ni n4 "><span class="nh "><a href="views/console/composed/ComposedConsoleFormatter.html"><span class="micon cl"></span><span>ComposedConsoleFormatter</span></a></span></div><div class="ni n4 "><span class="nh "><a href="views/console/composed/ComposedConsoleFormatter$.html"><span class="micon ob"></span><span>ComposedConsoleFormatter</span></a></span></div><div class="ni n4 "><span class="nh "><a href="views/console/composed/ConsoleElement.html"><span class="micon tr"></span><span>ConsoleElement</span></a></span></div><div class="ni n4 "><span class="nh "><a href="views/console/composed/Direction.html"><span class="micon en"></span><span>Direction</span></a></span></div><div class="ni n4 "><span class="nh "><a href="views/console/composed/Frame.html"><span class="micon tr"></span><span>Frame</span></a></span></div><div class="ni n4 "><span class="nh "><a href="views/console/composed/HorizontalFrame.html"><span class="micon cl"></span><span>HorizontalFrame</span></a></span></div><div class="ni n4 "><span class="nh "><a href="views/console/composed/RegularConsoleElement.html"><span class="micon cl"></span><span>RegularConsoleElement</span></a></span></div><div class="ni n4 "><span class="nh "><a href="views/console/composed/VerticalFrame.html"><span class="micon cl"></span><span>VerticalFrame</span></a></span></div></div><div class="ni n3"><span class="nh "><button class="ar icon-button "></button><a href="views/console/input.html"><span class="micon pa"></span><span>input</span></a></span><div class="ni n4"><span class="nh "><button class="ar icon-button "></button><a href="views/console/input/consoleInputHandlerImpl.html"><span class="micon pa"></span><span>consoleInputHandlerImpl</span></a></span><div class="ni n5 "><span class="nh "><a href="views/console/input/consoleInputHandlerImpl/ConsoleInputHandlerImpl.html"><span class="micon cl"></span><span>ConsoleInputHandlerImpl</span></a></span></div><div class="ni n5 "><span class="nh "><a href="views/console/input/consoleInputHandlerImpl/ConsoleReader.html"><span class="micon cl"></span><span>ConsoleReader</span></a></span></div></div><div class="ni n4 "><span class="nh "><a href="views/console/input/ConsoleInputHandler.html"><span class="micon tr"></span><span>ConsoleInputHandler</span></a></span></div></div><div class="ni n3 "><span class="nh "><a href="views/console/ConsoleElementView.html"><span class="micon cl"></span><span>ConsoleElementView</span></a></span></div><div class="ni n3 "><span class="nh "><a href="views/console/ConsoleGridView.html"><span class="micon cl"></span><span>ConsoleGridView</span></a></span></div><div class="ni n3 "><span class="nh "><a href="views/console/ConsoleHeadlineView.html"><span class="micon cl"></span><span>ConsoleHeadlineView</span></a></span></div><div class="ni n3 "><span class="nh "><a href="views/console/ConsoleView.html"><span class="micon tr"></span><span>ConsoleView</span></a></span></div></div><div class="ni n2"><span class="nh "><button class="ar icon-button "></button><a href="views/gui.html"><span class="micon pa"></span><span>gui</span></a></span><div class="ni n3 "><span class="nh "><a href="views/gui/ColorScheme$.html"><span class="micon ob"></span><span>ColorScheme</span></a></span></div><div class="ni n3 "><span class="nh "><a href="views/gui/GuiAnimation.html"><span class="micon cl"></span><span>GuiAnimation</span></a></span></div><div class="ni n3 "><span class="nh "><a href="views/gui/GuiButton.html"><span class="micon cl"></span><span>GuiButton</span></a></span></div><div class="ni n3 "><span class="nh "><a href="views/gui/GuiColorPattern.html"><span class="micon cl"></span><span>GuiColorPattern</span></a></span></div><div class="ni n3 "><span class="nh "><a href="views/gui/GuiColorTranslator$.html"><span class="micon ob"></span><span>GuiColorTranslator</span></a></span></div><div class="ni n3 "><span class="nh "><a href="views/gui/GuiElementButton.html"><span class="micon cl"></span><span>GuiElementButton</span></a></span></div><div class="ni n3 "><span class="nh "><a href="views/gui/GuiElementFormatter.html"><span class="micon cl"></span><span>GuiElementFormatter</span></a></span></div><div class="ni n3 "><span class="nh "><a href="views/gui/GuiElementView.html"><span class="micon cl"></span><span>GuiElementView</span></a></span></div><div class="ni n3 "><span class="nh "><a href="views/gui/GuiGridView.html"><span class="micon cl"></span><span>GuiGridView</span></a></span></div><div class="ni n3 "><span class="nh "><a href="views/gui/GuiHeadlineView.html"><span class="micon cl"></span><span>GuiHeadlineView</span></a></span></div><div class="ni n3 "><span class="nh "><a href="views/gui/GuiLoadStoreView.html"><span class="micon cl"></span><span>GuiLoadStoreView</span></a></span></div><div class="ni n3 "><span class="nh "><a href="views/gui/GuiLoader.html"><span class="micon cl"></span><span>GuiLoader</span></a></span></div><div class="ni n3 "><span class="nh "><a href="views/gui/GuiSettingView.html"><span class="micon cl"></span><span>GuiSettingView</span></a></span></div><div class="ni n3 "><span class="nh "><a href="views/gui/GuiStartView.html"><span class="micon cl"></span><span>GuiStartView</span></a></span></div><div class="ni n3 "><span class="nh "><a href="views/gui/GuiUndoRedoView.html"><span class="micon cl"></span><span>GuiUndoRedoView</span></a></span></div><div class="ni n3 "><span class="nh "><a href="views/gui/GuiView.html"><span class="micon tr"></span><span>GuiView</span></a></span></div></div></div><div class="ni n1"><span class="nh "><button class="ar icon-button "></button><a href="windows.html"><span class="micon pa"></span><span>windows</span></a></span><div class="ni n2"><span class="nh "><button class="ar icon-button "></button><a href="windows/focusManagerImpl.html"><span class="micon pa"></span><span>focusManagerImpl</span></a></span><div class="ni n3"><span class="nh "><button class="ar icon-button "></button><a href="windows/focusManagerImpl/FocusManagerImpl.html"><span class="micon cl"></span><span>FocusManagerImpl</span></a></span><div class="ni n4 "><span class="nh "><a href="windows/focusManagerImpl/FocusManagerImpl$FocusManagerSnapshot.html"><span class="micon cl"></span><span>FocusManagerSnapshot</span></a></span></div></div></div><div class="ni n2 "><span class="nh "><a href="windows/ConsoleWindow.html"><span class="micon cl"></span><span>ConsoleWindow</span></a></span></div><div class="ni n2 "><span class="nh "><a href="windows/FocusManager.html"><span class="micon tr"></span><span>FocusManager</span></a></span></div><div class="ni n2 "><span class="nh "><a href="windows/FocusState.html"><span class="micon en"></span><span>FocusState</span></a></span></div><div class="ni n2 "><span class="nh "><a href="windows/GuiWindow.html"><span class="micon cl"></span><span>GuiWindow</span></a></span></div><div class="ni n2 "><span class="nh "><a href="windows/Window.html"><span class="micon tr"></span><span>Window</span></a></span></div></div><div class="ni n1 "><span class="nh "><a href="App$.html"><span class="micon ob"></span><span>App</span></a></span></div><div class="ni n1 "><span class="nh "><a href="Observable.html"><span class="micon tr"></span><span>Observable</span></a></span></div><div class="ni n1 "><span class="nh "><a href="Observer.html"><span class="micon tr"></span><span>Observer</span></a></span></div><div class="ni n1 "><span class="nh "><a href="main.html"><span class="micon cl"></span><span>main</span></a></span></div></div></nav></div><div id="footer" class="body-small"><div class="left-container">Generated with</div><div class="right-container"><div class="text"></div></div><div class="text-mobile"></div></div><div id="scaladoc-searchBar"></div><div id="main"><div class="breadcrumbs container"><a href="../index.html">blockudoku</a>/<a href="../blockudoku.html">blockudoku</a>/<a href="commands.html">blockudoku.commands</a></div><div id="content" class="body-medium"><div><div class="cover-header">
+ <span class="icon"><span class="micon pa"></span></span>
+ <h1 class="h600 single">blockudoku.commands</h1>
+</div>
+<div class="fqname body-large">
+ <span></span>
+</div>
+<div class="main-signature mono-small-block">
+ <div class="signature">
+  <span class="modifiers"></span><span class="kind"><span t="k">package </span></span><a href="commands.html" t="n" class="documentableName ">blockudoku.commands</a>
+ </div>
+</div>
+<section id="members-list">
+ <h2 class="h500">Members list</h2>
+ <div class="documentableFilter">
+  <div class="filtersContainer"></div><input class="filterableInput" placeholder="Filter by any phrase" data-test-id="filterBarInput" type="search"><button class="clearButton label-only-button" data-test-id="filterBarClearButton">Clear all</button>
+ </div>
+ <div class="membersList expand">
+  <div class="tabs">
+   <div class="contents">
+    <section id="Packages">
+     <div data-togglable="packages" class="tab expand">
+      <div class="documentableList expand">
+       <div class="documentableList-expander">
+        <button class="icon-button show-content expand"></button>
+        <h3 class="groupHeader h400">Packages</h3>
+       </div>
+       <div class="documentableElement">
+        <div class="documentableElement-expander">
+         <div class="header monospace mono-medium">
+          <div class="signature">
+           <span class="modifiers"></span><span class="kind"><span t="k">package </span></span><a href="commands/commandsImpl.html" t="n" class="documentableName ">blockudoku.commands.commandsImpl</a>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+    <section id="Type-members">
+     <div data-togglable="Type members" class="tab expand">
+      <div class="member-group-header">
+       <h3 data-togglable="Type members" class="h400">Type members</h3>
+      </div>
+      <section id="Classlikes">
+       <div class="documentableList expand">
+        <div class="documentableList-expander">
+         <button class="icon-button show-content expand"></button>
+         <h4 class="groupHeader h200">Classlikes</h4>
+        </div>
+        <div class="documentableElement">
+         <div class="documentableElement-expander">
+          <button class="icon-button ar show-content"></button>
+          <div class="header monospace mono-medium">
+           <div class="signature">
+            <span class="modifiers"></span><span class="kind"><span t="k">trait </span></span><a href="commands/Command.html" t="n" class="documentableName ">Command</a>(<span t="k"></span><span t="k"></span><span data-unresolved-link="" t="n">snapshotables</span>: <span data-unresolved-link="" t="t">List</span>[<a href="commands/Snapshotable.html" t="t">Snapshotable</a>[<span t="k">_</span>]])
+           </div>
+          </div>
+         </div>
+         <div class="docs">
+          <span class="modifiers"></span>
+          <div>
+           <div class="originInfo"></div>
+           <div class="memberDocumentation">
+            <div class="documentableBrief doc">
+             <p>A destructive (but undoable) operation to be executed by a <a href="commands/CommandInvoker.html">blockudoku.commands.CommandInvoker</a>.</p>
+            </div>
+            <div class="cover">
+             <div class="doc">
+              <p>A destructive (but undoable) operation to be executed by a <a href="commands/CommandInvoker.html">blockudoku.commands.CommandInvoker</a>.</p>
+             </div>
+             <h2 class="h200">Value parameters</h2>
+             <dl class="attributes attributes-small">
+              <dt class="body-small">
+               snapshotables
+              </dt>
+              <dd class="body-medium">
+               <p>A list of all the objects that need to be snapshot before the command is executed. Is generally provided by the factory.</p>
+              </dd>
+             </dl>
+             <h2 class="h200">Attributes</h2>
+             <dl class="attributes attributes-small">
+              <dt class="body-small">
+               See also
+              </dt>
+              <dd class="body-medium">
+               <div>
+                <div>
+                 <p><a href="commands/Snapshotable.html">Snapshotable</a> <a href="commands/CommandInvoker.html">CommandInvoker</a> <a href="commands/CommandFactory.html">CommandFactory</a></p>
+                </div>
+               </div>
+              </dd>
+              <dt class="body-small">
+               Supertypes
+              </dt>
+              <dd class="body-medium">
+               <div class="mono-small-block supertypes">
+                <div>
+                 class <span data-unresolved-link="" t="n">Object</span>
+                </div>
+                <div>
+                 trait <span data-unresolved-link="" t="n">Matchable</span>
+                </div>
+                <div>
+                 class <span data-unresolved-link="" t="n">Any</span>
+                </div><span></span>
+               </div>
+              </dd>
+              <dt class="body-small">
+               Known subtypes
+              </dt>
+              <dd class="body-medium">
+               <div class="mono-small-block subtypes">
+                <div>
+                 class <a href="commands/commandsImpl/SelectElementCommand.html" t="n">SelectElementCommand</a>
+                </div>
+                <div>
+                 class <a href="commands/commandsImpl/SetElementCommand.html" t="n">SetElementCommand</a>
+                </div><span></span>
+               </div>
+              </dd>
+             </dl>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="documentableElement">
+         <div class="documentableElement-expander">
+          <button class="icon-button ar show-content"></button>
+          <div class="header monospace mono-medium">
+           <div class="signature">
+            <span class="modifiers"></span><span class="kind"><span t="k">trait </span></span><a href="commands/CommandFactory.html" t="n" class="documentableName ">CommandFactory</a>
+           </div>
+          </div>
+         </div>
+         <div class="docs">
+          <span class="modifiers"></span>
+          <div>
+           <div class="originInfo"></div>
+           <div class="memberDocumentation">
+            <div class="documentableBrief doc">
+             <p>Factory methods for each supported <a href="commands/Command.html">Command</a>. It is not recommended to create commands directly.</p>
+            </div>
+            <div class="cover">
+             <div class="doc">
+              <p>Factory methods for each supported <a href="commands/Command.html">Command</a>. It is not recommended to create commands directly.</p>
+             </div>
+             <h2 class="h200">Attributes</h2>
+             <dl class="attributes attributes-small">
+              <dt class="body-small">
+               See also
+              </dt>
+              <dd class="body-medium">
+               <div>
+                <div>
+                 <p><a href="commands/Command.html">Command</a> <a href="commands/CommandInvoker.html">CommandInvoker</a></p>
+                </div>
+               </div>
+              </dd>
+              <dt class="body-small">
+               Supertypes
+              </dt>
+              <dd class="body-medium">
+               <div class="mono-small-block supertypes">
+                <div>
+                 class <span data-unresolved-link="" t="n">Object</span>
+                </div>
+                <div>
+                 trait <span data-unresolved-link="" t="n">Matchable</span>
+                </div>
+                <div>
+                 class <span data-unresolved-link="" t="n">Any</span>
+                </div><span></span>
+               </div>
+              </dd>
+              <dt class="body-small">
+               Known subtypes
+              </dt>
+              <dd class="body-medium">
+               <div class="mono-small-block subtypes">
+                <div>
+                 class <a href="commands/commandsImpl/CommandFactoryImpl.html" t="n">CommandFactoryImpl</a>
+                </div><span></span>
+               </div>
+              </dd>
+             </dl>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="documentableElement">
+         <div class="documentableElement-expander">
+          <button class="icon-button ar show-content"></button>
+          <div class="header monospace mono-medium">
+           <div class="signature">
+            <span class="modifiers"></span><span class="kind"><span t="k">trait </span></span><a href="commands/CommandInvoker.html" t="n" class="documentableName ">CommandInvoker</a>
+           </div>
+          </div>
+         </div>
+         <div class="docs">
+          <span class="modifiers"></span>
+          <div>
+           <div class="originInfo"></div>
+           <div class="memberDocumentation">
+            <div class="documentableBrief doc">
+             <p>Responsible for executing, undoing and redoing commands.</p>
+            </div>
+            <div class="cover">
+             <div class="doc">
+              <p>Responsible for executing, undoing and redoing commands.</p>
+             </div>
+             <h2 class="h200">Attributes</h2>
+             <dl class="attributes attributes-small">
+              <dt class="body-small">
+               See also
+              </dt>
+              <dd class="body-medium">
+               <div>
+                <div>
+                 <p><a href="commands/Command.html">Command</a> <a href="commands/CommandFactory.html">CommandFactory</a></p>
+                </div>
+               </div>
+              </dd>
+              <dt class="body-small">
+               Supertypes
+              </dt>
+              <dd class="body-medium">
+               <div class="mono-small-block supertypes">
+                <div>
+                 class <span data-unresolved-link="" t="n">Object</span>
+                </div>
+                <div>
+                 trait <span data-unresolved-link="" t="n">Matchable</span>
+                </div>
+                <div>
+                 class <span data-unresolved-link="" t="n">Any</span>
+                </div><span></span>
+               </div>
+              </dd>
+              <dt class="body-small">
+               Known subtypes
+              </dt>
+              <dd class="body-medium">
+               <div class="mono-small-block subtypes">
+                <div>
+                 class <a href="commands/commandsImpl/CommandInvokerImpl.html" t="n">CommandInvokerImpl</a>
+                </div><span></span>
+               </div>
+              </dd>
+             </dl>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="documentableElement">
+         <div class="documentableElement-expander">
+          <button class="icon-button ar show-content"></button>
+          <div class="header monospace mono-medium">
+           <div class="signature">
+            <span class="modifiers"></span><span class="kind"><span t="k">trait </span></span><a href="commands/Snapshotable.html" t="n" class="documentableName ">Snapshotable</a>[<span t="k"></span><span data-unresolved-link="" t="t">TSnapshot</span>]
+           </div>
+          </div>
+         </div>
+         <div class="docs">
+          <span class="modifiers"></span>
+          <div>
+           <div class="originInfo"></div>
+           <div class="memberDocumentation">
+            <div class="documentableBrief doc">
+             <p>Needs to be implemented by all classes that manage mutable state in the command framework.</p>
+            </div>
+            <div class="cover">
+             <div class="doc">
+              <p>Needs to be implemented by all classes that manage mutable state in the command framework.</p>
+             </div>
+             <h2 class="h200">Type parameters</h2>
+             <dl class="attributes attributes-small">
+              <dt class="body-small">
+               TSnapshot
+              </dt>
+              <dd class="body-medium">
+               <p>Type of the snapshot. Should be '?' because all snapshots are case classes without common functionality.</p>
+              </dd>
+             </dl>
+             <h2 class="h200">Attributes</h2>
+             <dl class="attributes attributes-small">
+              <dt class="body-small">
+               See also
+              </dt>
+              <dd class="body-medium">
+               <div>
+                <div>
+                 <p><a href="commands/Command.html">Command</a></p>
+                </div>
+               </div>
+              </dd>
+              <dt class="body-small">
+               Supertypes
+              </dt>
+              <dd class="body-medium">
+               <div class="mono-small-block supertypes">
+                <div>
+                 class <span data-unresolved-link="" t="n">Object</span>
+                </div>
+                <div>
+                 trait <span data-unresolved-link="" t="n">Matchable</span>
+                </div>
+                <div>
+                 class <span data-unresolved-link="" t="n">Any</span>
+                </div><span></span>
+               </div>
+              </dd>
+              <dt class="body-small">
+               Known subtypes
+              </dt>
+              <dd class="body-medium">
+               <div class="mono-small-block subtypes">
+                <div>
+                 class <a href="controllers/mediatorImpl/ControllerMediatorImpl.html" t="n">ControllerMediatorImpl</a>
+                </div>
+                <div>
+                 trait <a href="controllers/mediatorImpl/ElementController.html" t="n">ElementController</a>
+                </div>
+                <div>
+                 class <a href="controllers/mediatorImpl/ElementControllerImpl.html" t="n">ElementControllerImpl</a>
+                </div>
+                <div>
+                 trait <a href="controllers/mediatorImpl/GridController.html" t="n">GridController</a>
+                </div>
+                <div>
+                 class <a href="controllers/mediatorImpl/GridControllerImpl.html" t="n">GridControllerImpl</a>
+                </div>
+                <div>
+                 trait <a href="controllers/mediatorImpl/ScoreController.html" t="n">ScoreController</a>
+                </div>
+                <div>
+                 class <a href="controllers/mediatorImpl/ScoreControllerImpl.html" t="n">ScoreControllerImpl</a>
+                </div>
+                <div>
+                 trait <a href="controllers/ControllerMediator.html" t="n">ControllerMediator</a>
+                </div>
+                <div>
+                 class <a href="windows/focusManagerImpl/FocusManagerImpl.html" t="n">FocusManagerImpl</a>
+                </div>
+                <div>
+                 trait <a href="windows/FocusManager.html" t="n">FocusManager</a>
+                </div><span class="show-all-code show-content text-button h100">Show all</span>
+               </div>
+              </dd>
+             </dl>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </section>
+     </div>
+    </section>
+   </div>
+  </div>
+ </div>
+</section></div><div id="toc" class="body-small"><div id="toc-container"><span class="toc-title h200">In this article</span><nav class="toc-nav"><ul class="toc-list"><li><a href="#members-list">Members list</a><ul><li><a href="#Packages">Packages</a></li><li><a href="#Type-members">Type members</a><ul><li><a href="#Classlikes">Classlikes</a></li></ul></li></ul></li></ul></nav></div></div></div><div id="footer" class="body-small mobile-footer"><div class="left-container">Generated with</div><div class="right-container"><div class="text"></div></div><div class="text-mobile"></div></div></div></div></body></html>
