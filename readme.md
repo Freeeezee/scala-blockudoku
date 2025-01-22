@@ -10,10 +10,10 @@ This project is an academic project at HTWG Konstanz.
 
 ## Overview
 
-- [Installation](##Installation)
-- [Build](##Build)
-- [Screenshots](##Screenshots)
-- [Technical Details](##Technical Details)
+- [Installation](#installation)
+- [Build](#build)
+- [Screenshots](#screenshots)
+- [Technical Details](##technical-details)
 
 ## Installation
 
@@ -83,3 +83,4 @@ sbt run
 - Output in both a textual UI on console with arrow-key based navigation and *ScalaFX* graphical UI with **synchronized** game state.
 - Uses a **custom** dependency injection framework. For more detail see [YADIS](https://gitlab.com/Freeeezee/yadis).
 - Game state is serialized as either JSON, XML (through libraries) or [YAML](https://github.com/Freeeezee/scala-blockudoku/tree/yaml/src/main/scala/blockudoku/saving/serializerYAMLImpl) (custom parser and serializer).
+- [ScalaDoc](https://freeeezee.github.io/scala-blockudoku/)
