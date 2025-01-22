@@ -1,7 +1,7 @@
 package blockudoku.saving.serializerXMLImpl
 
-import blockudoku.controllers.mediatorImpl.{ElementController, GridController}
-import blockudoku.controllers.{ElementCollector, GridCollector, ScoreCollector, ScoreController}
+import blockudoku.controllers.mediatorImpl.{ElementController, GridController, ScoreController}
+import blockudoku.controllers.{ElementCollector, GridCollector, ScoreCollector}
 import blockudoku.saving.Serializer
 
 class SerializerImpl(gridCollector: GridCollector, elementCollector: ElementCollector, elementController: ElementController, gridController: GridController, scoreCollector: ScoreCollector, scoreController: ScoreController) extends Serializer {

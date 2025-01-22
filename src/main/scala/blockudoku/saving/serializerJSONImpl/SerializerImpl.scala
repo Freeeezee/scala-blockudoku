@@ -1,7 +1,7 @@
 package blockudoku.saving.serializerJSONImpl
 
-import blockudoku.controllers.mediatorImpl.{ElementController, GridController}
-import blockudoku.controllers.{ElementCollector, GridCollector, ScoreCollector, ScoreController}
+import blockudoku.controllers.mediatorImpl.{ElementController, GridController, ScoreController}
+import blockudoku.controllers.{ElementCollector, GridCollector, ScoreCollector}
 import blockudoku.models.{Element, Grid}
 import blockudoku.saving.Serializer
 import blockudoku.saving.serializerJSONImpl.ModelSerializer.{elementReads, elementWrites, gridReads, gridWrites}

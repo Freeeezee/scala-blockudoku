@@ -1,6 +1,6 @@
 package blockudoku.controllers
 
-import blockudoku.observer.Observable
+import blockudoku.Observable
 
 trait ScoreCollector extends Observable {
   

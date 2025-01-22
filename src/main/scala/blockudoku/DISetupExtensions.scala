@@ -2,17 +2,16 @@ package blockudoku
 
 import blockudoku.commands.commandsImpl.{CommandFactoryImpl, CommandInvokerImpl}
 import blockudoku.commands.{CommandFactory, CommandInvoker}
-import blockudoku.controllers.mediatorImpl.{ControllerMediatorImpl, ElementController, ElementControllerImpl, GridController, GridControllerImpl}
-import blockudoku.controllers.scoreImpl.ScoreControllerImpl
-import blockudoku.controllers.{ControllerMediator, ElementCollector, GridCollector, GridConfig, ScoreCollector, ScoreController}
-import blockudoku.input.ConsoleInputHandler
-import blockudoku.input.consoleInputHandlerImpl.ConsoleInputHandlerImpl
+import blockudoku.controllers.mediatorImpl.{ControllerMediatorImpl, ElementController, ElementControllerImpl, GridController, GridControllerImpl, ScoreController, ScoreControllerImpl}
+import blockudoku.controllers.{ControllerMediator, ElementCollector, GridCollector, GridConfig, ScoreCollector}
 import blockudoku.saving.diskPersistentStoreImpl.PersistentStoreImpl
 import blockudoku.saving.{PersistentStore, SaveManager, Serializer}
 import blockudoku.saving.saveManagerImpl.SaveManagerImpl
 import blockudoku.saving.serializerXMLImpl.SerializerImpl
 import blockudoku.services.gridPreviewBuilderImpl.GridPreviewBuilderImpl
 import blockudoku.services.{GridPreviewBuilder, Random, RandomImpl}
+import blockudoku.views.console.input.ConsoleInputHandler
+import blockudoku.views.console.input.consoleInputHandlerImpl.ConsoleInputHandlerImpl
 import blockudoku.views.gui.GuiLoader
 import blockudoku.windows.focusManagerImpl.FocusManagerImpl
 import blockudoku.windows.{ConsoleWindow, FocusManager, GuiWindow}

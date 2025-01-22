@@ -1,7 +1,7 @@
 package blockudoku.controllers.mediatorImpl
 
 import blockudoku.commands.Snapshotable
-import blockudoku.controllers.{ControllerMediator, ScoreController}
+import blockudoku.controllers.ControllerMediator
 import blockudoku.models.{Element, Tile}
 import blockudoku.windows.{FocusManager, FocusState}
 

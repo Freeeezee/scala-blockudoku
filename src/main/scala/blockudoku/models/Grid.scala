@@ -3,6 +3,12 @@ package blockudoku.models
 import scala.util.boundary
 import scala.util.boundary.break
 
+/**
+ * Represents the state of the grid.
+ * @param xLength size of the grid in the x-axis.
+ * @param yLength size of the grid in the y-axis.
+ * @param tiles list of tiles that make up the grid.
+ */
 case class Grid(xLength: Int, yLength: Int, tiles: List[Tile]):
   def tile(xPos: Int, yPos: Int): Option[Tile] = {
     if xPos < 0 || xPos >= xLength || yPos < 0 || yPos >= yLength then

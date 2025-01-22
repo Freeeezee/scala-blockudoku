@@ -2,8 +2,7 @@ package blockudoku.views.gui
 
 import blockudoku.App
 import blockudoku.commands.{CommandFactory, CommandInvoker}
-import blockudoku.controllers.ScoreController
-import blockudoku.controllers.mediatorImpl.{ElementController, GridController}
+import blockudoku.controllers.mediatorImpl.{ElementController, GridController, ScoreController}
 import blockudoku.saving.SaveManager
 import blockudoku.services.GridPreviewBuilder
 import blockudoku.windows.FocusManager

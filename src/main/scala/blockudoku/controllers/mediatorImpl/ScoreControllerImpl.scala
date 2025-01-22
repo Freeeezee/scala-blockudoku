@@ -1,6 +1,7 @@
-package blockudoku.controllers.scoreImpl
+package blockudoku.controllers.mediatorImpl
 
-import blockudoku.controllers.{ControllerMediator, GridCollector, ScoreController}
+import blockudoku.controllers.mediatorImpl.ScoreController
+import blockudoku.controllers.{ControllerMediator, GridCollector}
 import blockudoku.models.{Grid, Score, Tile, TileState}
 
 import scala.{:+, ::}

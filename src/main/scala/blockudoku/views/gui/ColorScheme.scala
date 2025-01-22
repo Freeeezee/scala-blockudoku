@@ -1,6 +1,6 @@
 package blockudoku.views.gui
 
-import blockudoku.observer.Observable
+import blockudoku.Observable
 
 object ColorScheme extends Observable {
   

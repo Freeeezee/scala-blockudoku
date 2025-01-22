@@ -1,8 +1,8 @@
 package blockudoku.views.gui
 
+import blockudoku.Observer
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ElementCollector, GridCollector}
-import blockudoku.observer.Observer
 import scalafx.application.Platform
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Node

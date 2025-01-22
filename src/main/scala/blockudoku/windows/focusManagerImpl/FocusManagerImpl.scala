@@ -1,7 +1,7 @@
 package blockudoku.windows.focusManagerImpl
 
+import blockudoku.Observable
 import blockudoku.commands.Snapshotable
-import blockudoku.observer.Observable
 import blockudoku.windows.{FocusManager, FocusState}
 
 class FocusManagerImpl extends FocusManager, Snapshotable[FocusManagerImpl#FocusManagerSnapshot] {

@@ -1,8 +1,9 @@
 package blockudoku.views.gui
+
+import blockudoku.{Observable, Observer}
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ElementCollector, GridCollector}
 import blockudoku.models.{Grid, Tile, TileState}
-import blockudoku.observer.{Observable, Observer}
 import blockudoku.services.GridPreviewBuilder
 import blockudoku.windows.{FocusManager, FocusState}
 import scalafx.application.Platform

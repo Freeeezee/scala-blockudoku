@@ -1,4 +1,4 @@
-package blockudoku.input.consoleInputHandlerImpl
+package blockudoku.views.console.input.consoleInputHandlerImpl
 
 import org.jline.keymap.{BindingReader, KeyMap}
 import org.jline.terminal.TerminalBuilder

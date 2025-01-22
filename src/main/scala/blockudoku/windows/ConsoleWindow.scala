@@ -4,10 +4,10 @@ import blockudoku.App
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.mediatorImpl.{ElementController, GridController}
 import blockudoku.controllers.{ControllerMediator, ElementCollector, GridCollector}
-import blockudoku.input.ConsoleInputHandler
 import blockudoku.services.{ApplicationThread, CancelableTask, GridPreviewBuilder}
 import blockudoku.views.console.composed.Direction.{Down, Left, Right, Up}
 import blockudoku.views.console.composed.{ComposedConsoleFormatter, Direction, VerticalFrame}
+import blockudoku.views.console.input.ConsoleInputHandler
 import blockudoku.views.console.{ConsoleElementView, ConsoleGridView, ConsoleHeadlineView, ConsoleView}
 
 class ConsoleWindow(commandFactory: CommandFactory, commandInvoker: CommandInvoker, gridCollector: GridCollector, elementCollector: ElementCollector, focusManager: FocusManager, handler: ConsoleInputHandler, previewBuilder: GridPreviewBuilder) extends Window {

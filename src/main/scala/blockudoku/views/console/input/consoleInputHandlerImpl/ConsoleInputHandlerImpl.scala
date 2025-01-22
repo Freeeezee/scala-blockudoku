@@ -1,7 +1,7 @@
-package blockudoku.input.consoleInputHandlerImpl
+package blockudoku.views.console.input.consoleInputHandlerImpl
 
-import blockudoku.input.ConsoleInputHandler
 import blockudoku.services.Event
+import blockudoku.views.console.input.ConsoleInputHandler
 import org.jline.keymap.KeyMap
 
 class ConsoleInputHandlerImpl extends ConsoleInputHandler {

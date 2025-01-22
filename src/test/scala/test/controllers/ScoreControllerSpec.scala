@@ -1,6 +1,6 @@
 package test.controllers
 
-import blockudoku.controllers.ScoreController
+import blockudoku.controllers.mediatorImpl.ScoreController
 import test.GridProvider
 
 class ScoreControllerSpec extends ControllerSpec {

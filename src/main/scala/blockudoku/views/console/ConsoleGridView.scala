@@ -1,9 +1,9 @@
 package blockudoku.views.console
 
+import blockudoku.Observer
 import blockudoku.commands.{CommandFactory, CommandInvoker}
 import blockudoku.controllers.{ElementCollector, GridCollector}
 import blockudoku.models.{Grid, Tile, TileState}
-import blockudoku.observer.Observer
 import blockudoku.services.GridPreviewBuilder
 import blockudoku.services.console.ConsoleStyle
 import blockudoku.views.console.composed.{ConsoleElement, HorizontalFrame, RegularConsoleElement, VerticalFrame}

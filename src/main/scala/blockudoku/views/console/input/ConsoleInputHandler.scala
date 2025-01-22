@@ -1,4 +1,4 @@
-package blockudoku.input
+package blockudoku.views.console.input
 
 import blockudoku.services.Event
 
