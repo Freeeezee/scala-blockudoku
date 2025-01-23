@@ -9,6 +9,7 @@ import blockudoku.windows.FocusManager
 import scalafx.application.JFXApp3
 import scalafx.geometry.Pos
 import scalafx.scene.Scene
+import scalafx.scene.image.Image
 import scalafx.scene.layout.VBox
 
 import scala.compiletime.uninitialized
@@ -107,6 +108,7 @@ class GuiLoader(commandFactory: CommandFactory, commandInvoker: CommandInvoker, 
     stage = new JFXApp3.PrimaryStage {
 
       title.value = "Blockudoku"
+      icons += new Image("file:src/main/resources/icon.png")
       height = 800
       width = 600
       resizable = false
