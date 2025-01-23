@@ -22,7 +22,7 @@ class SerializerImpl(gridCollector: GridCollector, elementCollector: ElementColl
         "Grid" -> jsonGrid,
         "Score" -> scoreCollector.getScore
       )
-      Json.stringify(json)
+      Json.prettyPrint(json)
     }
 
     override def deserialize(data: String): Unit = {
