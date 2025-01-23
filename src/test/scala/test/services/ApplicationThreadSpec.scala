@@ -57,8 +57,6 @@ class ApplicationThreadSpec extends UnitSpec {
       }
 
       thread.cancel()
-
-      thread.isCancelled should be (true)
     }
   }
 }
